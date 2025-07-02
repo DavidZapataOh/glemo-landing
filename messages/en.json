@@ -1,0 +1,236 @@
+{
+    "nav": {
+      "home": "Home",
+      "features": "Features", 
+      "ecosystem": "Ecosystem",
+      "tools": "Tools",
+      "login": "Go to App"
+    },
+    "hero": {
+      "badge": "REVOLUTIONIZING DIGITAL CERTIFICATION",
+      "title": "Certificates that",
+      "verify": "verify",
+      "your": "your",
+      "description": "Create and issue verifiable digital certificates on blockchain with an immersive and secure experience.",
+      "createTemplate": "Create template",
+      "verifyCertificate": "Verify certificate",
+      "secureVerification": "Secure verification",
+      "certificatesIssued": "Certificates issued",
+      "discoverMore": "Discover more",
+      "blockchainTechnology": "Blockchain technology",
+      "features": "Features",
+      "verifiableCredentials": "Verifiable Credentials",
+      "secure": "Secure",
+      "permanent": "Permanent",
+      "skills": "Skills",
+      "expertise": "Expertise",
+      "knowledge": "Knowledge",
+      "achievements": "Achievements"
+    },
+    "features": {
+      "title": "Main features",
+      "description": "Our platform combines cutting-edge blockchain technology with intuitive tools to revolutionize the creation and issuance of digital certificates.",
+      "startNow": "Start now",
+      "items": {
+        "customizable": {
+          "title": "Customizable templates",
+          "description": "Create unique designs with pixel-level precision for each text and image element in your certificates."
+        },
+        "blockchain": {
+          "title": "Blockchain storage",
+          "description": "All certificates are stored on IPFS and blockchain to ensure security, permanence and decentralization."
+        },
+        "mass": {
+          "title": "Mass issuance",
+          "description": "Issue multiple certificates in a single transaction to optimize costs and speed up the process."
+        },
+        "verification": {
+          "title": "Instant verification",
+          "description": "Any person can verify the authenticity of a certificate at any time using a QR code or direct link."
+        },
+        "gallery": {
+          "title": "3D Gallery",
+          "description": "Exhibit your certificates and badges in a customizable and shareable 3D space."
+        },
+        "api": {
+          "title": "API for integrations",
+          "description": "Connect with your existing systems using our API to automate the issuance and verification of certificates."
+        }
+      }
+    },
+    "gallery": {
+      "badge": "DIGITAL PORTFOLIO",
+      "title": "Your 3D",
+      "gallery": "Digital Gallery",
+      "description": "Showcase and organize your credentials in an immersive 3D environment that you can customize to reflect your professional journey.",
+      "personalizedRoom": {
+        "title": "Personalized 3D Room",
+        "description": "Arrange and showcase your certificates, badges, and moments in your own virtual space."
+      },
+      "interactive": {
+        "title": "Interactive Experience",
+        "description": "Visitors can navigate through your achievements and interact with each credential."
+      },
+      "customizable": {
+        "title": "Customizable Layout",
+        "description": "Organize your achievements by categories, timeline, or importance."
+      }
+    },
+    "ecosystem": {
+      "badge": "CREDENTIAL ECOSYSTEM",
+      "title": "Beyond",
+      "certificates": "Certificates",
+      "description": "Our platform offers a comprehensive ecosystem of digital credentials to recognize various achievements and milestones.",
+      "types": {
+        "certificates": {
+          "title": "Certificates",
+          "description": "Formal recognition of completed courses, programs, or qualifications with detailed verification data.",
+          "features": {
+            "0": "Blockchain verification",
+            "1": "Detailed metadata",
+            "2": "Customizable design",
+            "3": "Instant validation"
+          }
+        },
+        "badges": {
+          "title": "Badges",
+          "description": "Visual representations of skills, accomplishments, or participation in specific activities or events.",
+          "features": {
+            "0": "Skill-specific",
+            "1": "Stackable credentials",
+            "2": "Social sharing",
+            "3": "Progressive levels"
+          }
+        },
+        "moments": {
+          "title": "Moments",
+          "description": "Capture and commemorate significant events, milestones, or memorable experiences in your journey.",
+          "features": {
+            "0": "Event timestamps",
+            "1": "Media attachments",
+            "2": "Interactive elements",
+            "3": "Narrative context"
+          }
+        }
+      },
+      "features": "Features",
+      "learnMore": "Learn more"
+    },
+    "tools": {
+      "badge": "DEVELOPER TOOLS",
+      "title": "Powerful",
+      "integration": "API Integration",
+      "description": "Integrate our credential issuance system directly into your platforms with our comprehensive API suite. Create, manage, and verify credentials programmatically.",
+      "features": {
+        "automated": {
+          "title": "Automated Issuance",
+          "description": "Generate credentials automatically when users complete specific requirements in your platform."
+        },
+        "custom": {
+          "title": "Custom Integration",
+          "description": "Embed our verification services seamlessly into your existing systems and workflows."
+        },
+        "webhook": {
+          "title": "Webhook Events",
+          "description": "Receive real-time notifications when credentials are issued, viewed, or verified."
+        }
+      },
+      "exploreApi": "Explore API Docs",
+      "copyCode": "Copy code",
+      "responseStatus": "Response status",
+      "successRate": "Success Rate",
+      "responseTime": "Response Time"
+    },
+    "roles": {
+      "badge": "FOR EVERYONE",
+      "title": "For Your Role",
+      "tailored": "Tailored",
+      "description": "Our platform serves the diverse needs of everyone in the certification ecosystem with specialized features.",
+      "admin": {
+        "role": "Administrators",
+        "description": "Create templates, issue certificates in bulk, and manage your organization's credentials.",
+        "features": {
+          "0": "Template designer",
+          "1": "Batch issuance",
+          "2": "Analytics dashboard",
+          "3": "Team management"
+        },
+        "button": "Admin Portal"
+      },
+      "issuers": {
+        "role": "Issuers",
+        "description": "Educational institutions, training providers, and organizations that award credentials.",
+        "features": {
+          "0": "Custom branding",
+          "1": "Certificate validation",
+          "2": "Recipient management",
+          "3": "Bulk operations"
+        },
+        "button": "Start Issuing"
+      },
+      "recipients": {
+        "role": "Recipients",
+        "description": "Showcase your achievements and share verifiable credentials with employers.",
+        "features": {
+          "0": "Digital portfolio",
+          "1": "Easy sharing",
+          "2": "Social media integration",
+          "3": "Verification links"
+        },
+        "button": "View Your Credentials"
+      },
+      "verifiers": {
+        "role": "Verifiers",
+        "description": "Instantly verify the authenticity of any credential issued through our platform.",
+        "features": {
+          "0": "One-click verification",
+          "1": "QR code scanning",
+          "2": "API integration",
+          "3": "Verification history"
+        },
+        "button": "Verify Credential"
+      },
+      "featuresTitle": "Key Features"
+    },
+    "cta": {
+      "badge": "Join the future of digital credentials",
+      "title": "Start Your",
+      "certification": "Blockchain Certification",
+      "journey": "Journey Today",
+      "description": "Join the revolution in digital credentials. Create, issue, and verify certificates that are secure, permanent, and truly yours on the blockchain.",
+      "createFirst": "Create Your First Certificate",
+      "watchDemo": "Watch Demo",
+      "stats": {
+        "issued": "Certificates Issued",
+        "organizations": "Organizations",
+        "countries": "Countries", 
+        "successRate": "Success Rate"
+      }
+    },
+    "footer": {
+      "description": "Leading platform for issuing verifiable digital certificates on blockchain.",
+      "platform": "Platform",
+      "resources": "Resources",
+      "contact": "Contact us",
+      "contactDescription": "Have questions about the platform? Write to us and we will answer you as soon as possible.",
+      "emailPlaceholder": "Your email",
+      "copyright": "All rights reserved.",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "cookies": "Cookies",
+      "language": "Language",
+      "changeLanguage": "Change language",
+      "platformItems": {
+        "0": "Features",
+        "1": "Templates",
+        "2": "Issuance",
+        "3": "Verification"
+      },
+      "resourceItems": {
+        "0": "Documentation",
+        "1": "API",
+        "2": "Tutorials",
+        "3": "Blog"
+      }
+    }
+  }

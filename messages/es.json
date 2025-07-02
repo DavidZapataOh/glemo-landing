@@ -1,0 +1,236 @@
+{
+    "nav": {
+      "home": "Inicio",
+      "features": "Características", 
+      "ecosystem": "Ecosistema",
+      "tools": "Herramientas",
+      "login": "Ir a la app"
+    },
+    "hero": {
+      "badge": "REVOLUCIONANDO LA CERTIFICACIÓN DIGITAL",
+      "title": "Certificados que",
+      "your": "tus",
+      "verify": "verifican",
+      "description": "Crea y emite certificados digitales verificables en blockchain con una experiencia inmersiva y segura.",
+      "createTemplate": "Crear plantilla",
+      "verifyCertificate": "Verificar certificado",
+      "secureVerification": "Verificación segura",
+      "certificatesIssued": "Certificados emitidos",
+      "discoverMore": "Descubrir más",
+      "blockchainTechnology": "Tecnología blockchain",
+      "features": "Características",
+      "verifiableCredentials": "Credenciales Verificables",
+      "secure": "Seguro",
+      "permanent": "Permanente",
+      "skills": "Habilidades",
+      "expertise": "Experiencias",
+      "knowledge": "Conocimientos",
+      "achievements": "Logros"
+    },
+    "features": {
+      "title": "Características principales",
+      "description": "Nuestra plataforma combina tecnología blockchain de vanguardia con herramientas intuitivas para revolucionar la creación y emisión de certificados digitales.",
+      "startNow": "Empezar ahora",
+      "items": {
+        "customizable": {
+          "title": "Plantillas personalizables",
+          "description": "Crea diseños únicos con precisión a nivel de píxel para cada elemento de texto e imagen en tus certificados."
+        },
+        "blockchain": {
+          "title": "Almacenamiento blockchain",
+          "description": "Todos los certificados se almacenan en IPFS y blockchain para garantizar seguridad, permanencia y descentralización."
+        },
+        "mass": {
+          "title": "Emisión masiva",
+          "description": "Emite múltiples certificados en una sola transacción para optimizar costos y acelerar el proceso."
+        },
+        "verification": {
+          "title": "Verificación instantánea",
+          "description": "Cualquier persona puede verificar la autenticidad de un certificado en cualquier momento usando un código QR o enlace directo."
+        },
+        "gallery": {
+          "title": "Galería 3D",
+          "description": "Exhibe tus certificados y badges en un espacio 3D personalizable y compartible."
+        },
+        "api": {
+          "title": "API para integraciones",
+          "description": "Conecta con tus sistemas existentes usando nuestra API para automatizar la emisión y verificación de certificados."
+        }
+      }
+    },
+    "gallery": {
+      "badge": "PORTAFOLIO DIGITAL",
+      "title": "Tu",
+      "gallery": "Galería 3D Digital",
+      "description": "Muestra y organiza tus credenciales en un entorno 3D inmersivo que puedes personalizar para reflejar tu trayectoria profesional.",
+      "personalizedRoom": {
+        "title": "Sala 3D Personalizada",
+        "description": "Organiza y muestra tus certificados, badges y momentos en tu propio espacio virtual."
+      },
+      "interactive": {
+        "title": "Experiencia Interactiva",
+        "description": "Los visitantes pueden navegar a través de tus logros e interactuar con cada credencial."
+      },
+      "customizable": {
+        "title": "Diseño Personalizable",
+        "description": "Organiza tus logros por categorías, línea de tiempo o importancia."
+      }
+    },
+    "ecosystem": {
+      "badge": "ECOSISTEMA DE CREDENCIALES",
+      "title": "Más allá de",
+      "certificates": "Certificados",
+      "description": "Nuestra plataforma ofrece un ecosistema integral de credenciales digitales para reconocer varios logros e hitos.",
+      "types": {
+        "certificates": {
+          "title": "Certificados",
+          "description": "Reconocimiento formal de cursos completados, programas o calificaciones con datos de verificación.",
+          "features": {
+            "0": "Verificación blockchain",
+            "1": "Metadatos detallados",
+            "2": "Diseño personalizable",
+            "3": "Validación instantánea"
+          }
+        },
+        "badges": {
+          "title": "Badges",
+          "description": "Representaciones visuales de habilidades, logros o participación en actividades o eventos específicos.",
+          "features": {
+            "0": "Específico por habilidad",
+            "1": "Credenciales apilables",
+            "2": "Compartir social",
+            "3": "Niveles progresivos"
+          }
+        },
+        "moments": {
+          "title": "Momentos",
+          "description": "Captura y conmemora eventos significativos, hitos o experiencias memorables en tu viaje.",
+          "features": {
+            "0": "Marcas de tiempo",
+            "1": "Archivos multimedia",
+            "2": "Elementos interactivos",
+            "3": "Contexto narrativo"
+          }
+        }
+      },
+      "features": "Características",
+      "learnMore": "Más información"
+    },
+    "tools": {
+      "badge": "HERRAMIENTAS DESARROLLADOR",
+      "title": "Poderosa",
+      "integration": "Integración API",
+      "description": "Integra nuestro sistema de emisión de credenciales directamente en tus plataformas con nuestro conjunto completo de APIs. Crea, gestiona y verifica credenciales programáticamente.",
+      "features": {
+        "automated": {
+          "title": "Emisión Automatizada",
+          "description": "Genera credenciales automáticamente cuando los usuarios completen requisitos específicos en tu plataforma."
+        },
+        "custom": {
+          "title": "Integración Personalizada",
+          "description": "Integra nuestros servicios de verificación sin problemas en tus sistemas y flujos de trabajo existentes."
+        },
+        "webhook": {
+          "title": "Eventos Webhook",
+          "description": "Recibe notificaciones en tiempo real cuando se emitan, vean o verifiquen credenciales."
+        }
+      },
+      "exploreApi": "Explorar Documentación API",
+      "copyCode": "Copiar código",
+      "responseStatus": "Estado de respuesta",
+      "successRate": "Tasa de éxito",
+      "responseTime": "Tiempo de respuesta"
+    },
+    "roles": {
+      "badge": "PARA TODOS",
+      "title": "Para Tu Rol",
+      "tailored": "Adaptado",
+      "description": "Nuestra plataforma sirve las diversas necesidades de todos en el ecosistema de certificación con características especializadas.",
+      "admin": {
+        "role": "Administradores",
+        "description": "Crea plantillas, emite certificados en lote y gestiona las credenciales de tu organización.",
+        "features": {
+          "0": "Diseñador de plantillas",
+          "1": "Emisión en lote",
+          "2": "Panel de analytics",
+          "3": "Gestión de equipo"
+        },
+        "button": "Portal Admin"
+      },
+      "issuers": {
+        "role": "Emisores",
+        "description": "Instituciones educativas, proveedores de capacitación y organizaciones que otorgan credenciales.",
+        "features": {
+          "0": "Marca personalizada",
+          "1": "Validación de certificados",
+          "2": "Gestión de destinatarios",
+          "3": "Operaciones en lote"
+        },
+        "button": "Comenzar a Emitir"
+      },
+      "recipients": {
+        "role": "Destinatarios",
+        "description": "Muestra tus logros y comparte credenciales verificables con empleadores.",
+        "features": {
+          "0": "Portafolio digital",
+          "1": "Compartir fácil",
+          "2": "Integración redes sociales",
+          "3": "Enlaces de verificación"
+        },
+        "button": "Ver Tus Credenciales"
+      },
+      "verifiers": {
+        "role": "Verificadores",
+        "description": "Verifica instantáneamente la autenticidad de cualquier credencial emitida a través de nuestra plataforma.",
+        "features": {
+          "0": "Verificación un clic",
+          "1": "Escaneo código QR",
+          "2": "Integración API",
+          "3": "Historial verificación"
+        },
+        "button": "Verificar Credencial"
+      },
+      "featuresTitle": "Características"
+    },
+    "cta": {
+      "badge": "Únete al futuro de las credenciales digitales",
+      "title": "Comienza tu Viaje de",
+      "certification": "Certificación Blockchain",
+      "journey": "Hoy",
+      "description": "Únete a la revolución en credenciales digitales. Crea, emite y verifica certificados que son seguros, permanentes y verdaderamente tuyos en el blockchain.",
+      "createFirst": "Crea Tu Primer Certificado",
+      "watchDemo": "Ver Demo",
+      "stats": {
+        "issued": "Certificados Emitidos",
+        "organizations": "Organizaciones", 
+        "countries": "Países",
+        "successRate": "Tasa de Éxito"
+      }
+    },
+    "footer": {
+      "description": "Plataforma líder para emitir certificados digitales verificables en blockchain.",
+      "platform": "Plataforma",
+      "resources": "Recursos",
+      "contact": "Contáctanos",
+      "contactDescription": "¿Tienes preguntas sobre la plataforma? Escríbenos y te responderemos lo antes posible.",
+      "emailPlaceholder": "Tu email",
+      "copyright": "Todos los derechos reservados.",
+      "terms": "Términos",
+      "privacy": "Privacidad",
+      "cookies": "Cookies",
+      "language": "Idioma",
+      "changeLanguage": "Cambiar idioma",
+      "platformItems": {
+        "0": "Características",
+        "1": "Plantillas",
+        "2": "Emisión",
+        "3": "Verificación"
+      },
+      "resourceItems": {
+        "0": "Documentación",
+        "1": "API",
+        "2": "Tutoriales",
+        "3": "Blog"
+      }
+    }
+  }

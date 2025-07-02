@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import Link from 'next/link';
 import { motion, Variants } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -9,12 +8,14 @@ import { ChevronDown, ArrowRight, Star, ShieldCheck, ChevronRight } from 'lucide
 import Image from 'next/image';
 import Footer from '@/components/common/Footer';
 import InteractiveButton from './InteractiveButton';
+import { useTranslations } from 'next-intl';
 const ParticleEffect = dynamic(() => import('./ParticleEffect'), { ssr: false });
 const GlowEffect = dynamic(() => import('./GlowEffect'), { ssr: false });
 const Certificate3D = dynamic(() => import('./Certificate3D'), { ssr: false });
 const Gallery3D = dynamic(() => import('./Gallery3D'), { ssr: false });
 
 const Landing = () => {
+  const t = useTranslations();
   const featuresRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const ecosystemRef = useRef<HTMLDivElement>(null);
@@ -23,7 +24,7 @@ const Landing = () => {
   const [typedWord, setTypedWord] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
-  const words = useMemo(() => ["talent", "skills", "expertise", "knowledge", "achievements"], []);
+  const words = useMemo(() => [t('hero.skills'), t('hero.expertise'), t('hero.knowledge'), t('hero.achievements')], []);
   const typingSpeed = 150;
   const deletingSpeed = 100;
   const pauseSpeed = 1500;
@@ -142,20 +143,27 @@ const Landing = () => {
           </div>
           
           <div className="hidden md:flex space-x-6">
-            {['Home', 'Features', 'Ecosystem', 'Tools'].map((item, index) => (
+            {[
+              { key: 'home', label: t('nav.home') },
+              { key: 'features', label: t('nav.features') },
+              { key: 'ecosystem', label: t('nav.ecosystem') },
+              { key: 'tools', label: t('nav.tools') }
+            ].map((item, index) => (
               <motion.a
                 key={index}
-                href={`#${item.toLowerCase()}`}
-                className={`text-sm ${currentSection === item.toLowerCase() ? 'text-primary' : 'text-textSecondary'} hover:text-primary transition-colors`}
+                href={`#${item.key}`}
+                className={`text-sm ${currentSection === item.key ? 'text-primary' : 'text-textSecondary'} hover:text-primary transition-colors`}
                 whileHover={{ y: -2 }}
               >
-                {item}
+                {item.label}
               </motion.a>
-          ))}
-        </div>
-        
+            ))}
+          </div>
+          
           <InteractiveButton variant="gradient" size="sm">
-            Login <ChevronRight className="ml-1 w-4 h-4" />
+            <a href="https://app.glemo.io" className="flex items-center">
+              {t('nav.login')} <ChevronRight className="ml-1 w-4 h-4" />
+            </a>
           </InteractiveButton>
         </div>
       </nav>
@@ -186,7 +194,7 @@ const Landing = () => {
               <div className="inline-block p-px bg-gradient-to-r from-primary to-secondary rounded-full backdrop-blur-xl">
                 <div className="bg-background/80 rounded-full px-4 py-1.5">
                   <div className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-medium text-sm">
-                    REVOLUTIONIZING DIGITAL CERTIFICATION
+                    {t('hero.badge')}
                   </div>
                 </div>
               </div>
@@ -196,7 +204,7 @@ const Landing = () => {
               variants={itemVariants}
               className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight"
             >
-              Certificates that <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary"> verify </span> your{" "}
+              {t('hero.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary"> {t('hero.verify')} </span> {t('hero.your')}{" "}
               <span className="relative inline-block">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
                   {typedWord}
@@ -219,25 +227,25 @@ const Landing = () => {
               variants={itemVariants}
               className="text-xl mb-10 text-textSecondary"
             >
-              Create and issue verifiable digital certificates on blockchain with an immersive and secure experience.
+              {t('hero.description')}
             </motion.p>
             
             <motion.div 
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Link href="/template-editor">
+              <a href="https://app.glemo.io">
                 <InteractiveButton variant="gradient" size="lg">
-                  Create template
+                  {t('hero.createTemplate')}
                 </InteractiveButton>
-              </Link>
+              </a>
               <motion.a 
-                href="#demo"
+                href="https://app.glemo.io/verify"
                 className="px-8 py-2 flex items-center justify-center border border-white/10 rounded-lg hover:bg-elementBackground/50 transition-all backdrop-blur-sm"
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                View demo
+                whileTap={{ scale: 0.98 }}
+              >
+                {t('hero.verifyCertificate')}
               </motion.a>
             </motion.div>
             
@@ -247,11 +255,11 @@ const Landing = () => {
             >
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-primary" />
-                Secure verification
+                {t('hero.secureVerification')}
               </div>
               <div className="flex items-center gap-2">
                 <Star className="h-5 w-5 text-primary" />
-                +50 Certificates issued
+                +50 {t('hero.certificatesIssued')}
               </div>
             </motion.div>
           </motion.div>
@@ -272,7 +280,7 @@ const Landing = () => {
                 transition={{ delay: 1.2, duration: 0.5 }}
               >
                 <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-                Blockchain technology
+                {t('hero.blockchainTechnology')}
                 </motion.div>
               
                 <motion.div 
@@ -281,11 +289,11 @@ const Landing = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.3, duration: 0.5 }}
               >
-                <div className="text-xs text-textSecondary mb-1">Features</div>
-                <div className="text-sm font-medium mb-3">Verifiable Credentials</div>
+                <div className="text-xs text-textSecondary mb-1">{t('hero.features')}</div>
+                <div className="text-sm font-medium mb-3">{t('hero.verifiableCredentials')}</div>
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full">Secure</span>
-                  <span className="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-full">Permanent</span>
+                  <span className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full">{t('hero.secure')}</span>
+                  <span className="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-full">{t('hero.permanent')}</span>
                 </div>
                 </motion.div>
             </div>
@@ -303,7 +311,7 @@ const Landing = () => {
               }}
             >
             <a href="#features" className="flex flex-col items-center">
-              <p className="text-textSecondary text-sm mb-2">Discover more</p>
+              <p className="text-textSecondary text-sm mb-2">{t('hero.discoverMore')}</p>
               <ChevronDown className="h-5 w-5 text-primary" />
             </a>
           </motion.div>
@@ -327,7 +335,7 @@ const Landing = () => {
               transition={{ duration: 0.5 }}
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                Main features
+                {t('features.title')}
               </span>
             </motion.h2>
             <motion.p 
@@ -337,7 +345,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Our platform combines cutting-edge blockchain technology with intuitive tools to revolutionize the creation and issuance of digital certificates.
+              {t('features.description')}
             </motion.p>
           </div>
           
@@ -345,38 +353,38 @@ const Landing = () => {
           {[
             {
               icon: "📜",
-              title: "Customizable templates",
-              description: "Create unique designs with pixel-level precision for each text and image element in your certificates.",
+              title: t('features.items.customizable.title'),
+              description: t('features.items.customizable.description'),
               color: "from-primary/20 to-primary/5"
             },
             {
               icon: "🔗",
-              title: "Blockchain storage",
-              description: "All certificates are stored on IPFS and blockchain to ensure security, permanence and decentralization.",
+              title: t('features.items.blockchain.title'),
+              description: t('features.items.blockchain.description'),
               color: "from-secondary/20 to-secondary/5"
             },
             {
               icon: "⚡",
-              title: "Mass issuance",
-              description: "Issue multiple certificates in a single transaction to optimize costs and speed up the process.",
+              title: t('features.items.mass.title'),
+              description: t('features.items.mass.description'),
               color: "from-primary/20 to-secondary/5"
             },
             {
               icon: "🔍",
-              title: "Instant verification",
-              description: "Any person can verify the authenticity of a certificate at any time using a QR code or direct link.",
+              title: t('features.items.verification.title'),
+              description: t('features.items.verification.description'),
               color: "from-secondary/20 to-primary/5"
             },
             {
               icon: "🏆",
-              title: "3D Gallery",
-              description: "Exhibit your certificates and badges in a customizable and shareable 3D space.",
+              title: t('features.items.gallery.title'),
+              description: t('features.items.gallery.description'),
               color: "from-primary/20 to-primary/5"
             },
             {
               icon: "🔌",
-              title: "API for integrations",
-              description: "Connect with your existing systems using our API to automate the issuance and verification of certificates.",
+              title: t('features.items.api.title'),
+              description: t('features.items.api.description'),
               color: "from-secondary/20 to-secondary/5"
             }
           ].map((feature, index) => (
@@ -419,14 +427,13 @@ const Landing = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Link href="/template-editor">
+            <a href="https://app.glemo.io">
               <InteractiveButton
                 variant="gradient"
                 size="lg"
                 className="group"
               >
-                
-                Start now
+                {t('features.startNow')}
                 <motion.div
                   className="ml-2"
                   animate={{ x: [0, 5, 0] }}
@@ -435,7 +442,7 @@ const Landing = () => {
                   <ArrowRight className="h-5 w-5" />
                 </motion.div>
               </InteractiveButton>
-            </Link>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -453,7 +460,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              DIGITAL PORTFOLIO
+              {t('gallery.badge')}
             </motion.span>
             <motion.h2 
               className="text-4xl md:text-5xl font-bold mb-6"
@@ -462,8 +469,8 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Your 3D <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                Digital Gallery
+              {t('gallery.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                {t('gallery.gallery')}
               </span>
             </motion.h2>
             <motion.p 
@@ -473,7 +480,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Showcase and organize your credentials in an immersive 3D environment that you can customize to reflect your professional journey.
+              {t('gallery.description')}
             </motion.p>
           </div>
           
@@ -509,20 +516,20 @@ const Landing = () => {
             <div className="lg:col-span-2 space-y-8">
               {[
                 {
-                  title: "Personalized 3D Room",
-                  description: "Arrange and showcase your certificates, badges, and moments in your own virtual space.",
+                  title: t('gallery.personalizedRoom.title'),
+                  description: t('gallery.personalizedRoom.description'),
                   icon: "🏆",
                   color: "from-primary/20 to-primary/5"
                 },
                 {
-                  title: "Interactive Experience",
-                  description: "Visitors can navigate through your achievements and interact with each credential.",
+                  title: t('gallery.interactive.title'),
+                  description: t('gallery.interactive.description'),
                   icon: "👆",
                   color: "from-secondary/20 to-secondary/5"
                 },
                 {
-                  title: "Customizable Layout",
-                  description: "Organize your achievements by categories, timeline, or importance.",
+                  title: t('gallery.customizable.title'),
+                  description: t('gallery.customizable.description'),
                   icon: "🎨",
                   color: "from-primary/20 to-secondary/5"
                 }
@@ -568,7 +575,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              CREDENTIAL ECOSYSTEM
+              {t('ecosystem.badge')}
             </motion.span>
             <motion.h2 
               className="text-4xl md:text-5xl font-bold mb-6"
@@ -577,8 +584,8 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Beyond <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                Certificates
+              {t('ecosystem.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                {t('ecosystem.certificates')}
               </span>
             </motion.h2>
             <motion.p 
@@ -588,32 +595,32 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Our platform offers a comprehensive ecosystem of digital credentials to recognize various achievements and milestones.
+              {t('ecosystem.description')}
             </motion.p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: "Certificates",
-                description: "Formal recognition of completed courses, programs, or qualifications with detailed verification data.",
+                title: t('ecosystem.types.certificates.title'),
+                description: t('ecosystem.types.certificates.description'),
                 icon: "📜",
                 color: "from-blue-500/30 to-primary/30",
-                features: ["Blockchain verification", "Detailed metadata", "Customizable design", "Instant validation"]
+                features: [t('ecosystem.types.certificates.features.0'), t('ecosystem.types.certificates.features.1'), t('ecosystem.types.certificates.features.2'), t('ecosystem.types.certificates.features.3')]
               },
               {
-                title: "Badges",
-                description: "Visual representations of skills, accomplishments, or participation in specific activities or events.",
+                title: t('ecosystem.types.badges.title'),
+                description: t('ecosystem.types.badges.description'),
                 icon: "🏅",
                 color: "from-purple-500/30 to-pink-500/30",
-                features: ["Skill-specific", "Stackable credentials", "Social sharing", "Progressive levels"]
+                features: [t('ecosystem.types.badges.features.0'), t('ecosystem.types.badges.features.1'), t('ecosystem.types.badges.features.2'), t('ecosystem.types.badges.features.3')]
               },
               {
-                title: "Moments",
-                description: "Capture and commemorate significant events, milestones, or memorable experiences in your journey.",
+                title: t('ecosystem.types.moments.title'),
+                description: t('ecosystem.types.moments.description'),
                 icon: "✨",
                 color: "from-amber-500/30 to-orange-500/30",
-                features: ["Event timestamps", "Media attachments", "Interactive elements", "Narrative context"]
+                features: [t('ecosystem.types.moments.features.0'), t('ecosystem.types.moments.features.1'), t('ecosystem.types.moments.features.2'), t('ecosystem.types.moments.features.3')]
               }
             ].map((item, index) => (
               <motion.div 
@@ -635,7 +642,7 @@ const Landing = () => {
                 </div>
                 
                 <div className="p-6 bg-elementBackground/60 flex-grow">
-                  <h4 className="text-sm font-semibold text-textSecondary mb-4">FEATURES</h4>
+                  <h4 className="text-sm font-semibold text-textSecondary mb-4">{t('ecosystem.features')}</h4>
                   <ul className="space-y-2">
                     {item.features.map((feature, fIndex) => (
                       <motion.li 
@@ -658,8 +665,9 @@ const Landing = () => {
                     className="w-full py-2.5 px-4 bg-elementBackground hover:bg-elementBackground/80 border border-white/10 rounded-lg text-sm font-medium flex items-center justify-center gap-2"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={() => window.open('https://app.glemo.io', '_blank')}
                   >
-                    Learn more
+                    {t('ecosystem.learnMore')}
                     <ArrowRight className="h-4 w-4" />
                   </motion.button>
                 </div>
@@ -689,7 +697,7 @@ const Landing = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                DEVELOPER TOOLS
+                {t('tools.badge')}
               </motion.span>
               <motion.h2 
                 className="text-4xl md:text-5xl font-bold mb-6"
@@ -698,8 +706,8 @@ const Landing = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                Powerful <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                  API Integration
+                {t('tools.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                  {t('tools.integration')}
                 </span>
               </motion.h2>
               <motion.p 
@@ -709,22 +717,22 @@ const Landing = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                Integrate our credential issuance system directly into your platforms with our comprehensive API suite. Create, manage, and verify credentials programmatically.
+                {t('tools.description')}
               </motion.p>
               
               <div className="space-y-6 mb-10">
                 {[
                   { 
-                    title: "Automated Issuance", 
-                    desc: "Generate credentials automatically when users complete specific requirements in your platform." 
+                    title: t('tools.features.automated.title'), 
+                    desc: t('tools.features.automated.description') 
                   },
                   { 
-                    title: "Custom Integration", 
-                    desc: "Embed our verification services seamlessly into your existing systems and workflows." 
+                    title: t('tools.features.custom.title'), 
+                    desc: t('tools.features.custom.description') 
                   },
                   { 
-                    title: "Webhook Events", 
-                    desc: "Receive real-time notifications when credentials are issued, viewed, or verified." 
+                    title: t('tools.features.webhook.title'), 
+                    desc: t('tools.features.webhook.description') 
                   }
                 ].map((item, index) => (
                   <motion.div 
@@ -752,7 +760,7 @@ const Landing = () => {
                 variant="gradient"
                 size="lg"
               >
-                Explore API Docs
+                {t('tools.exploreApi')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </InteractiveButton>
             </motion.div>
@@ -1009,7 +1017,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              FOR EVERYONE
+              {t('roles.badge')}
             </motion.span>
             <motion.h2 
               className="text-4xl md:text-5xl font-bold mb-6"
@@ -1019,8 +1027,8 @@ const Landing = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                Tailored
-              </span> For Your Role
+                {t('roles.tailored')}
+              </span> {t('roles.title')}
             </motion.h2>
             <motion.p 
               className="text-lg text-textSecondary"
@@ -1029,43 +1037,43 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Our platform serves the diverse needs of everyone in the certification ecosystem with specialized features.
+              {t('roles.description')}
             </motion.p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                role: "Administrators",
+                role: t('roles.admin.role'),
                 icon: "⚙️",
-                description: "Create templates, issue certificates in bulk, and manage your organization's credentials.",
-                features: ["Template designer", "Batch issuance", "Analytics dashboard", "Team management"],
+                description: t('roles.admin.description'),
+                features: [t('roles.admin.features.0'), t('roles.admin.features.1'), t('roles.admin.features.2'), t('roles.admin.features.3')],
                 color: "from-blue-600/20 to-blue-400/20",
-                buttonText: "Admin Portal"
+                buttonText: t('roles.admin.button')
               },
               {
-                role: "Issuers",
+                role: t('roles.issuers.role'),
                 icon: "🏫",
-                description: "Educational institutions, training providers, and organizations that award credentials.",
-                features: ["Custom branding", "Certificate validation", "Recipient management", "Bulk operations"],
+                description: t('roles.issuers.description'),
+                features: [t('roles.issuers.features.0'), t('roles.issuers.features.1'), t('roles.issuers.features.2'), t('roles.issuers.features.3')],
                 color: "from-green-600/20 to-green-400/20",
-                buttonText: "Start Issuing"
+                buttonText: t('roles.issuers.button')
               },
               {
-                role: "Recipients",
+                role: t('roles.recipients.role'),
                 icon: "👩‍🎓",
-                description: "Showcase your achievements and share verifiable credentials with employers.",
-                features: ["Digital portfolio", "Easy sharing", "Social media integration", "Verification links"],
+                description: t('roles.recipients.description'),
+                features: [t('roles.recipients.features.0'), t('roles.recipients.features.1'), t('roles.recipients.features.2'), t('roles.recipients.features.3')],
                 color: "from-purple-600/20 to-purple-400/20",
-                buttonText: "View Your Credentials"
+                buttonText: t('roles.recipients.button')
               },
               {
-                role: "Verifiers",
+                role: t('roles.verifiers.role'),
                 icon: "🔍",
-                description: "Instantly verify the authenticity of any credential issued through our platform.",
-                features: ["One-click verification", "QR code scanning", "API integration", "Verification history"],
+                description: t('roles.verifiers.description'),
+                features: [t('roles.verifiers.features.0'), t('roles.verifiers.features.1'), t('roles.verifiers.features.2'), t('roles.verifiers.features.3')],
                 color: "from-red-600/20 to-red-400/20",
-                buttonText: "Verify Credential"
+                buttonText: t('roles.verifiers.button')
               }
             ].map((item, index) => (
               <motion.div 
@@ -1087,7 +1095,7 @@ const Landing = () => {
                 </div>
                 
                 <div className="p-6">
-                  <h4 className="text-sm uppercase font-medium text-textSecondary mb-4">Key Features</h4>
+                  <h4 className="text-sm uppercase font-medium text-textSecondary mb-4">{t('roles.featuresTitle')}</h4>
                   <ul className="space-y-3 mb-6">
                     {item.features.map((feature, fIndex) => (
                       <motion.li 
@@ -1112,6 +1120,16 @@ const Landing = () => {
                     className="w-full py-2.5 text-sm bg-elementBackground hover:bg-elementBackground/70 border border-white/10 rounded-lg font-medium"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={() => {
+                      // Diferentes URLs según el rol
+                      const urls = [
+                        'https://app.glemo.io', // Admin
+                        'https://app.glemo.io', // Issuers - Start Issuing
+                        'https://app.glemo.io', // Recipients - View your credentials  
+                        'https://app.glemo.io/verify' // Verifiers
+                      ];
+                      window.open(urls[index], '_blank');
+                    }}
                   >
                     {item.buttonText}
                   </motion.button>
@@ -1148,7 +1166,7 @@ const Landing = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse mr-2"></div>
-              <span className="text-sm font-medium">Join the future of digital credentials</span>
+              <span className="text-sm font-medium">{t('cta.badge')}</span>
             </motion.div>
             
             <motion.h2 
@@ -1158,9 +1176,9 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Start Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                Blockchain Certification
-              </span> Journey Today
+              {t('cta.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                {t('cta.certification')}
+              </span> {t('cta.journey')}
             </motion.h2>
             
             <motion.p 
@@ -1170,7 +1188,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              Join the revolution in digital credentials. Create, issue, and verify certificates that are secure, permanent, and truly yours on the blockchain.
+              {t('cta.description')}
             </motion.p>
             
             <motion.div 
@@ -1180,25 +1198,15 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <InteractiveButton
-                variant="gradient"
-                size="lg"
-              >
-                Create Your First Certificate
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </InteractiveButton>
-              
-              <motion.button
-                className="flex items-center justify-center gap-2 text-textSecondary hover:text-text transition-colors px-6 py-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M14 10L8 14V6L14 10Z" fill="currentColor"/>
-                </svg>
-                Watch Demo
-              </motion.button>
+              <a href="https://app.glemo.io">
+                <InteractiveButton
+                  variant="gradient"
+                  size="lg"
+                >
+                  {t('cta.createFirst')}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </InteractiveButton>
+              </a>
             </motion.div>
             
             <motion.div 
@@ -1209,10 +1217,10 @@ const Landing = () => {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               {[
-                { label: "Certificates Issued", value: "50+" },
-                { label: "Organizations", value: "2+" },
-                { label: "Countries", value: "2+" },
-                { label: "Success Rate", value: "99.9%" }
+                { label: t('cta.stats.issued'), value: "50+" },
+                { label: t('cta.stats.organizations'), value: "2+" },
+                { label: t('cta.stats.countries'), value: "2+" },
+                { label: t('cta.stats.successRate'), value: "99.9%" }
               ].map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-2xl md:text-3xl font-bold mb-1">{stat.value}</div>
