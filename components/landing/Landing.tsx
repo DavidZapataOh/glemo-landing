@@ -4,7 +4,7 @@ import { motion, Variants } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import dynamic from 'next/dynamic';
-import { ChevronDown, ArrowRight, Star, ShieldCheck, ChevronRight } from 'lucide-react';
+import { ChevronDown, ArrowRight, Star, ShieldCheck, ChevronRight, FileText, Link, Zap, Search, Trophy, Plug, Settings, Building2, User, Eye, Award, Hand, Palette } from 'lucide-react';
 import Image from 'next/image';
 import Footer from '@/components/common/Footer';
 import InteractiveButton from './InteractiveButton';
@@ -134,7 +134,7 @@ const Landing = () => {
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-1">
             <motion.div
-              className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-md flex items-center justify-center"
+              className="w-10 h-10 bg-primary rounded-md flex items-center justify-center"
               whileHover={{ rotate: 5 }}
             >
               <Image src="/logos/logo.png" alt="GLEMO" width={32} height={32} />
@@ -162,7 +162,7 @@ const Landing = () => {
           
           <InteractiveButton variant="gradient" size="sm">
             <a href="https://app.glemo.io" className="flex items-center">
-              {t('nav.login')} <ChevronRight className="ml-1 w-4 h-4" />
+            {t('nav.login')} <ChevronRight className="ml-1 w-4 h-4" />
             </a>
           </InteractiveButton>
         </div>
@@ -191,9 +191,9 @@ const Landing = () => {
               transition={{ duration: 0.6 }}
               className="mb-8"
             >
-              <div className="inline-block p-px bg-gradient-to-r from-primary to-secondary rounded-full backdrop-blur-xl">
+              <div className="inline-block p-px bg-primary rounded-full backdrop-blur-xl">
                 <div className="bg-background/80 rounded-full px-4 py-1.5">
-                  <div className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-medium text-sm">
+                  <div className="text-transparent bg-clip-text bg-primary font-medium text-sm">
                     {t('hero.badge')}
                   </div>
                 </div>
@@ -204,22 +204,25 @@ const Landing = () => {
               variants={itemVariants}
               className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight"
             >
-              {t('hero.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary"> {t('hero.verify')} </span> {t('hero.your')}{" "}
-              <span className="relative inline-block">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                  {typedWord}
-                  <motion.span 
-                    animate={{ opacity: [0, 1, 0] }}
-                    transition={{ duration: 0.8, repeat: Infinity }}
-                    className="inline-block ml-1 w-[2px] h-[1em] bg-gradient-to-r from-primary to-secondary"
+              {t('hero.title')} <span className="text-transparent bg-clip-text bg-primary"> {t('hero.verify')} </span>{" "}
+              <span className="whitespace-nowrap">
+                {t('hero.your')}{" "}
+                <span className="relative inline-block">
+                  <span className="text-transparent bg-clip-text bg-primary whitespace-nowrap">
+                    {typedWord}
+                    <motion.span 
+                      animate={{ opacity: [0, 1, 0] }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                      className="inline-block ml-1 w-[2px] h-[1em] bg-primary"
+                    />
+                  </span>
+                  <motion.div 
+                    className="absolute -bottom-2 left-0 right-0 h-1 bg-primary"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ delay: 0.8, duration: 0.8 }}
                   />
                 </span>
-                <motion.div 
-                  className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary to-secondary"
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ delay: 0.8, duration: 0.8 }}
-                />
               </span>
             </motion.h1>
             
@@ -243,8 +246,8 @@ const Landing = () => {
                 href="https://app.glemo.io/verify"
                 className="px-8 py-2 flex items-center justify-center border border-white/10 rounded-lg hover:bg-elementBackground/50 transition-all backdrop-blur-sm"
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
-                whileTap={{ scale: 0.98 }}
-              >
+                  whileTap={{ scale: 0.98 }}
+                >
                 {t('hero.verifyCertificate')}
               </motion.a>
             </motion.div>
@@ -259,7 +262,7 @@ const Landing = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Star className="h-5 w-5 text-primary" />
-                +50 {t('hero.certificatesIssued')}
+                +150 {t('hero.certificatesIssued')}
               </div>
             </motion.div>
           </motion.div>
@@ -334,7 +337,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              <span className="text-transparent bg-clip-text bg-primary">
                 {t('features.title')}
               </span>
             </motion.h2>
@@ -352,55 +355,56 @@ const Landing = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 features-section">
           {[
             {
-              icon: "📜",
+              icon: FileText,
               title: t('features.items.customizable.title'),
               description: t('features.items.customizable.description'),
               color: "from-primary/20 to-primary/5"
             },
             {
-              icon: "🔗",
+              icon: Link,
               title: t('features.items.blockchain.title'),
               description: t('features.items.blockchain.description'),
               color: "from-secondary/20 to-secondary/5"
             },
             {
-              icon: "⚡",
+              icon: Zap,
               title: t('features.items.mass.title'),
               description: t('features.items.mass.description'),
               color: "from-primary/20 to-secondary/5"
             },
             {
-              icon: "🔍",
+              icon: Search,
               title: t('features.items.verification.title'),
               description: t('features.items.verification.description'),
               color: "from-secondary/20 to-primary/5"
             },
             {
-              icon: "🏆",
+              icon: Trophy,
               title: t('features.items.gallery.title'),
               description: t('features.items.gallery.description'),
               color: "from-primary/20 to-primary/5"
             },
             {
-              icon: "🔌",
+              icon: Plug,
               title: t('features.items.api.title'),
               description: t('features.items.api.description'),
               color: "from-secondary/20 to-secondary/5"
             }
-          ].map((feature, index) => (
+          ].map((feature, index) => {
+            const IconComponent = feature.icon;
+            return (
             <motion.div 
               key={index}
-              className="feature-card backdrop-blur-md border border-white/10 p-8 rounded-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"
+                className="feature-card backdrop-blur-md border border-white/10 p-8 rounded-2xl transition-all duration-300 overflow-hidden"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ boxShadow: "0 10px 30px -15px rgba(0, 200, 150, 0.2)" }}
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br opacity-20 rounded-full w-16 h-16 -z-10" style={{ background: `linear-gradient(to bottom right, ${feature.color.split(" ")[0].replace("from-", "")}, ${feature.color.split(" ")[1].replace("to-", "")})` }}></div>
-                <div className="w-16 h-16 flex items-center justify-center text-5xl mb-5 relative">
-                  {feature.icon}
+                  <div className="w-16 h-16 flex items-center justify-center mb-5 relative">
+                    <IconComponent className="w-8 h-8 text-primary" />
                 </div>
               </div>
               <h3 className="text-2xl font-bold mb-3">{feature.title}</h3>
@@ -417,7 +421,8 @@ const Landing = () => {
                 <div className={`w-full h-full bg-gradient-to-r ${feature.color}`}></div>
               </motion.div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
           
           <motion.div 
@@ -448,13 +453,13 @@ const Landing = () => {
       </section>
       
       <section className="py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-elementBackground/10 to-background -z-10"></div>
-        <div className="absolute top-0 right-0 w-2/3 h-1/2 bg-primary/5 rounded-full blur-[180px] -z-5"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background to-elementBackground/30 -z-10"></div>
+        <div className="absolute top-0 left-0 w-1/2 h-1/3 bg-primary/5 rounded-full blur-[150px] -z-5"></div>
         
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
+          <div className="text-center mb-20 max-w-3xl mx-auto">
             <motion.span 
-              className="inline-block text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider mb-3"
+              className="inline-block text-sm font-medium bg-clip-text text-transparent bg-primary tracking-wider mb-3"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -469,7 +474,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              {t('gallery.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              {t('gallery.title')} <span className="text-transparent bg-clip-text bg-primary">
                 {t('gallery.gallery')}
               </span>
             </motion.h2>
@@ -507,56 +512,66 @@ const Landing = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
-                <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
                   <ArrowRight className="w-5 h-5 text-white" />
                 </div>
               </motion.div>
             </div>
             
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6">
               {[
                 {
                   title: t('gallery.personalizedRoom.title'),
                   description: t('gallery.personalizedRoom.description'),
-                  icon: "🏆",
+                  icon: Award,
                   color: "from-primary/20 to-primary/5"
                 },
                 {
                   title: t('gallery.interactive.title'),
                   description: t('gallery.interactive.description'),
-                  icon: "👆",
+                  icon: Hand,
                   color: "from-secondary/20 to-secondary/5"
                 },
                 {
                   title: t('gallery.customizable.title'),
                   description: t('gallery.customizable.description'),
-                  icon: "🎨",
+                  icon: Palette,
                   color: "from-primary/20 to-secondary/5"
                 }
-              ].map((feature, index) => (
-                <motion.div 
-                  key={index}
-                  className="backdrop-blur-md border border-white/10 p-6 rounded-xl transition-all"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                  whileHover={{ 
-                    boxShadow: "0 10px 30px -15px rgba(0, 200, 150, 0.2)",
-                    backgroundColor: "rgba(44, 44, 44, 0.3)"
-                  }}
-                >
-                  <div className="flex gap-4">
-                    <div className="w-14 h-14 rounded-lg bg-gradient-to-br bg-opacity-20 flex items-center justify-center text-3xl" style={{ background: `linear-gradient(to bottom right, ${feature.color.split(" ")[0].replace("from-", "")}, ${feature.color.split(" ")[1].replace("to-", "")})` }}>
-                      {feature.icon}
+              ].map((feature, index) => {
+                const IconComponent = feature.icon;
+                return (
+                  <motion.div 
+                    key={index}
+                    className="backdrop-blur-md border border-white/10 p-6 rounded-2xl transition-all duration-300 overflow-hidden"
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  >
+                    <div className="flex gap-5 items-start">
+                      {/* Icon container */}
+                      <div className="relative">
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center`}>
+                          <IconComponent className="w-6 h-6 text-white" />
+                        </div>
+                        {/* Decorative element */}
+                        <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full bg-gradient-to-br ${feature.color} opacity-60`}></div>
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold mb-2">
+                          {feature.title}
+                        </h3>
+                        <p className="text-textSecondary text-sm leading-relaxed">
+                          {feature.description}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                      <p className="text-textSecondary text-sm">{feature.description}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -569,7 +584,7 @@ const Landing = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-20 max-w-3xl mx-auto">
             <motion.span 
-              className="inline-block text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider mb-3"
+              className="inline-block text-sm font-medium bg-clip-text text-transparent bg-primary tracking-wider mb-3"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -584,7 +599,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              {t('ecosystem.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              {t('ecosystem.title')} <span className="text-transparent bg-clip-text bg-primary">
                 {t('ecosystem.certificates')}
               </span>
             </motion.h2>
@@ -599,80 +614,213 @@ const Landing = () => {
             </motion.p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {[
               {
                 title: t('ecosystem.types.certificates.title'),
                 description: t('ecosystem.types.certificates.description'),
-                icon: "📜",
-                color: "from-blue-500/30 to-primary/30",
-                features: [t('ecosystem.types.certificates.features.0'), t('ecosystem.types.certificates.features.1'), t('ecosystem.types.certificates.features.2'), t('ecosystem.types.certificates.features.3')]
+                features: [t('ecosystem.types.certificates.features.0'), t('ecosystem.types.certificates.features.1'), t('ecosystem.types.certificates.features.2'), t('ecosystem.types.certificates.features.3')],
+                visualColor: "from-blue-500/20 to-primary/20",
+                accentColor: "bg-blue-500/10",
+                visual: (
+                  <div className="w-48 h-32 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border-2 border-blue-200 shadow-lg relative overflow-hidden">
+                    {/* Certificate Header */}
+                    <div className="absolute top-2 left-2 right-2 h-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-t flex items-center justify-center">
+                      <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Certificate Content */}
+                    <div className="pt-12 px-3 pb-2 h-full flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-bold text-blue-800 mb-1">CERTIFICATE OF COMPLETION</div>
+                        <div className="text-xs text-blue-700 mb-2">Blockchain Development Course</div>
+                        <div className="text-xs text-blue-600">Issued to: John Doe</div>
+                      </div>
+                      
+                      {/* Certificate Footer */}
+                      <div className="flex justify-between items-end">
+                        <div className="text-xs text-blue-500">Date: 2024</div>
+                        <div className="w-8 h-6 bg-blue-200 rounded flex items-center justify-center">
+                          <div className="w-4 h-4 bg-blue-400 rounded-sm"></div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Decorative elements */}
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-blue-300 rounded-full"></div>
+                    <div className="absolute bottom-1 left-1 w-1 h-1 bg-blue-400 rounded-full"></div>
+                  </div>
+                )
               },
               {
                 title: t('ecosystem.types.badges.title'),
                 description: t('ecosystem.types.badges.description'),
-                icon: "🏅",
-                color: "from-purple-500/30 to-pink-500/30",
-                features: [t('ecosystem.types.badges.features.0'), t('ecosystem.types.badges.features.1'), t('ecosystem.types.badges.features.2'), t('ecosystem.types.badges.features.3')]
-              },
-              {
-                title: t('ecosystem.types.moments.title'),
-                description: t('ecosystem.types.moments.description'),
-                icon: "✨",
-                color: "from-amber-500/30 to-orange-500/30",
-                features: [t('ecosystem.types.moments.features.0'), t('ecosystem.types.moments.features.1'), t('ecosystem.types.moments.features.2'), t('ecosystem.types.moments.features.3')]
+                features: [t('ecosystem.types.badges.features.0'), t('ecosystem.types.badges.features.1'), t('ecosystem.types.badges.features.2'), t('ecosystem.types.badges.features.3')],
+                visualColor: "from-purple-500/20 to-pink-500/20",
+                accentColor: "bg-purple-500/10",
+                visual: (
+                  <div className="w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full shadow-lg relative overflow-hidden">
+                    {/* Badge outer ring */}
+                    <div className="absolute inset-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full"></div>
+                    
+                    {/* Badge inner content */}
+                    <div className="absolute inset-4 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full flex flex-col items-center justify-center">
+                      {/* Badge icon */}
+                      <div className="w-8 h-8 bg-white/30 rounded-full flex items-center justify-center mb-1">
+                        <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                          <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                        </div>
+                      </div>
+                      
+                      {/* Badge text */}
+                      <div className="text-xs font-bold text-white text-center">
+                        <div>SKILL</div>
+                        <div className="text-xs">MASTER</div>
+                      </div>
+                    </div>
+                    
+                    {/* Badge decorative elements */}
+                    <div className="absolute top-1 right-1 w-3 h-3 bg-white/40 rounded-full"></div>
+                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-white/30 rounded-full"></div>
+                    <div className="absolute top-1/2 left-0 w-1 h-1 bg-white/50 rounded-full"></div>
+                    <div className="absolute top-1/2 right-0 w-1 h-1 bg-white/50 rounded-full"></div>
+                  </div>
+                )
               }
-            ].map((item, index) => (
+            ].map((item, index) => {
+              return (
               <motion.div 
                 key={index}
-                className="flex flex-col h-full backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
+                  className="group relative backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden bg-elementBackground/30"
+                  initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: "0 15px 30px -10px rgba(0, 0, 0, 0.3)"
-                }}
-              >
-                <div className={`p-8 bg-gradient-to-br ${item.color}`}>
-                  <div className="text-5xl mb-4">{item.icon}</div>
-                  <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-textSecondary mb-6">{item.description}</p>
+                  transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
+                >
+                  {/* Visual Section - Takes up 60% of the card */}
+                  <div className={`h-64 p-8 relative bg-gradient-to-br ${item.visualColor} overflow-hidden`}>
+                    {/* Background pattern */}
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-8 right-8 w-32 h-32 rounded-full bg-white/20 blur-3xl"></div>
+                      <div className="absolute bottom-8 left-8 w-24 h-24 rounded-full bg-white/20 blur-2xl"></div>
+                    </div>
+                    
+                    {/* Certificate/Badge representation with mouse follow effect */}
+                    <div className="relative z-10 flex items-center justify-center h-full">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: 0.2, ease: "easeOut" }}
+                        className="relative"
+                        whileHover="hover"
+                        variants={{
+                          hover: {
+                            transition: { duration: 0.3, ease: "easeOut" }
+                          }
+                        }}
+                        onMouseMove={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const x = e.clientX - rect.left;
+                          const y = e.clientY - rect.top;
+                          const centerX = rect.width / 2;
+                          const centerY = rect.height / 2;
+                          const rotateX = (y - centerY) / 10;
+                          const rotateY = (centerX - x) / 10;
+                          
+                          e.currentTarget.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                        }}
+                        style={{ transformStyle: 'preserve-3d' }}
+                      >
+                        {item.visual}
+                        
+                        {/* Floating elements around the visual */}
+                        <motion.div 
+                          className="absolute -top-2 -right-2 w-4 h-4 bg-white/20 rounded-lg"
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.2, delay: 0.4, ease: "easeOut" }}
+                        ></motion.div>
+                        <motion.div 
+                          className="absolute -bottom-2 -left-2 w-3 h-3 bg-white/30 rounded-full"
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.2, delay: 0.5, ease: "easeOut" }}
+                        ></motion.div>
+                        <motion.div 
+                          className="absolute top-1/2 -left-4 w-2 h-2 bg-white/25 rounded-full"
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.2, delay: 0.6, ease: "easeOut" }}
+                        ></motion.div>
+                      </motion.div>
+                    </div>
                 </div>
                 
-                <div className="p-6 bg-elementBackground/60 flex-grow">
-                  <h4 className="text-sm font-semibold text-textSecondary mb-4">{t('ecosystem.features')}</h4>
-                  <ul className="space-y-2">
-                    {item.features.map((feature, fIndex) => (
-                      <motion.li 
+                  {/* Text Section - Takes up 40% of the card */}
+                  <div className="p-6">
+                    <motion.h3 
+                      className="text-xl font-bold mb-2"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
+                    >
+                      {item.title}
+                    </motion.h3>
+                    <motion.p 
+                      className="text-textSecondary text-sm mb-4 leading-relaxed"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.4, ease: "easeOut" }}
+                    >
+                      {item.description}
+                    </motion.p>
+                    
+                    {/* Compact features list */}
+                    <div className="space-y-2 mb-6">
+                      {item.features.slice(0, 2).map((feature, fIndex) => (
+                        <motion.div 
                         key={fIndex} 
-                        className="flex items-center gap-2 text-sm"
-                        initial={{ opacity: 0, x: -10 }}
+                          className="flex items-center gap-2 text-xs"
+                          initial={{ opacity: 0, x: -5 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: 0.5 + fIndex * 0.1 }}
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                        {feature}
-                      </motion.li>
-                    ))}
-                  </ul>
+                          transition={{ duration: 0.2, delay: 0.5 + fIndex * 0.1, ease: "easeOut" }}
+                        >
+                          <div className="w-1 h-1 rounded-full bg-primary flex-shrink-0"></div>
+                          <span className="text-textSecondary">{feature}</span>
+                        </motion.div>
+                      ))}
                 </div>
                 
-                <div className="p-6 border-t border-white/5">
+                    {/* Action button */}
                   <motion.button 
-                    className="w-full py-2.5 px-4 bg-elementBackground hover:bg-elementBackground/80 border border-white/10 rounded-lg text-sm font-medium flex items-center justify-center gap-2"
+                      className="w-full py-2.5 px-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-medium flex items-center justify-center gap-2 transition-all duration-200"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.7, ease: "easeOut" }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => window.open('https://app.glemo.io', '_blank')}
+                      onClick={() => window.open('https://app.glemo.io', '_blank')}
                   >
                     {t('ecosystem.learnMore')}
-                    <ArrowRight className="h-4 w-4" />
+                      <ArrowRight className="h-3 w-3" />
                   </motion.button>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -691,7 +839,7 @@ const Landing = () => {
               transition={{ duration: 0.6 }}
             >
               <motion.span 
-                className="inline-block text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider mb-3"
+                className="inline-block text-sm font-medium bg-clip-text text-transparent bg-primary tracking-wider mb-3"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -706,7 +854,7 @@ const Landing = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                {t('tools.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                {t('tools.title')} <span className="text-transparent bg-clip-text bg-primary">  
                   {t('tools.integration')}
                 </span>
               </motion.h2>
@@ -743,7 +891,7 @@ const Landing = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                   >
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white flex-shrink-0 mt-1">
+                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white flex-shrink-0 mt-1">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -992,12 +1140,12 @@ const Landing = () => {
               
               <div className="absolute -bottom-4 -left-4 p-3 bg-elementBackground/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-xl">
                 <div className="text-xs font-medium mb-1 text-textSecondary">Success Rate</div>
-                <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">99.9%</div>
+                <div className="text-lg font-bold text-transparent bg-clip-text bg-primary">99.9%</div>
               </div>
               
               <div className="absolute -top-4 -right-4 p-3 bg-elementBackground/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-xl">
                 <div className="text-xs font-medium mb-1 text-textSecondary">Response Time</div>
-                <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">230ms</div>
+                <div className="text-lg font-bold text-transparent bg-clip-text bg-primary">230ms</div>
               </div>
             </motion.div>
           </div>
@@ -1011,7 +1159,7 @@ const Landing = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-20 max-w-3xl mx-auto">
             <motion.span 
-              className="inline-block text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider mb-3"
+              className="inline-block text-sm font-medium bg-clip-text text-transparent bg-primary tracking-wider mb-3"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1026,7 +1174,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              <span className="text-transparent bg-clip-text bg-primary">
                 {t('roles.tailored')}
               </span> {t('roles.title')}
             </motion.h2>
@@ -1041,11 +1189,11 @@ const Landing = () => {
             </motion.p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {[
               {
                 role: t('roles.admin.role'),
-                icon: "⚙️",
+                icon: Settings,
                 description: t('roles.admin.description'),
                 features: [t('roles.admin.features.0'), t('roles.admin.features.1'), t('roles.admin.features.2'), t('roles.admin.features.3')],
                 color: "from-blue-600/20 to-blue-400/20",
@@ -1053,7 +1201,7 @@ const Landing = () => {
               },
               {
                 role: t('roles.issuers.role'),
-                icon: "🏫",
+                icon: Building2,
                 description: t('roles.issuers.description'),
                 features: [t('roles.issuers.features.0'), t('roles.issuers.features.1'), t('roles.issuers.features.2'), t('roles.issuers.features.3')],
                 color: "from-green-600/20 to-green-400/20",
@@ -1061,7 +1209,7 @@ const Landing = () => {
               },
               {
                 role: t('roles.recipients.role'),
-                icon: "👩‍🎓",
+                icon: User,
                 description: t('roles.recipients.description'),
                 features: [t('roles.recipients.features.0'), t('roles.recipients.features.1'), t('roles.recipients.features.2'), t('roles.recipients.features.3')],
                 color: "from-purple-600/20 to-purple-400/20",
@@ -1069,73 +1217,69 @@ const Landing = () => {
               },
               {
                 role: t('roles.verifiers.role'),
-                icon: "🔍",
+                icon: Eye,
                 description: t('roles.verifiers.description'),
                 features: [t('roles.verifiers.features.0'), t('roles.verifiers.features.1'), t('roles.verifiers.features.2'), t('roles.verifiers.features.3')],
                 color: "from-red-600/20 to-red-400/20",
                 buttonText: t('roles.verifiers.button')
               }
-            ].map((item, index) => (
+            ].map((item, index) => {
+              const IconComponent = item.icon;
+              return (
               <motion.div 
                 key={index} 
-                className="h-full backdrop-blur-md border border-white/10 rounded-xl overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
+                  className="relative h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden"
+                  initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: "0 15px 30px -10px rgba(0, 0, 0, 0.2)"
-                }}
-              >
-                <div className={`p-6 bg-gradient-to-br ${item.color}`}>
-                  <div className="mb-4 text-4xl">{item.icon}</div>
-                  <h3 className="text-xl font-bold mb-2">{item.role}</h3>
-                  <p className="text-sm text-textSecondary">{item.description}</p>
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  {/* Subtle background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-30`}></div>
+                  
+                  {/* Content */}
+                  <div className="relative z-10 p-6 h-full flex flex-col">
+                    {/* Icon */}
+                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+                      <IconComponent className="w-6 h-6 text-white" />
                 </div>
                 
-                <div className="p-6">
-                  <h4 className="text-sm uppercase font-medium text-textSecondary mb-4">{t('roles.featuresTitle')}</h4>
-                  <ul className="space-y-3 mb-6">
-                    {item.features.map((feature, fIndex) => (
-                      <motion.li 
-                        key={fIndex} 
-                        className="flex items-center text-sm gap-2"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: 0.5 + fIndex * 0.1 }}
-                      >
-                        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center flex-shrink-0">
-                          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6.5 2L3 5.5L1.5 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
+                    {/* Title */}
+                    <h3 className="text-lg font-semibold text-white mb-2">{item.role}</h3>
+                    
+                    {/* Description */}
+                    <p className="text-white/70 text-sm mb-6 leading-relaxed flex-1">{item.description}</p>
+                    
+                    {/* Features - minimal */}
+                    <div className="mb-6">
+                      {item.features.slice(0, 2).map((feature, fIndex) => (
+                        <div key={fIndex} className="flex items-center gap-2 text-xs text-white/60 mb-1">
+                          <div className="w-1 h-1 rounded-full bg-white/40"></div>
+                          <span>{feature}</span>
                         </div>
-                        {feature}
-                      </motion.li>
-                    ))}
-                  </ul>
-                  
-                  <motion.button 
-                    className="w-full py-2.5 text-sm bg-elementBackground hover:bg-elementBackground/70 border border-white/10 rounded-lg font-medium"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => {
-                      // Diferentes URLs según el rol
-                      const urls = [
-                        'https://app.glemo.io', // Admin
-                        'https://app.glemo.io', // Issuers - Start Issuing
-                        'https://app.glemo.io', // Recipients - View your credentials  
-                        'https://app.glemo.io/verify' // Verifiers
-                      ];
-                      window.open(urls[index], '_blank');
-                    }}
+                      ))}
+                    </div>
+                    
+                    {/* Button */}
+                    <button 
+                      className="w-full py-2.5 px-4 bg-white/10 border border-white/20 rounded-lg text-sm font-medium text-white flex items-center justify-center gap-2 transition-all duration-200"
+                      onClick={() => {
+                        const urls = [
+                          'https://app.glemo.io',
+                          'https://app.glemo.io', 
+                          'https://app.glemo.io',
+                          'https://app.glemo.io/verify'
+                        ];
+                        window.open(urls[index], '_blank');
+                      }}
                   >
                     {item.buttonText}
-                  </motion.button>
+                      <ArrowRight className="h-3 w-3" />
+                    </button>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1176,7 +1320,7 @@ const Landing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              {t('cta.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              {t('cta.title')} <span className="text-transparent bg-clip-text bg-primary">
                 {t('cta.certification')}
               </span> {t('cta.journey')}
             </motion.h2>
@@ -1199,13 +1343,13 @@ const Landing = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <a href="https://app.glemo.io">
-                <InteractiveButton
-                  variant="gradient"
-                  size="lg"
-                >
-                  {t('cta.createFirst')}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </InteractiveButton>
+              <InteractiveButton
+                variant="gradient"
+                size="lg"
+              >
+                {t('cta.createFirst')}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </InteractiveButton>
               </a>
             </motion.div>
             
@@ -1217,7 +1361,7 @@ const Landing = () => {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               {[
-                { label: t('cta.stats.issued'), value: "50+" },
+                { label: t('cta.stats.issued'), value: "150+" },
                 { label: t('cta.stats.organizations'), value: "2+" },
                 { label: t('cta.stats.countries'), value: "2+" },
                 { label: t('cta.stats.successRate'), value: "99.9%" }

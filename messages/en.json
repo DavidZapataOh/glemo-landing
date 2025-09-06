@@ -22,10 +22,10 @@
       "verifiableCredentials": "Verifiable Credentials",
       "secure": "Secure",
       "permanent": "Permanent",
-      "skills": "Skills",
-      "expertise": "Expertise",
-      "knowledge": "Knowledge",
-      "achievements": "Achievements"
+      "skills": "skills",
+      "expertise": "expertise",
+      "knowledge": "knowledge",
+      "achievements": "achievements"
     },
     "features": {
       "title": "Main features",

@@ -22,10 +22,10 @@
       "verifiableCredentials": "Credenciales Verificables",
       "secure": "Seguro",
       "permanent": "Permanente",
-      "skills": "Habilidades",
-      "expertise": "Experiencias",
-      "knowledge": "Conocimientos",
-      "achievements": "Logros"
+      "skills": "habilidades",
+      "expertise": "experiencias",
+      "knowledge": "conocimientos",
+      "achievements": "logros"
     },
     "features": {
       "title": "Características principales",

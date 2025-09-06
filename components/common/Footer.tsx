@@ -38,7 +38,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div>
             <div className="flex items-center space-x-2 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-md flex items-center justify-center">
+              <div className="w-10 h-10 bg-primary rounded-md flex items-center justify-center">
                 <Image src="/logos/logo.png" alt="GLEMO" width={32} height={32} />
               </div>
               <span className="text-lg font-bold">GLEMO</span>
@@ -102,12 +102,11 @@ const Footer = () => {
                 placeholder={t('footer.emailPlaceholder')} 
                 className="px-4 py-2 bg-elementBackground border border-white/10 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-primary text-sm flex-grow"
               />
-              <button className="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-r-lg hover:opacity-90 transition-opacity">
+              <button className="bg-primary text-white px-4 py-2 rounded-r-lg hover:opacity-90 transition-opacity">
                 <Send className="w-4 h-4" />
               </button>
             </div>
             
-            {/* Selector de idioma */}
             <div>
               <h5 className="text-sm font-semibold mb-3 flex items-center gap-2">
                 <Globe className="w-4 h-4" />
