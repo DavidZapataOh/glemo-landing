@@ -207,21 +207,21 @@ const Landing = () => {
               {t('hero.title')} <span className="text-transparent bg-clip-text bg-primary"> {t('hero.verify')} </span>{" "}
               <span className="whitespace-nowrap">
                 {t('hero.your')}{" "}
-                <span className="relative inline-block">
+              <span className="relative inline-block">
                   <span className="text-transparent bg-clip-text bg-primary whitespace-nowrap">
-                    {typedWord}
-                    <motion.span 
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{ duration: 0.8, repeat: Infinity }}
+                  {typedWord}
+                  <motion.span 
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 0.8, repeat: Infinity }}
                       className="inline-block ml-1 w-[2px] h-[1em] bg-primary"
-                    />
-                  </span>
-                  <motion.div 
-                    className="absolute -bottom-2 left-0 right-0 h-1 bg-primary"
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ delay: 0.8, duration: 0.8 }}
                   />
+                </span>
+                <motion.div 
+                    className="absolute -bottom-2 left-0 right-0 h-1 bg-primary"
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.8, duration: 0.8 }}
+                />
                 </span>
               </span>
             </motion.h1>
@@ -541,20 +541,20 @@ const Landing = () => {
               ].map((feature, index) => {
                 const IconComponent = feature.icon;
                 return (
-                  <motion.div 
-                    key={index}
+                <motion.div 
+                  key={index}
                     className="backdrop-blur-md border border-white/10 p-6 rounded-2xl transition-all duration-300 overflow-hidden"
-                    initial={{ opacity: 0, x: 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                   >
                     <div className="flex gap-5 items-start">
                       {/* Icon container */}
                       <div className="relative">
                         <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center`}>
                           <IconComponent className="w-6 h-6 text-white" />
-                        </div>
+                    </div>
                         {/* Decorative element */}
                         <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full bg-gradient-to-br ${feature.color} opacity-60`}></div>
                       </div>
@@ -567,9 +567,9 @@ const Landing = () => {
                         <p className="text-textSecondary text-sm leading-relaxed">
                           {feature.description}
                         </p>
-                      </div>
                     </div>
-                  </motion.div>
+                  </div>
+                </motion.div>
                 );
               })}
             </div>
