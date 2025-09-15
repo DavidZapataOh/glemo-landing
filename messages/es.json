@@ -102,14 +102,24 @@
             "3": "Niveles progresivos"
           }
         },
-        "moments": {
-          "title": "Momentos",
-          "description": "Captura y conmemora eventos significativos, hitos o experiencias memorables en tu viaje.",
+        "assets": {
+          "title": "Assets",
+          "description": "Representaciones digitales de objetos físicos o virtuales con propiedad verificable en blockchain.",
           "features": {
-            "0": "Marcas de tiempo",
-            "1": "Archivos multimedia",
-            "2": "Elementos interactivos",
-            "3": "Contexto narrativo"
+            "0": "Propiedad verificable",
+            "1": "Metadatos inmutables",
+            "2": "Transferencia segura",
+            "3": "Autenticidad garantizada"
+          }
+        },
+        "credentials": {
+          "title": "Credentials",
+          "description": "Verificaciones de membresía, privilegios o pertenencia a organizaciones con validación en tiempo real.",
+          "features": {
+            "0": "Verificación en tiempo real",
+            "1": "Niveles de acceso",
+            "2": "Expiración automática",
+            "3": "Integración organizacional"
           }
         }
       },

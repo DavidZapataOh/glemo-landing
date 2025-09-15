@@ -614,7 +614,7 @@ const Landing = () => {
             </motion.p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {[
               {
                 title: t('ecosystem.types.certificates.title'),
@@ -686,6 +686,76 @@ const Landing = () => {
                     <div className="absolute bottom-1 left-1 w-2 h-2 bg-white/30 rounded-full"></div>
                     <div className="absolute top-1/2 left-0 w-1 h-1 bg-white/50 rounded-full"></div>
                     <div className="absolute top-1/2 right-0 w-1 h-1 bg-white/50 rounded-full"></div>
+                  </div>
+                )
+              },
+              {
+                title: t('ecosystem.types.assets.title'),
+                description: t('ecosystem.types.assets.description'),
+                features: [t('ecosystem.types.assets.features.0'), t('ecosystem.types.assets.features.1'), t('ecosystem.types.assets.features.2'), t('ecosystem.types.assets.features.3')],
+                visualColor: "from-green-500/20 to-emerald-500/20",
+                accentColor: "bg-green-500/10",
+                visual: (
+                  <div className="w-32 h-32 bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg border-2 border-green-200 shadow-lg relative overflow-hidden">
+                    {/* Gorra/Camiseta representation */}
+                    <div className="absolute inset-4 flex flex-col items-center justify-center">
+                      {/* Gorra */}
+                      <div className="w-16 h-12 bg-gradient-to-b from-green-600 to-green-700 rounded-t-full relative">
+                        {/* Visera de la gorra */}
+                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-20 h-3 bg-green-800 rounded-full"></div>
+                        {/* Logo/Texto en la gorra */}
+                        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-8 h-6 bg-white/20 rounded flex items-center justify-center">
+                          <div className="w-4 h-4 bg-white rounded-sm"></div>
+                        </div>
+                      </div>
+                      
+                      {/* Texto debajo */}
+                      <div className="mt-2 text-center">
+                        <div className="text-xs font-bold text-green-800">GLEMO</div>
+                        <div className="text-xs text-green-600">#001</div>
+                      </div>
+                    </div>
+                    
+                    {/* Decorative elements */}
+                    <div className="absolute top-2 right-2 w-2 h-2 bg-green-300 rounded-full"></div>
+                    <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                  </div>
+                )
+              },
+              {
+                title: t('ecosystem.types.credentials.title'),
+                description: t('ecosystem.types.credentials.description'),
+                features: [t('ecosystem.types.credentials.features.0'), t('ecosystem.types.credentials.features.1'), t('ecosystem.types.credentials.features.2'), t('ecosystem.types.credentials.features.3')],
+                visualColor: "from-orange-500/20 to-red-500/20",
+                accentColor: "bg-orange-500/10",
+                visual: (
+                  <div className="w-24 h-36 bg-gradient-to-br from-orange-50 to-red-100 rounded-lg border-2 border-orange-200 shadow-lg relative overflow-hidden">
+                    {/* Credential Header */}
+                    <div className="absolute top-2 left-2 right-2 h-6 bg-gradient-to-r from-orange-600 to-red-600 rounded-t flex items-center justify-center">
+                      <div className="text-xs font-bold text-white">ID CARD</div>
+                    </div>
+                    
+                    {/* Photo area - más pequeña y mejor posicionada */}
+                    <div className="absolute top-10 left-4 right-4 h-8 bg-white/90 rounded flex items-center justify-center">
+                      <div className="w-5 h-5 bg-orange-300 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Credential Content - mejor espaciado */}
+                    <div className="absolute top-20 left-2 right-2 px-1 text-center">
+                      <div className="text-xs font-bold text-orange-800 mb-0.5">JOHN DOE</div>
+                      <div className="text-xs text-orange-700 mb-0.5">MEMBER</div>
+                    </div>
+                    
+                    {/* Credential Footer */}
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <div className="text-xs text-orange-500 text-center">VALID 2025</div>
+                    </div>
+                    
+                    {/* Decorative elements */}
+                    <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-orange-300 rounded-full"></div>
+                    <div className="absolute bottom-1 left-1 w-1 h-1 bg-orange-400 rounded-full"></div>
                   </div>
                 )
               }

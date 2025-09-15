@@ -102,14 +102,24 @@
             "3": "Progressive levels"
           }
         },
-        "moments": {
-          "title": "Moments",
-          "description": "Capture and commemorate significant events, milestones, or memorable experiences in your journey.",
+        "assets": {
+          "title": "Assets",
+          "description": "Digital representations of physical or virtual objects with verifiable ownership on blockchain.",
           "features": {
-            "0": "Event timestamps",
-            "1": "Media attachments",
-            "2": "Interactive elements",
-            "3": "Narrative context"
+            "0": "Verifiable ownership",
+            "1": "Immutable metadata",
+            "2": "Secure transfer",
+            "3": "Guaranteed authenticity"
+          }
+        },
+        "credentials": {
+          "title": "Credentials",
+          "description": "Verifications of membership, privileges, or organizational affiliation with real-time validation.",
+          "features": {
+            "0": "Real-time verification",
+            "1": "Access levels",
+            "2": "Automatic expiration",
+            "3": "Organizational integration"
           }
         }
       },
