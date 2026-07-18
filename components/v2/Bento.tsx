@@ -333,36 +333,68 @@ function BrandScene({ brand, domain }: { brand: "glemo" | "nova"; domain: string
 }
 
 /* ------------------------------------------------------------------ */
-/* 3 · Latency — the Aave number that counts + a live feed             */
+/* 3 · Latency — a real stopwatch: ticks, sweeping hand, arc, flash    */
 /* ------------------------------------------------------------------ */
+const DIAL_R = 56;
+const DIAL_C = 2 * Math.PI * DIAL_R;
+const SWEEP_DEG = 132; // dramatized sweep for 0.18s on the dial
+
 function LatencyTile() {
   const t = useTranslations("bento.latency");
   const feed = t.raw("feed") as string[];
 
   const { rootRef, reduced } = useLoop((root) => {
     const q = gsap.utils.selector(root);
-    const counter = { v: 0 };
     const numEl = root.querySelector(".lt-num") as HTMLElement;
-    const tl = gsap.timeline({ paused: true });
-    tl.to(counter, {
-      v: 0.18,
-      duration: 1.4,
-      ease: "power3.out",
-      onUpdate: () => {
-        if (numEl) numEl.textContent = counter.v.toFixed(2) + "s";
-      },
+    const arc = root.querySelector(".lt-arc") as SVGCircleElement;
+    const counter = { v: 0 };
+
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, paused: true });
+    tl.set(q(".lt-hand"), { rotation: 0, svgOrigin: "70 70" })
+      .set(arc, { strokeDasharray: DIAL_C, strokeDashoffset: DIAL_C })
+      .set(q(".lt-flash"), { opacity: 0, scale: 0.9, svgOrigin: "70 70" })
+      .set(q(".lt-chip"), { opacity: 0, y: 8 })
+      .set(counter, { v: 0 })
+      .add(() => {
+        if (numEl) numEl.textContent = "0.00";
+      })
+      // the sweep: digits blur past, hand + arc race, then snap
+      .to(counter, {
+        v: 0.18,
+        duration: 1.15,
+        ease: "power2.out",
+        onUpdate: () => {
+          if (numEl) numEl.textContent = counter.v.toFixed(2);
+        },
+      })
+      .to(q(".lt-hand"), { rotation: SWEEP_DEG, duration: 1.15, ease: "power2.out" }, "<")
+      .to(
+        arc,
+        {
+          strokeDashoffset: DIAL_C - (DIAL_C * SWEEP_DEG) / 360,
+          duration: 1.15,
+          ease: "power2.out",
+        },
+        "<"
+      )
+      // the click: flash ring + tiny recoil on the hand, like a real chrono stop
+      .fromTo(
+        q(".lt-flash"),
+        { opacity: 0, scale: 0.92 },
+        { opacity: 1, scale: 1.06, duration: 0.16, yoyo: true, repeat: 1, ease: "power1.out" }
+      )
+      .to(q(".lt-hand"), { rotation: SWEEP_DEG - 3, duration: 0.1, yoyo: true, repeat: 1 }, "<");
+
+    // verification chips take turns under the dial
+    q(".lt-chip").forEach((chip) => {
+      tl.to(chip, { opacity: 1, y: 0, duration: 0.35, ease: EASE }).to(chip, {
+        opacity: 0,
+        y: -6,
+        duration: 0.3,
+        delay: 1.05,
+      });
     });
-    // rotating feed
-    const rows = q(".lt-row");
-    gsap.set(rows, { opacity: 0, y: 8 });
-    const cycle = gsap.timeline({ repeat: -1 });
-    rows.forEach((row) => {
-      cycle
-        .to(row, { opacity: 1, y: 0, duration: 0.4, ease: EASE })
-        .to(row, { opacity: 0.35, duration: 0.3 }, "+=1.3");
-    });
-    cycle.to(rows, { opacity: 0, y: 8, duration: 0.3, delay: 0.6 });
-    tl.add(cycle, 0.4);
+    tl.to({}, { duration: 0.4 });
     return tl;
   });
 
@@ -370,30 +402,102 @@ function LatencyTile() {
     <div
       ref={rootRef}
       className={cn(
-        "flex h-full flex-col justify-between rounded-lg border border-paper-line bg-[oklch(0.16_0.02_168)] p-7 text-ink",
+        "flex h-full flex-col items-center justify-between rounded-lg border border-paper-line bg-[oklch(0.16_0.02_168)] p-7 text-ink",
         tileShadow
       )}
     >
-      <div>
-        <p className="lt-num font-mono text-[3rem] font-medium leading-none text-verify">
-          {reduced ? t("value") : "0.00s"}
-        </p>
-        <p className="mt-2 text-[0.92rem] text-ink-2">{t("label")}</p>
+      {/* stopwatch */}
+      <div className="relative mt-1">
+        <svg viewBox="0 0 140 140" className="h-[168px] w-[168px]" aria-hidden="true">
+          {/* crown */}
+          <rect x="66" y="1" width="8" height="7" rx="2" fill="oklch(0.4 0.03 168)" />
+          {/* ticks */}
+          {Array.from({ length: 40 }, (_, i) => {
+            const major = i % 5 === 0;
+            const a = (i * 9 * Math.PI) / 180;
+            const r1 = major ? 59 : 62;
+            const x1 = 70 + r1 * Math.sin(a);
+            const y1 = 70 - r1 * Math.cos(a);
+            const x2 = 70 + 65 * Math.sin(a);
+            const y2 = 70 - 65 * Math.cos(a);
+            return (
+              <line
+                key={i}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke={major ? "oklch(0.6 0.04 168)" : "oklch(0.35 0.025 168)"}
+                strokeWidth={major ? 2 : 1}
+                strokeLinecap="round"
+              />
+            );
+          })}
+          {/* progress arc */}
+          <circle
+            className="lt-arc"
+            cx="70"
+            cy="70"
+            r={DIAL_R}
+            fill="none"
+            stroke="var(--verify)"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            transform="rotate(-90 70 70)"
+            style={{
+              strokeDasharray: DIAL_C,
+              strokeDashoffset: reduced ? DIAL_C - (DIAL_C * SWEEP_DEG) / 360 : DIAL_C,
+              filter: "drop-shadow(0 0 6px oklch(0.82 0.155 165 / 0.5))",
+            }}
+          />
+          {/* stop flash */}
+          <circle
+            className="lt-flash"
+            cx="70"
+            cy="70"
+            r={DIAL_R}
+            fill="none"
+            stroke="var(--verify-strong)"
+            strokeWidth="1.5"
+            opacity={0}
+          />
+          {/* hand */}
+          <g
+            className="lt-hand"
+            style={reduced ? { transform: `rotate(${SWEEP_DEG}deg)`, transformOrigin: "70px 70px" } : undefined}
+          >
+            <line x1="70" y1="70" x2="70" y2="20" stroke="var(--verify-strong)" strokeWidth="2.5" strokeLinecap="round" />
+            <circle cx="70" cy="70" r="4" fill="var(--verify-strong)" />
+            <circle cx="70" cy="70" r="1.8" fill="oklch(0.16 0.02 168)" />
+          </g>
+        </svg>
+        {/* digits inside the dial */}
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center pt-9">
+          <p className="font-mono text-[1.55rem] font-medium leading-none text-verify">
+            <span className="lt-num">{reduced ? "0.18" : "0.00"}</span>
+            <span className="text-[0.8rem] text-ink-2">s</span>
+          </p>
+        </div>
       </div>
-      <ul className="mt-6 space-y-2" aria-hidden="true">
-        {feed.map((row) => (
-          <li
+
+      <p className="mt-3 text-center text-[0.92rem] text-ink-2">{t("label")}</p>
+
+      {/* one verification chip at a time, under the dial */}
+      <div className="relative mt-4 h-9 w-full" aria-hidden="true">
+        {feed.map((row, i) => (
+          <p
             key={row}
             className={cn(
-              "lt-row rounded-md border border-line bg-[oklch(0.19_0.02_168)] px-3 py-2 font-mono text-[10.5px] text-ink-2",
-              reduced ? "" : "opacity-0"
+              "lt-chip absolute inset-x-0 mx-auto w-fit max-w-full truncate rounded-full border border-line bg-[oklch(0.19_0.02_168)] px-3.5 py-2 font-mono text-[10.5px] text-ink-2",
+              reduced && i > 0 && "hidden",
+              !reduced && "opacity-0"
             )}
           >
             <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-verify" />
             {row}
-          </li>
+          </p>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

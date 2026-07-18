@@ -180,7 +180,6 @@ export default function GlemoInAction() {
           click(tl);
           pop(tl, '[data-t="linkedin"]');
         } else if (i === 3) {
-          gsap.set('[data-t="v-text"]', { text: "" } as gsap.TweenVars);
           const target = $('[data-t="v-text"]');
           if (target) target.textContent = "";
           gsap.set('[data-t="v-check"]', { opacity: 0, y: 6 });
@@ -284,7 +283,7 @@ export default function GlemoInAction() {
                   >
                     {s.desc}
                   </span>
-                  {/* progress */}
+                  {/* progress (static-full when the cursor show is off) */}
                   <span className="mt-3 block h-[3px] w-full overflow-hidden rounded-full bg-line lg:ml-8 lg:w-[calc(100%-2rem)]">
                     <span
                       ref={(el) => {
@@ -292,7 +291,7 @@ export default function GlemoInAction() {
                       }}
                       className={cn(
                         "block h-full origin-left bg-verify",
-                        active === i ? "" : "scale-x-0"
+                        active === i ? (animated ? "" : "scale-x-100") : "scale-x-0"
                       )}
                     />
                   </span>
@@ -304,7 +303,7 @@ export default function GlemoInAction() {
           {/* stage */}
           <div
             ref={stageRef}
-            className="relative min-h-[420px] overflow-hidden rounded-lg border border-line bg-[oklch(0.13_0.011_170)]"
+            className="relative overflow-hidden rounded-lg border border-line bg-[oklch(0.13_0.011_170)] lg:min-h-[420px]"
             style={{
               backgroundImage:
                 "radial-gradient(oklch(1 0 0 / 0.045) 1px, transparent 1px)",
@@ -367,11 +366,15 @@ type SceneProps = {
 };
 
 function Shell({ visible, children }: { visible: boolean; children: React.ReactNode }) {
+  // Mobile: normal flow, only the active scene rendered visible (stage height
+  // adapts). Desktop: absolute layers cross-fading inside the fixed stage.
   return (
     <div
       className={cn(
-        "absolute inset-x-0 bottom-0 top-[45px] p-6 transition-opacity duration-400 ease-glemo sm:p-8",
-        visible ? "opacity-100" : "pointer-events-none opacity-0"
+        "p-5 sm:p-7 lg:absolute lg:inset-x-0 lg:bottom-0 lg:top-[45px] lg:p-8 lg:transition-opacity lg:duration-400 lg:ease-glemo",
+        visible
+          ? "block lg:opacity-100"
+          : "hidden lg:pointer-events-none lg:block lg:opacity-0"
       )}
       aria-hidden={!visible}
     >
@@ -384,9 +387,9 @@ function SceneDesign({ visible, done, sc }: SceneProps) {
   const hidden = done ? "" : "opacity-0";
   return (
     <Shell visible={visible}>
-      <div className="flex h-full items-center gap-6" data-s="0">
+      <div className="flex flex-col gap-4 lg:h-full lg:flex-row lg:items-center lg:gap-6" data-s="0">
         {/* canvas */}
-        <div className="grid flex-1 place-items-center self-stretch rounded-md border border-line bg-surface">
+        <div className="grid flex-1 place-items-center rounded-md border border-line bg-surface py-6 lg:self-stretch lg:py-0">
           <div className="relative w-[78%] max-w-[330px] rounded-md border border-line bg-[oklch(0.17_0.013_170)] p-6 text-center">
             <span
               data-t="c-logo"
@@ -397,7 +400,7 @@ function SceneDesign({ visible, done, sc }: SceneProps) {
                 <path d="M28 41 L37 50 L54 30" stroke="var(--verify)" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </span>
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-ink-2/70">
+            <p className="px-8 font-mono text-[9px] uppercase tracking-[0.18em] text-ink-2/70">
               {sc.certTitle as string}
             </p>
             <p
@@ -420,7 +423,7 @@ function SceneDesign({ visible, done, sc }: SceneProps) {
           </div>
         </div>
         {/* tools */}
-        <div className="flex w-40 shrink-0 flex-col gap-2.5">
+        <div className="flex w-full flex-row flex-wrap justify-center gap-2 lg:w-40 lg:shrink-0 lg:flex-col lg:gap-2.5">
           {(
             [
               ["tool-logo", sc.toolLogo],
@@ -473,7 +476,7 @@ function SceneIssue({ visible, done, sc }: SceneProps) {
         >
           {sc.moreRecipients as string}
         </p>
-        <div className="mt-5 flex items-center gap-4">
+        <div className="mt-5 flex flex-wrap items-center gap-3 sm:gap-4">
           <span
             data-t="issue-btn"
             className="rounded-full bg-verify px-5 py-2.5 text-[0.9rem] font-bold text-[oklch(0.17_0.03_170)]"
@@ -505,10 +508,16 @@ function SceneDeliver({ visible, done, sc }: SceneProps) {
   const hidden = done ? "" : "opacity-0";
   return (
     <Shell visible={visible}>
-      <div className="flex h-full items-center justify-center gap-6" data-s="2">
+      <div
+        className="flex flex-col items-center gap-5 lg:h-full lg:flex-row lg:justify-center lg:gap-6"
+        data-s="2"
+      >
         <div
           data-t="email"
-          className={cn("w-[300px] rounded-md border border-line bg-surface p-5", hidden)}
+          className={cn(
+            "w-full max-w-[300px] rounded-md border border-line bg-surface p-5",
+            hidden
+          )}
         >
           <div className="flex items-center gap-3">
             <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-2 text-sm">✉</span>
