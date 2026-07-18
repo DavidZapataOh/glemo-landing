@@ -68,15 +68,32 @@ export default function GlemoInAction() {
     const cursor = $(".ga-cursor");
     const ring = $(".ga-ring");
 
+    // Cursor + ring live at stage origin (left-0/top-0); x/y is the full
+    // position. Measure targets lazily at tween start so layout shifts
+    // (rail expansion, scene transitions) can't desync the pointer.
     const pt = (el: HTMLElement | null) => {
-      if (!el) return { x: 40, y: 40 };
+      if (!el) return { x: 60, y: 60 };
       const r = el.getBoundingClientRect();
       const s = stage.getBoundingClientRect();
-      return { x: r.left - s.left + r.width / 2, y: r.top - s.top + r.height / 2 };
+      // aim the arrow tip slightly inside the target center
+      return { x: r.left - s.left + r.width / 2 - 3, y: r.top - s.top + r.height / 2 - 3 };
     };
+    let lastPt = { x: 60, y: 60 };
     const move = (tl: gsap.core.Timeline, sel: string, dur = 0.55) =>
-      tl.to(cursor, { ...pt($(sel)), duration: dur, ease: "power2.inOut" });
+      tl.to(cursor, {
+        duration: dur,
+        ease: "power2.inOut",
+        // lazy getters: resolved when the tween starts, not when built
+        x: () => {
+          lastPt = pt($(sel));
+          return lastPt.x;
+        },
+        y: () => lastPt.y,
+      });
     const click = (tl: gsap.core.Timeline) => {
+      tl.add(() => {
+        gsap.set(ring, { x: lastPt.x + 3, y: lastPt.y + 3 });
+      });
       tl.to(cursor, { scale: 0.8, duration: 0.09, yoyo: true, repeat: 1 });
       tl.fromTo(
         ring,
@@ -288,6 +305,11 @@ export default function GlemoInAction() {
           <div
             ref={stageRef}
             className="relative min-h-[420px] overflow-hidden rounded-lg border border-line bg-[oklch(0.13_0.011_170)]"
+            style={{
+              backgroundImage:
+                "radial-gradient(oklch(1 0 0 / 0.045) 1px, transparent 1px)",
+              backgroundSize: "22px 22px",
+            }}
           >
             {/* window chrome */}
             <div className="flex items-center gap-1.5 border-b border-line px-4 py-3">
@@ -309,9 +331,9 @@ export default function GlemoInAction() {
             {/* cursor */}
             {animated && (
               <>
-                <span className="ga-ring pointer-events-none absolute left-0 top-0 z-40 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-verify opacity-0" />
+                <span className="ga-ring pointer-events-none absolute left-0 top-0 z-40 -ml-4 -mt-4 h-8 w-8 rounded-full border-2 border-verify opacity-0" />
                 <svg
-                  className="ga-cursor pointer-events-none absolute left-10 top-10 z-50 h-5 w-5 drop-shadow-[0_2px_6px_rgb(0_0_0/0.6)]"
+                  className="ga-cursor pointer-events-none absolute left-0 top-0 z-50 h-5 w-5 drop-shadow-[0_2px_6px_rgb(0_0_0/0.6)]"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                 >

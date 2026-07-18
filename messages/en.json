@@ -170,12 +170,19 @@
       "title": "Your brand, not ours",
       "body": "Slide it: with our badge, or with none at all.",
       "before": "With badge",
-      "after": "White-label"
+      "after": "White-label",
+      "brandA": "glemo verified",
+      "brandB": "verify.nova.edu"
     },
     "latency": {
       "value": "0.18s",
       "label": "median time to verify",
-      "note": "faster than a doubt"
+      "note": "faster than a doubt",
+      "feed": [
+        "hr-platform.co · verified · 0.14s",
+        "talent-app.io · verified · 0.21s",
+        "edu-portal.mx · verified · 0.17s"
+      ]
     },
     "nolockin": {
       "title": "Works even without us",
@@ -184,12 +191,31 @@
         "W3C VC",
         "Open Badges 3.0",
         "Export anytime"
-      ]
+      ],
+      "here": "On Glemo",
+      "anywhere": "Anywhere else"
     },
     "bulk": {
       "value": "2,000",
       "label": "credentials in 4 minutes",
-      "note": "spreadsheet in, certificates out"
+      "note": "spreadsheet in, certificates out",
+      "rows": [
+        "María Torres",
+        "Daniel Reyes",
+        "Sofía Lin"
+      ]
+    },
+    "flow": {
+      "label": "What a check looks like",
+      "rawTitle": "what arrives",
+      "rawLines": [
+        "credential_id: 8f3a…c21",
+        "issuer: andes-tech.edu ✓",
+        "signature: valid ✓",
+        "revoked: false"
+      ],
+      "resultTitle": "what your team sees",
+      "counter": "checked ×12 this week"
     }
   },
   "audiences": {

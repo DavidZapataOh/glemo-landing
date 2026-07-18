@@ -1,20 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useReducedMotion } from "framer-motion";
+import { gsap, registerGsap, EASE } from "@/lib/motion";
 import Reveal from "./ui/Reveal";
 import { cn } from "@/lib/utils";
 
 /**
- * Bento (Greenly/Certifier lesson): the paper interlude. Each tile shows one
- * idea with a tiny product-shaped visual — including Certifier's best trick,
- * the draggable white-label slider. No two tiles share a layout.
+ * Bento v2 — the Spade/Bitwage/Aave grammar: every tile is a working UI
+ * fragment that explains itself, with mono evidence chips as proof.
+ * Row 1: raw→verified flow (span 2) · dramatic white-label swap.
+ * Row 2: live latency counter · portable-anywhere · bulk table→certs.
  */
 export default function Bento() {
   const t = useTranslations("bento");
-  const journey = t.raw("journey.steps") as string[];
-  const chips = t.raw("nolockin.chips") as string[];
-  const [split, setSplit] = useState(58);
 
   return (
     <section id="institutions" className="bg-paper py-[clamp(5rem,12vh,9rem)] text-paper-ink">
@@ -24,151 +24,20 @@ export default function Bento() {
         </Reveal>
 
         <div className="mt-12 grid gap-4 sm:gap-5 lg:grid-cols-3">
-          {/* journey — spans 2 */}
           <Reveal className="lg:col-span-2">
-            <div className="h-full rounded-lg border border-paper-line bg-white p-7 shadow-[0_18px_50px_-34px_rgb(10_20_15/0.3)]">
-              <p className="font-mono text-[10.5px] uppercase tracking-[0.15em] text-paper-ink-2">
-                {t("journey.label")}
-              </p>
-              <div className="relative mt-8 flex flex-wrap items-center gap-y-6">
-                {journey.map((step, i) => (
-                  <div key={step} className="flex items-center">
-                    <span
-                      className={cn(
-                        "relative z-10 rounded-full border px-4 py-2 text-[0.9rem] font-bold",
-                        i === 2
-                          ? "border-[oklch(0.52_0.11_166)] bg-[oklch(0.52_0.11_166)] text-white"
-                          : "border-paper-line bg-white text-paper-ink"
-                      )}
-                    >
-                      {i === 2 && <span aria-hidden="true">✓ </span>}
-                      {step}
-                    </span>
-                    {i < journey.length - 1 && (
-                      <svg width="46" height="10" className="mx-1 shrink-0" aria-hidden="true">
-                        <line
-                          x1="2"
-                          y1="5"
-                          x2="44"
-                          y2="5"
-                          stroke="oklch(0.45 0.02 168 / 0.5)"
-                          strokeWidth="1.6"
-                          strokeDasharray="1 6"
-                          strokeLinecap="round"
-                        />
-                        <path d="M40 1.5 L45 5 L40 8.5" fill="none" stroke="oklch(0.45 0.02 168 / 0.6)" strokeWidth="1.4" strokeLinecap="round" />
-                      </svg>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <p className="mt-7 max-w-[30rem] text-[0.95rem] leading-relaxed text-paper-ink-2">
-                {t("latency.note")}: {t("latency.value")} {t("latency.label")}.
-              </p>
-            </div>
+            <FlowTile />
           </Reveal>
-
-          {/* white-label draggable slider */}
           <Reveal delay={0.06}>
-            <div className="h-full rounded-lg border border-paper-line bg-white p-7 shadow-[0_18px_50px_-34px_rgb(10_20_15/0.3)]">
-              <h3 className="text-[1.15rem] font-bold">{t("whitelabel.title")}</h3>
-              <p className="mt-1.5 text-[0.9rem] text-paper-ink-2">{t("whitelabel.body")}</p>
-
-              <div className="relative mt-5 overflow-hidden rounded-md border border-paper-line">
-                {/* white-label layer (bottom) */}
-                <MiniCert branded={false} />
-                {/* branded layer (top, clipped) */}
-                <div
-                  className="absolute inset-0"
-                  style={{ clipPath: `inset(0 ${100 - split}% 0 0)` }}
-                  aria-hidden="true"
-                >
-                  <MiniCert branded />
-                </div>
-                {/* divider */}
-                <span
-                  className="pointer-events-none absolute inset-y-0 w-[3px] -translate-x-1/2 rounded-full bg-[oklch(0.52_0.11_166)]"
-                  style={{ left: `${split}%` }}
-                  aria-hidden="true"
-                >
-                  <span className="absolute left-1/2 top-1/2 grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[oklch(0.52_0.11_166)] text-[11px] font-black text-white">
-                    ⇄
-                  </span>
-                </span>
-                <input
-                  type="range"
-                  min={8}
-                  max={92}
-                  value={split}
-                  onChange={(e) => setSplit(Number(e.target.value))}
-                  aria-label={`${t("whitelabel.before")} / ${t("whitelabel.after")}`}
-                  className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
-                />
-              </div>
-              <div className="mt-2.5 flex justify-between font-mono text-[10px] uppercase tracking-[0.1em] text-paper-ink-2">
-                <span>{t("whitelabel.before")}</span>
-                <span>{t("whitelabel.after")}</span>
-              </div>
-            </div>
+            <WhitelabelTile />
           </Reveal>
-
-          {/* latency */}
           <Reveal delay={0.04}>
-            <div className="flex h-full flex-col justify-between rounded-lg border border-paper-line bg-[oklch(0.16_0.02_168)] p-7 text-ink shadow-[0_18px_50px_-34px_rgb(10_20_15/0.4)]">
-              <div className="flex items-end gap-1.5" aria-hidden="true">
-                {[34, 18, 26, 12, 22, 8, 15].map((h, i) => (
-                  <span
-                    key={i}
-                    className="w-2.5 rounded-sm bg-verify/70"
-                    style={{ height: `${h}px` }}
-                  />
-                ))}
-              </div>
-              <div className="mt-6">
-                <p className="font-mono text-[2.6rem] font-medium leading-none text-verify">
-                  {t("latency.value")}
-                </p>
-                <p className="mt-2 text-[0.92rem] text-ink-2">{t("latency.label")}</p>
-              </div>
-            </div>
+            <LatencyTile />
           </Reveal>
-
-          {/* no lock-in */}
           <Reveal delay={0.08}>
-            <div className="h-full rounded-lg border border-paper-line bg-white p-7 shadow-[0_18px_50px_-34px_rgb(10_20_15/0.3)]">
-              <h3 className="text-[1.15rem] font-bold">{t("nolockin.title")}</h3>
-              <p className="mt-1.5 max-w-[24rem] text-[0.9rem] leading-relaxed text-paper-ink-2">
-                {t("nolockin.body")}
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {chips.map((c) => (
-                  <span
-                    key={c}
-                    className="rounded-full border border-paper-line px-3 py-1.5 font-mono text-[11px] text-paper-ink-2"
-                  >
-                    {c}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <PortableTile />
           </Reveal>
-
-          {/* bulk */}
           <Reveal delay={0.12}>
-            <div className="flex h-full flex-col justify-between rounded-lg border border-paper-line bg-white p-7 shadow-[0_18px_50px_-34px_rgb(10_20_15/0.3)]">
-              <p className="font-mono text-[10.5px] uppercase tracking-[0.15em] text-paper-ink-2">
-                bulk
-              </p>
-              <div className="mt-5">
-                <p className="font-mono text-[2.6rem] font-medium leading-none text-paper-ink">
-                  {t("bulk.value")}
-                </p>
-                <p className="mt-2 text-[0.92rem] text-paper-ink-2">{t("bulk.label")}</p>
-                <p className="mt-3 text-[0.85rem] italic text-paper-ink-2/80">
-                  {t("bulk.note")}
-                </p>
-              </div>
-            </div>
+            <BulkTile />
           </Reveal>
         </div>
       </div>
@@ -176,33 +45,523 @@ export default function Bento() {
   );
 }
 
-function MiniCert({ branded }: { branded: boolean }) {
+const tileShadow = "shadow-[0_18px_50px_-34px_rgb(10_20_15/0.3)]";
+
+/** IO-gated looping timeline helper */
+function useLoop(
+  build: (root: HTMLElement) => gsap.core.Timeline,
+  deps: unknown[] = []
+) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    registerGsap();
+    const root = rootRef.current;
+    if (!root || reduced) return;
+    let tl: gsap.core.Timeline | null = null;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          if (!tl) tl = build(root);
+          tl.play();
+        } else tl?.pause();
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(root);
+    return () => {
+      io.disconnect();
+      tl?.kill();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+
+  return { rootRef, reduced };
+}
+
+/* ------------------------------------------------------------------ */
+/* 1 · Raw → verified (the Spade phone-tile lesson, ours)              */
+/* ------------------------------------------------------------------ */
+function FlowTile() {
+  const t = useTranslations("bento.flow");
+  const rawLines = t.raw("rawLines") as string[];
+
+  const { rootRef, reduced } = useLoop((root) => {
+    const q = gsap.utils.selector(root);
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, paused: true });
+    tl.set(q(".fl-line"), { opacity: 0.25 })
+      .set(q(".fl-pulse"), { opacity: 0, x: 0 })
+      .set(q(".fl-stamp"), { opacity: 0, scale: 0.6 })
+      .set(q(".fl-counter"), { opacity: 0, y: 6 })
+      .to(q(".fl-line"), { opacity: 1, duration: 0.35, stagger: 0.35, ease: EASE })
+      .fromTo(
+        q(".fl-pulse"),
+        { opacity: 0, x: 0 },
+        { opacity: 1, x: 92, duration: 0.55, ease: "power2.inOut" }
+      )
+      .to(q(".fl-pulse"), { opacity: 0, duration: 0.12 }, "-=0.1")
+      .fromTo(
+        q(".fl-stamp"),
+        { opacity: 0, scale: 0.6, rotate: -18 },
+        { opacity: 1, scale: 1, rotate: -8, duration: 0.4, ease: "back.out(2.2)" }
+      )
+      .to(q(".fl-counter"), { opacity: 1, y: 0, duration: 0.3, ease: EASE }, "-=0.1")
+      .to({}, { duration: 1.4 });
+    return tl;
+  });
+
   return (
-    <div className="flex h-[150px] items-center justify-center bg-paper">
-      <div className="w-[75%] rounded-md border border-paper-line bg-white p-4 text-center">
-        <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-paper-ink-2">
-          certificate
-        </p>
-        <p className="mt-1.5 text-[0.95rem] font-black">María Torres</p>
-        <p className="text-[9.5px] text-paper-ink-2">Product Design · 2026</p>
-        <div className="mt-2 flex items-center justify-center gap-1.5">
-          {branded ? (
-            <>
-              <svg viewBox="0 0 80 80" className="h-3.5 w-3.5" aria-hidden="true">
-                <polygon points="40,4 72,22 72,58 40,76 8,58 8,22" fill="none" stroke="oklch(0.52 0.11 166)" strokeWidth="5" />
-                <path d="M28 41 L37 50 L54 30" stroke="oklch(0.52 0.11 166)" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="font-mono text-[8.5px] text-[oklch(0.52_0.11_166)]">
-                glemo verified
-              </span>
-            </>
-          ) : (
-            <span className="font-mono text-[8.5px] text-paper-ink-2/70">
-              yourbrand.com/verify
+    <div
+      ref={rootRef}
+      className={cn("h-full rounded-lg border border-paper-line bg-white p-7", tileShadow)}
+    >
+      <p className="font-mono text-[10.5px] uppercase tracking-[0.15em] text-paper-ink-2">
+        {t("label")}
+      </p>
+
+      <div className="mt-6 grid items-center gap-5 sm:grid-cols-[1fr_auto_1.1fr]">
+        {/* raw side */}
+        <div className="rounded-md border border-paper-line bg-[oklch(0.98_0.004_165)] p-4">
+          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-paper-ink-2/70">
+            {t("rawTitle")}
+          </p>
+          <ul className="mt-2.5 space-y-1.5 font-mono text-[11.5px] text-paper-ink-2">
+            {rawLines.map((line) => (
+              <li key={line} className="fl-line">
+                {line}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* connector */}
+        <div className="relative hidden h-px w-24 sm:block" aria-hidden="true">
+          <svg className="absolute inset-y-[-6px] w-full" viewBox="0 0 96 12">
+            <line x1="0" y1="6" x2="96" y2="6" stroke="oklch(0.45 0.02 168 / 0.4)" strokeWidth="1.5" strokeDasharray="1 6" strokeLinecap="round" />
+            <path d="M90 2 L95 6 L90 10" fill="none" stroke="oklch(0.45 0.02 168 / 0.5)" strokeWidth="1.4" strokeLinecap="round" />
+          </svg>
+          <span
+            className="fl-pulse absolute -top-[3px] left-0 h-[7px] w-[7px] rounded-full bg-[oklch(0.52_0.11_166)] shadow-[0_0_10px_oklch(0.52_0.11_166/0.6)]"
+          />
+        </div>
+
+        {/* human result */}
+        <div className="relative rounded-md border border-paper-line bg-white p-4 shadow-[0_10px_30px_-18px_rgb(10_20_15/0.35)]">
+          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-paper-ink-2/70">
+            {t("resultTitle")}
+          </p>
+          <div className="mt-3 flex items-center gap-3">
+            <span
+              className="grid h-10 w-10 place-items-center rounded-full text-[13px] font-black text-white"
+              style={{ background: "linear-gradient(135deg, oklch(0.78 0.11 55), oklch(0.62 0.13 320))" }}
+            >
+              MT
             </span>
-          )}
+            <div>
+              <p className="text-[0.98rem] font-black leading-tight">María Torres</p>
+              <p className="text-[0.8rem] text-paper-ink-2">Product Design · Andes Tech</p>
+            </div>
+          </div>
+          <span
+            className={cn(
+              "fl-stamp absolute right-3 top-9 rotate-[-8deg] rounded-md border-2 border-[oklch(0.52_0.11_166)] px-2 py-0.5 font-mono text-[10px] font-medium tracking-[0.1em] text-[oklch(0.52_0.11_166)]",
+              reduced ? "" : "opacity-0"
+            )}
+          >
+            VERIFIED ✓
+          </span>
+          <p
+            className={cn(
+              "fl-counter mt-3 inline-block rounded-full bg-[oklch(0.52_0.11_166/0.1)] px-2.5 py-1 font-mono text-[10px] text-[oklch(0.45_0.1_166)]",
+              reduced ? "" : "opacity-0"
+            )}
+          >
+            {t("counter")}
+          </p>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 2 · White-label — a full brand swap, not a footnote                 */
+/* ------------------------------------------------------------------ */
+function WhitelabelTile() {
+  const t = useTranslations("bento.whitelabel");
+  const [split, setSplit] = useState(50);
+  const nudged = useRef(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+
+  // one gentle auto-nudge when it enters view: shows it's draggable
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || reduced || nudged.current) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting || nudged.current) return;
+      nudged.current = true;
+      const obj = { v: 50 };
+      gsap.to(obj, {
+        v: 78,
+        duration: 0.9,
+        delay: 0.5,
+        ease: "power2.inOut",
+        onUpdate: () => setSplit(Math.round(obj.v)),
+      });
+      gsap.to(obj, {
+        v: 50,
+        duration: 0.9,
+        delay: 1.6,
+        ease: "power2.inOut",
+        onUpdate: () => setSplit(Math.round(obj.v)),
+      });
+      io.disconnect();
+    }, { threshold: 0.5 });
+    io.observe(root);
+    return () => io.disconnect();
+  }, [reduced]);
+
+  return (
+    <div
+      ref={rootRef}
+      className={cn("flex h-full flex-col rounded-lg border border-paper-line bg-white p-7", tileShadow)}
+    >
+      <h3 className="text-[1.15rem] font-bold">{t("title")}</h3>
+      <p className="mt-1.5 text-[0.9rem] text-paper-ink-2">{t("body")}</p>
+
+      <div className="relative mt-5 flex-1 overflow-hidden rounded-md border border-paper-line">
+        <BrandScene brand="nova" domain={t("brandB")} />
+        <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - split}% 0 0)` }} aria-hidden="true">
+          <BrandScene brand="glemo" domain={t("brandA")} />
+        </div>
+        <span
+          className="pointer-events-none absolute inset-y-0 w-[3px] -translate-x-1/2 bg-paper-ink"
+          style={{ left: `${split}%` }}
+          aria-hidden="true"
+        >
+          <span className="absolute left-1/2 top-1/2 grid h-8 w-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-paper-ink text-[12px] font-black text-white shadow-[0_4px_14px_rgb(0_0_0/0.3)]">
+            ⇄
+          </span>
+        </span>
+        <input
+          type="range"
+          min={6}
+          max={94}
+          value={split}
+          onChange={(e) => setSplit(Number(e.target.value))}
+          aria-label={`${t("before")} / ${t("after")}`}
+          className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
+        />
+      </div>
+      <div className="mt-2.5 flex justify-between font-mono text-[10px] uppercase tracking-[0.1em] text-paper-ink-2">
+        <span>{t("before")}</span>
+        <span>{t("after")}</span>
+      </div>
+    </div>
+  );
+}
+
+/** Two complete identities — the swap must be unmistakable */
+function BrandScene({ brand, domain }: { brand: "glemo" | "nova"; domain: string }) {
+  const isGlemo = brand === "glemo";
+  return (
+    <div
+      className={cn(
+        "flex h-[190px] flex-col",
+        isGlemo ? "bg-[oklch(0.17_0.013_170)]" : "bg-[oklch(0.97_0.008_280)]"
+      )}
+    >
+      {/* browser bar with domain */}
+      <div
+        className={cn(
+          "flex items-center gap-2 border-b px-3 py-1.5",
+          isGlemo ? "border-white/10" : "border-[oklch(0.85_0.02_280)]"
+        )}
+      >
+        <span className={cn("h-1.5 w-1.5 rounded-full", isGlemo ? "bg-white/25" : "bg-[oklch(0.75_0.03_280)]")} />
+        <span
+          className={cn(
+            "rounded-sm px-2 py-0.5 font-mono text-[8.5px]",
+            isGlemo ? "bg-white/10 text-white/70" : "bg-white text-[oklch(0.4_0.1_280)]"
+          )}
+        >
+          {isGlemo ? "glemo.io/verify" : domain}
+        </span>
+      </div>
+      {/* credential */}
+      <div className="grid flex-1 place-items-center p-3">
+        <div
+          className={cn(
+            "w-[82%] rounded-md p-3 text-center",
+            isGlemo
+              ? "border border-white/10 bg-[oklch(0.2_0.015_170)]"
+              : "border border-[oklch(0.85_0.02_280)] bg-white"
+          )}
+        >
+          {isGlemo ? (
+            <svg viewBox="0 0 80 80" className="mx-auto h-5 w-5" aria-hidden="true">
+              <polygon points="40,4 72,22 72,58 40,76 8,58 8,22" fill="none" stroke="var(--verify)" strokeWidth="5" />
+              <path d="M28 41 L37 50 L54 30" stroke="var(--verify)" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          ) : (
+            <p className="font-serif text-[13px] font-bold tracking-[0.2em] text-[oklch(0.4_0.12_280)]">
+              NOVA
+            </p>
+          )}
+          <p className={cn("mt-1 text-[0.9rem] font-black", isGlemo ? "text-white" : "text-[oklch(0.25_0.05_280)]")}>
+            María Torres
+          </p>
+          <p className={cn("text-[9px]", isGlemo ? "text-white/60" : "text-[oklch(0.5_0.05_280)]")}>
+            Product Design · 2026
+          </p>
+          <p
+            className={cn(
+              "mx-auto mt-1.5 inline-block rounded-full px-2 py-0.5 font-mono text-[8px]",
+              isGlemo
+                ? "bg-[oklch(0.82_0.155_165/0.15)] text-verify"
+                : "bg-[oklch(0.4_0.12_280)] text-white"
+            )}
+          >
+            {isGlemo ? "✓ glemo verified" : "✓ verified"}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 3 · Latency — the Aave number that counts + a live feed             */
+/* ------------------------------------------------------------------ */
+function LatencyTile() {
+  const t = useTranslations("bento.latency");
+  const feed = t.raw("feed") as string[];
+
+  const { rootRef, reduced } = useLoop((root) => {
+    const q = gsap.utils.selector(root);
+    const counter = { v: 0 };
+    const numEl = root.querySelector(".lt-num") as HTMLElement;
+    const tl = gsap.timeline({ paused: true });
+    tl.to(counter, {
+      v: 0.18,
+      duration: 1.4,
+      ease: "power3.out",
+      onUpdate: () => {
+        if (numEl) numEl.textContent = counter.v.toFixed(2) + "s";
+      },
+    });
+    // rotating feed
+    const rows = q(".lt-row");
+    gsap.set(rows, { opacity: 0, y: 8 });
+    const cycle = gsap.timeline({ repeat: -1 });
+    rows.forEach((row) => {
+      cycle
+        .to(row, { opacity: 1, y: 0, duration: 0.4, ease: EASE })
+        .to(row, { opacity: 0.35, duration: 0.3 }, "+=1.3");
+    });
+    cycle.to(rows, { opacity: 0, y: 8, duration: 0.3, delay: 0.6 });
+    tl.add(cycle, 0.4);
+    return tl;
+  });
+
+  return (
+    <div
+      ref={rootRef}
+      className={cn(
+        "flex h-full flex-col justify-between rounded-lg border border-paper-line bg-[oklch(0.16_0.02_168)] p-7 text-ink",
+        tileShadow
+      )}
+    >
+      <div>
+        <p className="lt-num font-mono text-[3rem] font-medium leading-none text-verify">
+          {reduced ? t("value") : "0.00s"}
+        </p>
+        <p className="mt-2 text-[0.92rem] text-ink-2">{t("label")}</p>
+      </div>
+      <ul className="mt-6 space-y-2" aria-hidden="true">
+        {feed.map((row) => (
+          <li
+            key={row}
+            className={cn(
+              "lt-row rounded-md border border-line bg-[oklch(0.19_0.02_168)] px-3 py-2 font-mono text-[10.5px] text-ink-2",
+              reduced ? "" : "opacity-0"
+            )}
+          >
+            <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-verify" />
+            {row}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 4 · Portable — verifies here, verifies anywhere                     */
+/* ------------------------------------------------------------------ */
+function PortableTile() {
+  const t = useTranslations("bento.nolockin");
+  const chips = t.raw("chips") as string[];
+
+  const { rootRef, reduced } = useLoop((root) => {
+    const q = gsap.utils.selector(root);
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.8, paused: true });
+    tl.set(q(".pt-card-b"), { opacity: 0, x: -26, scale: 0.9 })
+      .set(q(".pt-check-b"), { opacity: 0, scale: 0.5 })
+      .to(q(".pt-card-b"), { opacity: 1, x: 0, scale: 1, duration: 0.6, ease: EASE, delay: 0.5 })
+      .fromTo(
+        q(".pt-check-b"),
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }
+      )
+      .to({}, { duration: 1.2 });
+    return tl;
+  });
+
+  const MiniCard = ({ side }: { side: "a" | "b" }) => (
+    <div
+      className={cn(
+        "relative rounded-md border border-paper-line bg-white px-3 py-2.5",
+        side === "b" && "pt-card-b"
+      )}
+    >
+      <p className="text-[0.8rem] font-black leading-none">María T.</p>
+      <p className="mt-0.5 text-[8.5px] text-paper-ink-2">Product Design</p>
+      <span
+        className={cn(
+          "absolute -right-1.5 -top-1.5 grid h-5 w-5 place-items-center rounded-full bg-[oklch(0.52_0.11_166)] text-[9px] font-black text-white",
+          side === "b" && "pt-check-b",
+          side === "b" && !reduced && "opacity-0"
+        )}
+      >
+        ✓
+      </span>
+    </div>
+  );
+
+  return (
+    <div
+      ref={rootRef}
+      className={cn("flex h-full flex-col rounded-lg border border-paper-line bg-white p-7", tileShadow)}
+    >
+      <h3 className="text-[1.15rem] font-bold">{t("title")}</h3>
+      <p className="mt-1.5 text-[0.9rem] leading-relaxed text-paper-ink-2">{t("body")}</p>
+
+      <div className="mt-5 grid flex-1 grid-cols-[1fr_auto_1fr] items-center gap-2">
+        <div className="rounded-md border border-paper-line bg-[oklch(0.98_0.004_165)] p-3">
+          <p className="mb-2 font-mono text-[8.5px] uppercase tracking-[0.14em] text-paper-ink-2/70">
+            {t("here")}
+          </p>
+          <MiniCard side="a" />
+        </div>
+        <svg width="26" height="10" aria-hidden="true">
+          <line x1="0" y1="5" x2="24" y2="5" stroke="oklch(0.45 0.02 168 / 0.5)" strokeWidth="1.5" strokeDasharray="1 5" strokeLinecap="round" />
+        </svg>
+        <div className="rounded-md border border-dashed border-paper-line p-3">
+          <p className="mb-2 font-mono text-[8.5px] uppercase tracking-[0.14em] text-paper-ink-2/70">
+            {t("anywhere")}
+          </p>
+          <MiniCard side="b" />
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {chips.map((c) => (
+          <span key={c} className="rounded-full border border-paper-line px-3 py-1.5 font-mono text-[10.5px] text-paper-ink-2">
+            {c}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 5 · Bulk — spreadsheet in, certificates out (Bitwage table lesson)  */
+/* ------------------------------------------------------------------ */
+function BulkTile() {
+  const t = useTranslations("bento.bulk");
+  const rows = t.raw("rows") as string[];
+
+  const { rootRef, reduced } = useLoop((root) => {
+    const q = gsap.utils.selector(root);
+    const counter = { v: 0 };
+    const numEl = root.querySelector(".bk-num") as HTMLElement;
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 2, paused: true });
+    tl.set(q(".bk-cert"), { opacity: 0, x: -10, scale: 0.85 })
+      .set(counter, { v: 0 })
+      .add(() => {
+        if (numEl) numEl.textContent = "0";
+      })
+      .to(q(".bk-row"), {
+        backgroundColor: "oklch(0.52 0.11 166 / 0.08)",
+        duration: 0.3,
+        stagger: 0.28,
+        ease: "none",
+      })
+      .to(
+        q(".bk-cert"),
+        { opacity: 1, x: 0, scale: 1, duration: 0.4, stagger: 0.28, ease: "back.out(1.8)" },
+        "<0.15"
+      )
+      .to(
+        counter,
+        {
+          v: 2000,
+          duration: 1.5,
+          ease: "power3.out",
+          onUpdate: () => {
+            if (numEl) numEl.textContent = Math.round(counter.v).toLocaleString("en-US");
+          },
+        },
+        "<"
+      )
+      .to(q(".bk-row"), { backgroundColor: "transparent", duration: 0.4, delay: 1 });
+    return tl;
+  });
+
+  return (
+    <div
+      ref={rootRef}
+      className={cn("flex h-full flex-col rounded-lg border border-paper-line bg-white p-7", tileShadow)}
+    >
+      <div>
+        <p className="font-mono text-[3rem] font-medium leading-none text-paper-ink">
+          <span className="bk-num">{reduced ? t("value") : "0"}</span>
+        </p>
+        <p className="mt-2 text-[0.92rem] text-paper-ink-2">{t("label")}</p>
+      </div>
+
+      <div className="mt-5 grid flex-1 grid-cols-[1.4fr_1fr] items-center gap-3">
+        <ul className="divide-y divide-paper-line overflow-hidden rounded-md border border-paper-line font-mono text-[10.5px]">
+          {rows.map((r, i) => (
+            <li key={r} className="bk-row flex items-center gap-2 px-2.5 py-2 text-paper-ink-2">
+              <span className="text-paper-ink-2/50">{i + 2}</span>
+              {r}
+            </li>
+          ))}
+        </ul>
+        <div className="space-y-1.5">
+          {rows.map((r) => (
+            <div
+              key={r}
+              className={cn(
+                "bk-cert flex items-center gap-1.5 rounded-sm border border-paper-line bg-[oklch(0.98_0.004_165)] px-2 py-1.5",
+                reduced ? "" : "opacity-0"
+              )}
+            >
+              <svg viewBox="0 0 80 80" className="h-3 w-3 shrink-0" aria-hidden="true">
+                <polygon points="40,4 72,22 72,58 40,76 8,58 8,22" fill="none" stroke="oklch(0.52 0.11 166)" strokeWidth="6" />
+                <path d="M28 41 L37 50 L54 30" stroke="oklch(0.52 0.11 166)" strokeWidth="8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="truncate text-[9px] font-bold text-paper-ink">{r.split(" ")[0]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <p className="mt-3 font-mono text-[10px] text-paper-ink-2/70">{t("note")}</p>
     </div>
   );
 }
