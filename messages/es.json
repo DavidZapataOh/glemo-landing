@@ -1,246 +1,191 @@
 {
-    "nav": {
-      "home": "Inicio",
-      "features": "Características", 
-      "ecosystem": "Ecosistema",
-      "tools": "Herramientas",
-      "login": "Ir a la app"
-    },
-    "hero": {
-      "badge": "REVOLUCIONANDO LA CERTIFICACIÓN DIGITAL",
-      "title": "Certificados que",
-      "your": "tus",
-      "verify": "verifican",
-      "description": "Crea y emite certificados digitales verificables en blockchain con una experiencia inmersiva y segura.",
-      "createTemplate": "Crear plantilla",
-      "verifyCertificate": "Verificar certificado",
-      "secureVerification": "Verificación segura",
-      "certificatesIssued": "Certificados emitidos",
-      "discoverMore": "Descubrir más",
-      "blockchainTechnology": "Tecnología blockchain",
-      "features": "Características",
-      "verifiableCredentials": "Credenciales Verificables",
-      "secure": "Seguro",
-      "permanent": "Permanente",
-      "skills": "habilidades",
-      "expertise": "experiencias",
-      "knowledge": "conocimientos",
-      "achievements": "logros"
-    },
-    "features": {
-      "title": "Características principales",
-      "description": "Nuestra plataforma combina tecnología blockchain de vanguardia con herramientas intuitivas para revolucionar la creación y emisión de certificados digitales.",
-      "startNow": "Empezar ahora",
-      "items": {
-        "customizable": {
-          "title": "Plantillas personalizables",
-          "description": "Crea diseños únicos con precisión a nivel de píxel para cada elemento de texto e imagen en tus certificados."
-        },
-        "blockchain": {
-          "title": "Almacenamiento blockchain",
-          "description": "Todos los certificados se almacenan en IPFS y blockchain para garantizar seguridad, permanencia y descentralización."
-        },
-        "mass": {
-          "title": "Emisión masiva",
-          "description": "Emite múltiples certificados en una sola transacción para optimizar costos y acelerar el proceso."
-        },
-        "verification": {
-          "title": "Verificación instantánea",
-          "description": "Cualquier persona puede verificar la autenticidad de un certificado en cualquier momento usando un código QR o enlace directo."
-        },
-        "gallery": {
-          "title": "Galería 3D",
-          "description": "Exhibe tus certificados y badges en un espacio 3D personalizable y compartible."
-        },
-        "api": {
-          "title": "API para integraciones",
-          "description": "Conecta con tus sistemas existentes usando nuestra API para automatizar la emisión y verificación de certificados."
-        }
-      }
-    },
-    "gallery": {
-      "badge": "PORTAFOLIO DIGITAL",
-      "title": "Tu",
-      "gallery": "Galería 3D Digital",
-      "description": "Muestra y organiza tus credenciales en un entorno 3D inmersivo que puedes personalizar para reflejar tu trayectoria profesional.",
-      "personalizedRoom": {
-        "title": "Sala 3D Personalizada",
-        "description": "Organiza y muestra tus certificados, badges y momentos en tu propio espacio virtual."
-      },
-      "interactive": {
-        "title": "Experiencia Interactiva",
-        "description": "Los visitantes pueden navegar a través de tus logros e interactuar con cada credencial."
-      },
-      "customizable": {
-        "title": "Diseño Personalizable",
-        "description": "Organiza tus logros por categorías, línea de tiempo o importancia."
-      }
-    },
-    "ecosystem": {
-      "badge": "ECOSISTEMA DE CREDENCIALES",
-      "title": "Más allá de",
-      "certificates": "Certificados",
-      "description": "Nuestra plataforma ofrece un ecosistema integral de credenciales digitales para reconocer varios logros e hitos.",
-      "types": {
-        "certificates": {
-          "title": "Certificados",
-          "description": "Reconocimiento formal de cursos completados, programas o calificaciones con datos de verificación.",
-          "features": {
-            "0": "Verificación blockchain",
-            "1": "Metadatos detallados",
-            "2": "Diseño personalizable",
-            "3": "Validación instantánea"
-          }
-        },
-        "badges": {
-          "title": "Badges",
-          "description": "Representaciones visuales de habilidades, logros o participación en actividades o eventos específicos.",
-          "features": {
-            "0": "Específico por habilidad",
-            "1": "Credenciales apilables",
-            "2": "Compartir social",
-            "3": "Niveles progresivos"
-          }
-        },
-        "assets": {
-          "title": "Assets",
-          "description": "Representaciones digitales de objetos físicos o virtuales con propiedad verificable en blockchain.",
-          "features": {
-            "0": "Propiedad verificable",
-            "1": "Metadatos inmutables",
-            "2": "Transferencia segura",
-            "3": "Autenticidad garantizada"
-          }
-        },
-        "credentials": {
-          "title": "Credentials",
-          "description": "Verificaciones de membresía, privilegios o pertenencia a organizaciones con validación en tiempo real.",
-          "features": {
-            "0": "Verificación en tiempo real",
-            "1": "Niveles de acceso",
-            "2": "Expiración automática",
-            "3": "Integración organizacional"
-          }
-        }
-      },
-      "features": "Características",
-      "learnMore": "Más información"
-    },
-    "tools": {
-      "badge": "HERRAMIENTAS DESARROLLADOR",
-      "title": "Poderosa",
-      "integration": "Integración API",
-      "description": "Integra nuestro sistema de emisión de credenciales directamente en tus plataformas con nuestro conjunto completo de APIs. Crea, gestiona y verifica credenciales programáticamente.",
-      "features": {
-        "automated": {
-          "title": "Emisión Automatizada",
-          "description": "Genera credenciales automáticamente cuando los usuarios completen requisitos específicos en tu plataforma."
-        },
-        "custom": {
-          "title": "Integración Personalizada",
-          "description": "Integra nuestros servicios de verificación sin problemas en tus sistemas y flujos de trabajo existentes."
-        },
-        "webhook": {
-          "title": "Eventos Webhook",
-          "description": "Recibe notificaciones en tiempo real cuando se emitan, vean o verifiquen credenciales."
-        }
-      },
-      "exploreApi": "Explorar Documentación API",
-      "copyCode": "Copiar código",
-      "responseStatus": "Estado de respuesta",
-      "successRate": "Tasa de éxito",
-      "responseTime": "Tiempo de respuesta"
-    },
-    "roles": {
-      "badge": "PARA TODOS",
-      "title": "Para Tu Rol",
-      "tailored": "Adaptado",
-      "description": "Nuestra plataforma sirve las diversas necesidades de todos en el ecosistema de certificación con características especializadas.",
-      "admin": {
-        "role": "Administradores",
-        "description": "Crea plantillas, emite certificados en lote y gestiona las credenciales de tu organización.",
-        "features": {
-          "0": "Diseñador de plantillas",
-          "1": "Emisión en lote",
-          "2": "Panel de analytics",
-          "3": "Gestión de equipo"
-        },
-        "button": "Portal Admin"
-      },
-      "issuers": {
-        "role": "Emisores",
-        "description": "Instituciones educativas, proveedores de capacitación y organizaciones que otorgan credenciales.",
-        "features": {
-          "0": "Marca personalizada",
-          "1": "Validación de certificados",
-          "2": "Gestión de destinatarios",
-          "3": "Operaciones en lote"
-        },
-        "button": "Comenzar a Emitir"
-      },
-      "recipients": {
-        "role": "Destinatarios",
-        "description": "Muestra tus logros y comparte credenciales verificables con empleadores.",
-        "features": {
-          "0": "Portafolio digital",
-          "1": "Compartir fácil",
-          "2": "Integración redes sociales",
-          "3": "Enlaces de verificación"
-        },
-        "button": "Ver Tus Credenciales"
-      },
-      "verifiers": {
-        "role": "Verificadores",
-        "description": "Verifica instantáneamente la autenticidad de cualquier credencial emitida a través de nuestra plataforma.",
-        "features": {
-          "0": "Verificación un clic",
-          "1": "Escaneo código QR",
-          "2": "Integración API",
-          "3": "Historial verificación"
-        },
-        "button": "Verificar Credencial"
-      },
-      "featuresTitle": "Características"
-    },
-    "cta": {
-      "badge": "Únete al futuro de las credenciales digitales",
-      "title": "Comienza tu Viaje de",
-      "certification": "Certificación Blockchain",
-      "journey": "Hoy",
-      "description": "Únete a la revolución en credenciales digitales. Crea, emite y verifica certificados que son seguros, permanentes y verdaderamente tuyos en el blockchain.",
-      "createFirst": "Crea Tu Primer Certificado",
-      "watchDemo": "Ver Demo",
-      "stats": {
-        "issued": "Certificados Emitidos",
-        "organizations": "Organizaciones", 
-        "countries": "Países",
-        "successRate": "Tasa de Éxito"
-      }
-    },
-    "footer": {
-      "description": "Plataforma líder para emitir certificados digitales verificables en blockchain.",
+  "meta": {
+    "title": "Glemo — Credenciales que se prueban solas",
+    "description": "La red neutral de verificación. Emite credenciales infalsificables y verifica cualquier credencial, de cualquier emisor, en una sola llamada de API. Sin necesidad de saber de cripto."
+  },
+  "announcement": {
+    "text": "Programa de design partners abierto",
+    "cta": "Aplicar"
+  },
+  "nav": {
+    "product": "Producto",
+    "developers": "Developers",
+    "institutions": "Instituciones",
+    "faq": "FAQ",
+    "cta": "Empieza a construir"
+  },
+  "hero": {
+    "titleA": "Credenciales que",
+    "titleB": "se prueban solas.",
+    "sub": "Glemo es la red neutral de verificación: emite credenciales infalsificables en minutos y verifica cualquier credencial — de cualquier emisor — en una sola llamada de API. Sin saber de cripto, en ningún lado.",
+    "ctaPrimary": "Empieza a construir",
+    "ctaSecondary": "Agenda una demo",
+    "microTrust": "Sobre estándares abiertos · W3C Verifiable Credentials · Open Badges 3.0 · GDPR-ready",
+    "issuersLabel": "emisores",
+    "verifiersLabel": "verificadores",
+    "coreLabel": "red de verificación",
+    "nodes": {
+      "university": "Universidad",
+      "bootcamp": "Bootcamp",
+      "academy": "Academia",
+      "event": "Hackathon",
+      "employer": "Empleador",
       "platform": "Plataforma",
-      "resources": "Recursos",
-      "contact": "Contáctanos",
-      "contactDescription": "¿Tienes preguntas sobre la plataforma? Escríbenos y te responderemos lo antes posible.",
-      "emailPlaceholder": "Tu email",
-      "copyright": "Todos los derechos reservados.",
-      "terms": "Términos",
-      "privacy": "Privacidad",
-      "cookies": "Cookies",
-      "language": "Idioma",
-      "changeLanguage": "Cambiar idioma",
-      "platformItems": {
-        "0": "Características",
-        "1": "Plantillas",
-        "2": "Emisión",
-        "3": "Verificación"
+      "hrTool": "Sistema de RRHH",
+      "marketplace": "Marketplace"
+    },
+    "pulse": "verificado"
+  },
+  "standards": {
+    "label": "Interoperable por diseño",
+    "items": [
+      "W3C Verifiable Credentials",
+      "Open Badges 3.0",
+      "Decentralized Identifiers",
+      "OpenID for VC",
+      "GDPR-ready",
+      "REST + Webhooks"
+    ]
+  },
+  "problem": {
+    "titleA": "Cualquiera puede falsificar un PDF.",
+    "titleB": "Nadie debería tener que confiar en uno.",
+    "body": "La IA volvió trivial falsificar diplomas, certificados y CVs. Verificarlos sigue siendo correos, llamadas y días de espera — así que la mayoría de credenciales nunca se verifican.",
+    "stats": [
+      { "value": "$21B", "label": "perdidos cada año por fraude académico" },
+      { "value": "3–5 días", "label": "toma un chequeo manual de educación o empleo" },
+      { "value": "46%", "label": "efectividad promedio de las herramientas anti-fraude actuales" }
+    ],
+    "statsNote": "Fuentes: Parchment, Velocity Network Foundation, Liminal — 2025."
+  },
+  "how": {
+    "title": "De emitida a verificada en milisegundos",
+    "steps": [
+      {
+        "num": "01",
+        "name": "Emitir",
+        "body": "Diseña y emite credenciales infalsificables — una a una o miles desde una hoja de cálculo. Cada persona recibe la suya por email: sin wallet, sin app, sin jerga.",
+        "mono": "POST /v1/credentials → 201 created"
       },
-      "resourceItems": {
-        "0": "Documentación",
-        "1": "API",
-        "2": "Tutoriales",
-        "3": "Blog"
+      {
+        "num": "02",
+        "name": "Portar",
+        "body": "Cada credencial está construida sobre estándares abiertos, es portable a cualquier lugar y pertenece a su titular. Sigue funcionando — incluso sin Glemo.",
+        "mono": "format: w3c-vc / ob-3.0 · portable: true"
+      },
+      {
+        "num": "03",
+        "name": "Verificar",
+        "body": "Cualquier plataforma, empleador o sistema comprueba la autenticidad en una sola llamada — sin contactar jamás al emisor.",
+        "mono": "status: verified ✓ · 180ms"
       }
-    }
+    ]
+  },
+  "features": {
+    "title": "Todo lo que un emisor necesita. Nada que el receptor tenga que aprender.",
+    "scenes": [
+      {
+        "title": "Un estudio de diseño para credenciales",
+        "body": "Editor visual con tu marca, campos dinámicos y emisión masiva desde una hoja de cálculo. Certificados e insignias que se ven como tú — no como una plantilla.",
+        "mono": "bulk: 2,000 destinatarios · 4 min"
+      },
+      {
+        "title": "Entrega sin fricción",
+        "body": "Cada persona recibe un enlace por email y una página pública de verificación. Compartir en LinkedIn toma un clic. Cero pasos cripto, para todos, siempre.",
+        "mono": "entrega: email · wallet: invisible"
+      },
+      {
+        "title": "Revocación y auditoría integradas",
+        "body": "Revoca o expira cualquier credencial cuando quieras. Cada verificación queda registrada: tu trazabilidad se escribe sola.",
+        "mono": "revoked_at: null · checks: logged"
+      }
+    ]
+  },
+  "dev": {
+    "title": "Integra verificación en una tarde",
+    "body": "Una API REST limpia y SDKs. Verifica cualquier credencial — incluso las que no emitiste — con una sola llamada, y recibe una respuesta firmada en la que puedes confiar.",
+    "docs": "Lee la documentación",
+    "tabs": { "curl": "cURL", "node": "Node.js", "python": "Python" },
+    "responseNote": "Vista previa del producto — la API que vas a integrar."
+  },
+  "audiences": {
+    "title": "Dos lados. Una red.",
+    "tabs": [
+      {
+        "id": "verifiers",
+        "label": "Plataformas y empleadores",
+        "headline": "Confía en cualquier credencial sin perseguir a nadie.",
+        "points": [
+          "Una API para verificar credenciales de cualquier emisor",
+          "Widget de verificación embebible en tu producto",
+          "Respuestas en milisegundos, no en días",
+          "Cero trabajo de integración por cada emisor nuevo"
+        ]
+      },
+      {
+        "id": "issuers",
+        "label": "Instituciones",
+        "headline": "Emite credenciales en las que sí se puede confiar.",
+        "points": [
+          "Estudio visual, tu marca, emisión masiva",
+          "Tus destinatarios no necesitan saber nada técnico",
+          "Verificables para siempre — aunque cambies de plataforma",
+          "Revocación, expiración y auditoría integradas"
+        ]
+      },
+      {
+        "id": "developers",
+        "label": "Developers",
+        "headline": "Infraestructura de credenciales que se siente como una API moderna.",
+        "points": [
+          "REST + webhooks, errores sensatos, docs de verdad",
+          "SDKs y widget de verificación embebible",
+          "Estándares abiertos por debajo — sin lock-in",
+          "Llaves sandbox para empezar en minutos"
+        ]
+      }
+    ]
+  },
+  "faq": {
+    "title": "Preguntas justas",
+    "items": [
+      {
+        "q": "¿Necesito saber algo de blockchain?",
+        "a": "No. Ni tú, ni tus destinatarios, ni tus verificadores. Glemo usa infraestructura criptográfica por debajo, pero todas las superficies que tocas son email, enlaces y una API REST."
+      },
+      {
+        "q": "¿Qué pasa con las credenciales si Glemo desaparece?",
+        "a": "Siguen funcionando. Están construidas sobre estándares abiertos (W3C Verifiable Credentials, Open Badges 3.0) y son exportables y verificables independientemente de nosotros. El no-lock-in es un requisito de diseño, no una promesa."
+      },
+      {
+        "q": "¿Puedo verificar una credencial que no se emitió en Glemo?",
+        "a": "Ese es el punto de la red. Glemo verifica credenciales basadas en estándares de cualquier emisor compatible — y nuestro roadmap extiende la verificación a fuentes que nunca adoptaron estándares."
+      },
+      {
+        "q": "¿Dónde viven los datos personales?",
+        "a": "Fuera de cualquier infraestructura pública. Los datos personales permanecen en almacenamiento convencional y compatible con GDPR; públicamente solo se anclan pruebas criptográficas. Borrar los datos de una persona sigue siendo posible — por diseño."
+      },
+      {
+        "q": "¿Cuánto cuesta?",
+        "a": "Emitir está diseñado para ser accesible a instituciones de cualquier tamaño; la verificación se cobra por chequeo a plataformas con volumen. Estamos incorporando design partners ahora — los términos tempranos son generosos."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Empieza a verificar hoy",
+    "body": "Únete al programa de design partners: construye con la API, o trae credenciales verificables a tu institución.",
+    "primary": "Empieza a construir",
+    "secondary": "Agenda una demo"
+  },
+  "footer": {
+    "tagline": "La red neutral de verificación para las credenciales del mundo.",
+    "product": "Producto",
+    "productLinks": { "how": "Cómo funciona", "features": "Para instituciones", "audiences": "Para plataformas" },
+    "developersCol": "Developers",
+    "developersLinks": { "api": "Vista previa de la API", "standards": "Estándares abiertos", "faq": "FAQ" },
+    "company": "Compañía",
+    "companyLinks": { "partners": "Design partners", "contact": "Contacto" },
+    "language": "Idioma",
+    "rights": "© {year} Glemo. Todos los derechos reservados."
   }
+}
