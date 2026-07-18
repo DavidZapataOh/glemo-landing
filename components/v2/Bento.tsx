@@ -333,11 +333,20 @@ function BrandScene({ brand, domain }: { brand: "glemo" | "nova"; domain: string
 }
 
 /* ------------------------------------------------------------------ */
-/* 3 · Latency — a real stopwatch: ticks, sweeping hand, arc, flash    */
+/* 3 · Latency — segmented ring (chosen: option B). Smartwatch dial:    */
+/* segments light up in sequence, then all pulse + "VERIFIED ✓".        */
 /* ------------------------------------------------------------------ */
-const DIAL_R = 56;
-const DIAL_C = 2 * Math.PI * DIAL_R;
-const SWEEP_DEG = 132; // dramatized sweep for 0.18s on the dial
+const RING = { cx: 70, cy: 70, rIn: 48, rOut: 58, N: 44, A0: -140, A1: 140 };
+
+function ringSeg(i: number) {
+  const a = ((RING.A0 + (i / (RING.N - 1)) * (RING.A1 - RING.A0)) * Math.PI) / 180;
+  return {
+    x1: RING.cx + RING.rIn * Math.sin(a),
+    y1: RING.cy - RING.rIn * Math.cos(a),
+    x2: RING.cx + RING.rOut * Math.sin(a),
+    y2: RING.cy - RING.rOut * Math.cos(a),
+  };
+}
 
 function LatencyTile() {
   const t = useTranslations("bento.latency");
@@ -346,55 +355,72 @@ function LatencyTile() {
   const { rootRef, reduced } = useLoop((root) => {
     const q = gsap.utils.selector(root);
     const numEl = root.querySelector(".lt-num") as HTMLElement;
-    const arc = root.querySelector(".lt-arc") as SVGCircleElement;
+    const lbl = root.querySelector(".lt-lbl") as HTMLElement;
+    const segs = Array.from(root.querySelectorAll(".lt-seg")) as SVGLineElement[];
     const counter = { v: 0 };
+    const N = RING.N;
 
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, paused: true });
-    tl.set(q(".lt-hand"), { rotation: 0, svgOrigin: "70 70" })
-      .set(arc, { strokeDasharray: DIAL_C, strokeDashoffset: DIAL_C })
-      .set(q(".lt-flash"), { opacity: 0, scale: 0.9, svgOrigin: "70 70" })
+    const paintSegs = (litFrac: number, glow = false) => {
+      const litN = litFrac * N;
+      segs.forEach((s, i) => {
+        const on = i < litN;
+        const lead = on && i >= litN - 2;
+        s.setAttribute(
+          "stroke",
+          on ? (lead ? "var(--verify-strong)" : "var(--verify)") : "var(--line)"
+        );
+        s.setAttribute("stroke-width", lead ? "4.2" : "3.2");
+        (s.style as CSSStyleDeclaration).filter =
+          glow && on
+            ? "drop-shadow(0 0 7px oklch(0.82 0.155 165 / 0.8))"
+            : lead
+              ? "drop-shadow(0 0 4px oklch(0.82 0.155 165 / 0.7))"
+              : "none";
+      });
+    };
+
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.5, paused: true });
+    tl.set(counter, { v: 0 })
       .set(q(".lt-chip"), { opacity: 0, y: 8 })
-      .set(counter, { v: 0 })
       .add(() => {
         if (numEl) numEl.textContent = "0.00";
+        if (lbl) {
+          lbl.textContent = "VERIFY";
+          lbl.style.color = "#8f8d86";
+        }
+        paintSegs(0);
       })
-      // the sweep: digits blur past, hand + arc race, then snap
+      // segments illuminate in sequence while the digits race
       .to(counter, {
         v: 0.18,
-        duration: 1.15,
+        duration: 1.2,
         ease: "power2.out",
         onUpdate: () => {
           if (numEl) numEl.textContent = counter.v.toFixed(2);
+          paintSegs(counter.v / 0.18);
         },
       })
-      .to(q(".lt-hand"), { rotation: SWEEP_DEG, duration: 1.15, ease: "power2.out" }, "<")
-      .to(
-        arc,
-        {
-          strokeDashoffset: DIAL_C - (DIAL_C * SWEEP_DEG) / 360,
-          duration: 1.15,
-          ease: "power2.out",
-        },
-        "<"
-      )
-      // the click: flash ring + tiny recoil on the hand, like a real chrono stop
-      .fromTo(
-        q(".lt-flash"),
-        { opacity: 0, scale: 0.92 },
-        { opacity: 1, scale: 1.06, duration: 0.16, yoyo: true, repeat: 1, ease: "power1.out" }
-      )
-      .to(q(".lt-hand"), { rotation: SWEEP_DEG - 3, duration: 0.1, yoyo: true, repeat: 1 }, "<");
+      // the "verified" beat: all lit segments pulse + label swaps
+      .add(() => {
+        if (lbl) {
+          lbl.textContent = "VERIFIED ✓";
+          lbl.style.color = "var(--verify)";
+        }
+        paintSegs(1, true);
+      })
+      .to({}, { duration: 0.22 })
+      .add(() => paintSegs(1, false));
 
-    // verification chips take turns under the dial
+    // rotating verification feed under the dial
     q(".lt-chip").forEach((chip) => {
-      tl.to(chip, { opacity: 1, y: 0, duration: 0.35, ease: EASE }).to(chip, {
+      tl.to(chip, { opacity: 1, y: 0, duration: 0.35, ease: EASE }, "<0.1").to(chip, {
         opacity: 0,
         y: -6,
         duration: 0.3,
-        delay: 1.05,
+        delay: 0.85,
       });
     });
-    tl.to({}, { duration: 0.4 });
+    tl.to({}, { duration: 0.3 });
     return tl;
   });
 
@@ -406,83 +432,44 @@ function LatencyTile() {
         tileShadow
       )}
     >
-      {/* stopwatch */}
+      {/* segmented ring */}
       <div className="relative mt-1">
-        <svg viewBox="0 0 140 140" className="h-[168px] w-[168px]" aria-hidden="true">
-          {/* crown */}
-          <rect x="66" y="1" width="8" height="7" rx="2" fill="oklch(0.4 0.03 168)" />
-          {/* ticks */}
-          {Array.from({ length: 40 }, (_, i) => {
-            const major = i % 5 === 0;
-            const a = (i * 9 * Math.PI) / 180;
-            const r1 = major ? 59 : 62;
-            const x1 = 70 + r1 * Math.sin(a);
-            const y1 = 70 - r1 * Math.cos(a);
-            const x2 = 70 + 65 * Math.sin(a);
-            const y2 = 70 - 65 * Math.cos(a);
+        <svg viewBox="0 0 140 140" className="h-[176px] w-[176px]" aria-hidden="true">
+          {Array.from({ length: RING.N }, (_, i) => {
+            const s = ringSeg(i);
             return (
               <line
                 key={i}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke={major ? "oklch(0.6 0.04 168)" : "oklch(0.35 0.025 168)"}
-                strokeWidth={major ? 2 : 1}
+                className="lt-seg"
+                x1={s.x1}
+                y1={s.y1}
+                x2={s.x2}
+                y2={s.y2}
+                stroke={reduced ? "var(--verify)" : "var(--line)"}
+                strokeWidth={3.2}
                 strokeLinecap="round"
               />
             );
           })}
-          {/* progress arc */}
-          <circle
-            className="lt-arc"
-            cx="70"
-            cy="70"
-            r={DIAL_R}
-            fill="none"
-            stroke="var(--verify)"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            transform="rotate(-90 70 70)"
-            style={{
-              strokeDasharray: DIAL_C,
-              strokeDashoffset: reduced ? DIAL_C - (DIAL_C * SWEEP_DEG) / 360 : DIAL_C,
-              filter: "drop-shadow(0 0 6px oklch(0.82 0.155 165 / 0.5))",
-            }}
-          />
-          {/* stop flash */}
-          <circle
-            className="lt-flash"
-            cx="70"
-            cy="70"
-            r={DIAL_R}
-            fill="none"
-            stroke="var(--verify-strong)"
-            strokeWidth="1.5"
-            opacity={0}
-          />
-          {/* hand */}
-          <g
-            className="lt-hand"
-            style={reduced ? { transform: `rotate(${SWEEP_DEG}deg)`, transformOrigin: "70px 70px" } : undefined}
-          >
-            <line x1="70" y1="70" x2="70" y2="20" stroke="var(--verify-strong)" strokeWidth="2.5" strokeLinecap="round" />
-            <circle cx="70" cy="70" r="4" fill="var(--verify-strong)" />
-            <circle cx="70" cy="70" r="1.8" fill="oklch(0.16 0.02 168)" />
-          </g>
         </svg>
-        {/* digits inside the dial */}
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center pt-9">
-          <p className="font-mono text-[1.55rem] font-medium leading-none text-verify">
+        {/* digits + label centered in the ring */}
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <p className="font-mono text-[2rem] font-medium leading-none text-verify">
             <span className="lt-num">{reduced ? "0.18" : "0.00"}</span>
-            <span className="text-[0.8rem] text-ink-2">s</span>
+            <span className="text-[0.95rem] text-ink-2">s</span>
+          </p>
+          <p
+            className="lt-lbl mt-1.5 font-mono text-[10px] uppercase tracking-[0.18em]"
+            style={{ color: reduced ? "var(--verify)" : "#8f8d86" }}
+          >
+            {reduced ? "VERIFIED ✓" : "VERIFY"}
           </p>
         </div>
       </div>
 
-      <p className="mt-3 text-center text-[0.92rem] text-ink-2">{t("label")}</p>
+      <p className="mt-2 text-center text-[0.92rem] text-ink-2">{t("label")}</p>
 
-      {/* one verification chip at a time, under the dial */}
+      {/* one verification at a time, under the dial */}
       <div className="relative mt-4 h-9 w-full" aria-hidden="true">
         {feed.map((row, i) => (
           <p
