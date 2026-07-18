@@ -1,43 +1,248 @@
 {
   "meta": {
-    "title": "Glemo — Credentials that prove themselves",
-    "description": "The neutral verification network. Issue tamper-proof credentials and verify any credential, from any issuer, in one API call. No crypto knowledge required."
+    "title": "Glemo · Credentials that prove themselves",
+    "description": "Design beautiful certificates, send thousands in one go, and let anyone check they're real in seconds. No more chasing issuers or trusting whatever a PDF says."
   },
   "announcement": {
-    "text": "Design-partner program now open",
-    "cta": "Apply"
+    "text": "We're choosing our first design partners",
+    "cta": "Join them"
   },
   "nav": {
     "product": "Product",
     "developers": "Developers",
-    "institutions": "Institutions",
+    "institutions": "Who it's for",
     "faq": "FAQ",
-    "cta": "Start building"
+    "cta": "Start free"
   },
   "hero": {
     "titleA": "Credentials that",
     "titleB": "prove themselves.",
-    "sub": "Glemo is the neutral verification network: issue tamper-proof credentials in minutes, and verify any credential — from any issuer — in one API call. No crypto knowledge required, on either side.",
-    "ctaPrimary": "Start building",
+    "sub": "Design beautiful certificates, send thousands in one go, and let anyone check they're real in seconds. No more chasing issuers or trusting whatever a PDF says.",
+    "ctaPrimary": "Start free",
     "ctaSecondary": "Book a demo",
-    "microTrust": "Built on open standards · W3C Verifiable Credentials · Open Badges 3.0 · GDPR-ready",
-    "issuersLabel": "issuers",
-    "verifiersLabel": "verifiers",
-    "coreLabel": "verification network",
-    "nodes": {
-      "university": "University",
-      "bootcamp": "Bootcamp",
-      "academy": "Academy",
-      "event": "Hackathon",
-      "employer": "Employer",
-      "platform": "Platform",
-      "hrTool": "HR system",
-      "marketplace": "Marketplace"
+    "microTrust": "Open standards · GDPR-ready · Nothing to install",
+    "verifiedChip": "Verified · 0.18s",
+    "cards": {
+      "diploma": {
+        "kind": "University degree",
+        "name": "María Torres",
+        "title": "B.A. Graphic Design",
+        "issuer": "Universidad del Valle",
+        "year": "Class of 2026"
+      },
+      "cert": {
+        "kind": "Professional certificate",
+        "name": "Daniel Reyes",
+        "title": "Cloud Architecture",
+        "issuer": "Andes Tech Academy",
+        "year": "2026"
+      },
+      "event": {
+        "kind": "Achievement",
+        "name": "Sofía Lin",
+        "title": "Hackathon Winner",
+        "issuer": "ETH Bogotá",
+        "year": "2026"
+      }
+    }
+  },
+  "usecases": {
+    "label": "Made for the people who certify people",
+    "items": [
+      "Universities",
+      "Bootcamps",
+      "Online academies",
+      "HR teams",
+      "Hackathons & events",
+      "Licensing bodies",
+      "Communities",
+      "Job platforms"
+    ]
+  },
+  "problem": {
+    "titleA": "Anyone can fake a PDF.",
+    "titleB": "Nobody checks.",
+    "body": "Faking a certificate takes ten minutes. Verifying one takes days of emails and calls, so most are never checked at all. That's how fake diplomas became a billion-dollar business.",
+    "chips": [
+      "diploma_FINAL_v3.pdf",
+      "✎ edited: yesterday",
+      "skills: all of them",
+      "issued by: trust me",
+      "reference: my cousin"
+    ],
+    "stats": [
+      {
+        "value": "$21B",
+        "label": "the yearly fake-credential economy"
+      },
+      {
+        "value": "3–5 days",
+        "label": "to check one credential by hand"
+      },
+      {
+        "value": "46%",
+        "label": "how often fraud tools actually catch it"
+      }
+    ],
+    "statsNote": "Sources: Parchment, Velocity Network Foundation, Liminal, 2025."
+  },
+  "action": {
+    "title": "Watch it work.",
+    "sub": "This is the whole journey, from a blank page to a credential anyone can trust.",
+    "steps": [
+      {
+        "name": "Design",
+        "desc": "Start from a template or a blank canvas, add your logo and your colors, and have it ready in minutes."
+      },
+      {
+        "name": "Issue",
+        "desc": "One person or a whole cohort. Upload a spreadsheet, press go, done."
+      },
+      {
+        "name": "Deliver",
+        "desc": "Everyone gets theirs by email, with a page they can share anywhere, LinkedIn included."
+      },
+      {
+        "name": "Verify",
+        "desc": "Employers and platforms check any credential in under a second, without an account and without calling anyone."
+      },
+      {
+        "name": "Audit",
+        "desc": "Every check leaves a trace. You can revoke, expire or export whenever you want."
+      }
+    ],
+    "scene": {
+      "toolLogo": "Logo",
+      "toolName": "Recipient name",
+      "toolQr": "QR code",
+      "certTitle": "Certificate of Completion",
+      "certCourse": "Product Design · 2026",
+      "recipients": [
+        "María Torres",
+        "Daniel Reyes",
+        "Sofía Lin"
+      ],
+      "moreRecipients": "+1,844 more",
+      "issueButton": "Issue all",
+      "issuedChip": "1,847 issued",
+      "emailSubject": "Your credential is here 🎓",
+      "emailFrom": "Andes Tech Academy",
+      "walletShare": "Share to LinkedIn",
+      "verifyPlaceholder": "Paste any credential link…",
+      "verifyChecks": [
+        "Issuer ✓",
+        "Holder ✓",
+        "Not revoked ✓"
+      ],
+      "verifiedIn": "verified in 0.18s",
+      "auditRows": [
+        [
+          "14:02",
+          "hr-platform.co",
+          "verified ✓"
+        ],
+        [
+          "13:47",
+          "employer portal",
+          "verified ✓"
+        ],
+        [
+          "11:20",
+          "credential #291",
+          "revoked by issuer"
+        ]
+      ],
+      "auditExport": "Export CSV"
+    }
+  },
+  "bento": {
+    "title": "The small things that make the difference",
+    "journey": {
+      "label": "One credential's life",
+      "steps": [
+        "Issued",
+        "Emailed",
+        "Verified ×12",
+        "On LinkedIn"
+      ]
     },
-    "pulse": "verified"
+    "whitelabel": {
+      "title": "Your brand, not ours",
+      "body": "Slide it: with our badge, or with none at all.",
+      "before": "With badge",
+      "after": "White-label"
+    },
+    "latency": {
+      "value": "0.18s",
+      "label": "median time to verify",
+      "note": "faster than a doubt"
+    },
+    "nolockin": {
+      "title": "Works even without us",
+      "body": "Everything follows open standards. Export it whenever you want and it keeps verifying without us.",
+      "chips": [
+        "W3C VC",
+        "Open Badges 3.0",
+        "Export anytime"
+      ]
+    },
+    "bulk": {
+      "value": "2,000",
+      "label": "credentials in 4 minutes",
+      "note": "spreadsheet in, certificates out"
+    }
+  },
+  "audiences": {
+    "title": "Who is Glemo for?",
+    "tabs": [
+      {
+        "id": "issuers",
+        "label": "People who certify",
+        "headline": "Universities, bootcamps, academies, events.",
+        "points": [
+          "Certificates that look like you, not like a template",
+          "Send one or thousands, same effort",
+          "Your students share them with one click",
+          "Revoke or expire any credential, anytime"
+        ]
+      },
+      {
+        "id": "verifiers",
+        "label": "Teams who need to trust",
+        "headline": "HR teams, platforms, marketplaces.",
+        "points": [
+          "Check any credential in under a second",
+          "A widget you can drop into your product",
+          "Works for credentials from any issuer",
+          "No more calling universities"
+        ]
+      },
+      {
+        "id": "developers",
+        "label": "Builders",
+        "headline": "One clean API for both sides.",
+        "points": [
+          "REST + webhooks that behave like you'd expect",
+          "Sandbox keys, first verification in minutes",
+          "Open standards underneath, no lock-in",
+          "Docs written by people who read docs"
+        ]
+      }
+    ]
+  },
+  "dev": {
+    "title": "For developers, it's one call",
+    "body": "A REST API that behaves. Verify anything, even credentials you didn't issue, and get an answer you can act on.",
+    "docs": "Read the docs",
+    "tabs": {
+      "curl": "cURL",
+      "node": "Node.js",
+      "python": "Python"
+    },
+    "responseNote": "Product preview: the API you'll integrate."
   },
   "standards": {
-    "label": "Interoperable by design",
+    "label": "Built on open standards",
     "items": [
       "W3C Verifiable Credentials",
       "Open Badges 3.0",
@@ -47,144 +252,56 @@
       "REST + Webhooks"
     ]
   },
-  "problem": {
-    "titleA": "Anyone can fake a PDF.",
-    "titleB": "No one should have to trust one.",
-    "body": "AI made forging diplomas, certificates and CVs trivial. Verifying them still means emails, phone calls and days of waiting — so most credentials are never checked at all.",
-    "stats": [
-      { "value": "$21B", "label": "lost to academic fraud every year" },
-      { "value": "3–5 days", "label": "for a manual education or employment check" },
-      { "value": "46%", "label": "average success rate of current fraud tools" }
-    ],
-    "statsNote": "Sources: Parchment, Velocity Network Foundation, Liminal — 2025."
-  },
-  "how": {
-    "title": "From issued to verified in milliseconds",
-    "steps": [
-      {
-        "num": "01",
-        "name": "Issue",
-        "body": "Design and issue tamper-proof credentials — one at a time, or thousands from a spreadsheet. Recipients get theirs by email: no wallet, no app, no jargon.",
-        "mono": "POST /v1/credentials → 201 created"
-      },
-      {
-        "num": "02",
-        "name": "Hold",
-        "body": "Every credential is built on open standards, portable anywhere, and belongs to its holder. It keeps working — even without Glemo.",
-        "mono": "format: w3c-vc / ob-3.0 · portable: true"
-      },
-      {
-        "num": "03",
-        "name": "Verify",
-        "body": "Any platform, employer or system checks authenticity in a single call — without ever contacting the issuer.",
-        "mono": "status: verified ✓ · 180ms"
-      }
-    ]
-  },
-  "features": {
-    "title": "Everything issuers need. Nothing recipients have to learn.",
-    "scenes": [
-      {
-        "title": "A design studio for credentials",
-        "body": "A visual editor with your branding, dynamic fields and bulk issuance from a spreadsheet. Certificates and badges that look like you — not like a template.",
-        "mono": "bulk: 2,000 recipients · 4 min"
-      },
-      {
-        "title": "Delivery without friction",
-        "body": "Recipients receive a link by email and a public verification page. Sharing to LinkedIn takes one click. Zero crypto steps, for anyone, ever.",
-        "mono": "delivery: email · wallet: invisible"
-      },
-      {
-        "title": "Revocation and audit, built in",
-        "body": "Revoke or expire any credential at any time. Every verification is logged, so your audit trail writes itself.",
-        "mono": "revoked_at: null · checks: logged"
-      }
-    ]
-  },
-  "dev": {
-    "title": "Ship verification in an afternoon",
-    "body": "A clean REST API and SDKs. Verify any credential — including ones you didn't issue — with a single call, and get a signed answer you can trust.",
-    "docs": "Read the docs",
-    "tabs": { "curl": "cURL", "node": "Node.js", "python": "Python" },
-    "responseNote": "Live product preview — the API you'll integrate."
-  },
-  "audiences": {
-    "title": "Two sides. One network.",
-    "tabs": [
-      {
-        "id": "verifiers",
-        "label": "For platforms & employers",
-        "headline": "Trust any credential without doing the chasing.",
-        "points": [
-          "One API to verify credentials from any issuer",
-          "Embeddable verification widget for your product",
-          "Answers in milliseconds, not days",
-          "No integration work for each new issuer"
-        ]
-      },
-      {
-        "id": "issuers",
-        "label": "For institutions",
-        "headline": "Issue credentials people can actually trust.",
-        "points": [
-          "Visual studio, your branding, bulk issuance",
-          "Recipients need zero technical knowledge",
-          "Verifiable forever — even if you change platforms",
-          "Revocation, expiry and audit built in"
-        ]
-      },
-      {
-        "id": "developers",
-        "label": "For developers",
-        "headline": "Credential infrastructure that feels like a modern API.",
-        "points": [
-          "REST + webhooks, sensible errors, real docs",
-          "SDKs and an embeddable verify widget",
-          "Open standards under the hood — no lock-in",
-          "Sandbox keys to start in minutes"
-        ]
-      }
-    ]
-  },
   "faq": {
     "title": "Fair questions",
     "items": [
       {
         "q": "Do I need to know anything about blockchain?",
-        "a": "No. Neither do your recipients or your verifiers. Glemo uses cryptographic infrastructure under the hood, but every surface you touch is email, links and a REST API."
+        "a": "No. Nobody does, not you, not your students, not the person checking. You'll see email, links and a dashboard. The heavy cryptography stays where it belongs: out of sight."
       },
       {
-        "q": "What happens to credentials if Glemo disappears?",
-        "a": "They keep working. Credentials are built on open standards (W3C Verifiable Credentials, Open Badges 3.0) and are exportable and verifiable independently of us. No lock-in is a design requirement, not a promise."
+        "q": "What happens if Glemo disappears?",
+        "a": "Your credentials keep working. They're built on open standards, so they can be exported and verified without us. We think that's the only honest way to build this."
       },
       {
-        "q": "Can I verify a credential that wasn't issued on Glemo?",
-        "a": "That's the point of the network. Glemo verifies standards-based credentials from any compliant issuer — and our roadmap extends verification to sources that never adopted standards at all."
+        "q": "Can my recipients mess it up?",
+        "a": "There's nothing to mess up. They get an email with a link. That's the whole experience, no wallet, no password, no app to install."
       },
       {
         "q": "Where does personal data live?",
-        "a": "Off any public infrastructure. Personal data stays in conventional, GDPR-compliant storage; only cryptographic proofs are anchored publicly. Deleting a person's data remains possible — by design."
+        "a": "In normal, GDPR-compliant storage that can be edited or deleted, never on anything public or permanent. Only tamper-proof fingerprints are anchored publicly."
       },
       {
         "q": "What does it cost?",
-        "a": "Issuing is designed to be accessible for institutions of any size; verification is billed per check for platforms at volume. We're onboarding design partners now — early terms are generous."
+        "a": "Issuing is priced so any institution can afford it; heavy verification is billed per check. Design partners get generous early terms, that could be you."
       }
     ]
   },
   "cta": {
-    "title": "Start verifying today",
-    "body": "Join the design-partner program: build with the API, or bring verifiable credentials to your institution.",
-    "primary": "Start building",
+    "title": "Give your credentials a checkmark",
+    "body": "We're picking a small group of design partners. Build with the API, or bring Glemo to your institution.",
+    "primary": "Start free",
     "secondary": "Book a demo"
   },
   "footer": {
-    "tagline": "The neutral verification network for the world's credentials.",
+    "tagline": "Credentials people can trust, from anywhere, forever.",
     "product": "Product",
-    "productLinks": { "how": "How it works", "features": "For institutions", "audiences": "For platforms" },
+    "productLinks": {
+      "how": "Watch it work",
+      "features": "Who it's for",
+      "audiences": "The details"
+    },
     "developersCol": "Developers",
-    "developersLinks": { "api": "API preview", "standards": "Open standards", "faq": "FAQ" },
+    "developersLinks": {
+      "api": "API preview",
+      "standards": "Open standards",
+      "faq": "FAQ"
+    },
     "company": "Company",
-    "companyLinks": { "partners": "Design partners", "contact": "Contact" },
+    "companyLinks": {
+      "partners": "Design partners",
+      "contact": "Contact"
+    },
     "language": "Language",
     "rights": "© {year} Glemo. All rights reserved."
   }

@@ -1,43 +1,248 @@
 {
   "meta": {
-    "title": "Glemo — Credenciales que se prueban solas",
-    "description": "La red neutral de verificación. Emite credenciales infalsificables y verifica cualquier credencial, de cualquier emisor, en una sola llamada de API. Sin necesidad de saber de cripto."
+    "title": "Glemo · Credenciales que se prueban solas",
+    "description": "Diseña certificados hermosos, envía miles de una vez, y deja que cualquiera compruebe que son reales en segundos. Se acabó perseguir emisores o confiar en lo que diga un PDF."
   },
   "announcement": {
-    "text": "Programa de design partners abierto",
-    "cta": "Aplicar"
+    "text": "Estamos eligiendo a nuestros primeros design partners",
+    "cta": "Únete"
   },
   "nav": {
     "product": "Producto",
     "developers": "Developers",
-    "institutions": "Instituciones",
+    "institutions": "Para quién",
     "faq": "FAQ",
-    "cta": "Empieza a construir"
+    "cta": "Empieza gratis"
   },
   "hero": {
     "titleA": "Credenciales que",
     "titleB": "se prueban solas.",
-    "sub": "Glemo es la red neutral de verificación: emite credenciales infalsificables en minutos y verifica cualquier credencial — de cualquier emisor — en una sola llamada de API. Sin saber de cripto, en ningún lado.",
-    "ctaPrimary": "Empieza a construir",
+    "sub": "Diseña certificados hermosos, envía miles de una vez, y deja que cualquiera compruebe que son reales en segundos. Se acabó perseguir emisores o confiar en lo que diga un PDF.",
+    "ctaPrimary": "Empieza gratis",
     "ctaSecondary": "Agenda una demo",
-    "microTrust": "Sobre estándares abiertos · W3C Verifiable Credentials · Open Badges 3.0 · GDPR-ready",
-    "issuersLabel": "emisores",
-    "verifiersLabel": "verificadores",
-    "coreLabel": "red de verificación",
-    "nodes": {
-      "university": "Universidad",
-      "bootcamp": "Bootcamp",
-      "academy": "Academia",
-      "event": "Hackathon",
-      "employer": "Empleador",
-      "platform": "Plataforma",
-      "hrTool": "Sistema de RRHH",
-      "marketplace": "Marketplace"
+    "microTrust": "Estándares abiertos · GDPR-ready · Nada que instalar",
+    "verifiedChip": "Verificado · 0.18s",
+    "cards": {
+      "diploma": {
+        "kind": "Título universitario",
+        "name": "María Torres",
+        "title": "Diseño Gráfico",
+        "issuer": "Universidad del Valle",
+        "year": "Promoción 2026"
+      },
+      "cert": {
+        "kind": "Certificado profesional",
+        "name": "Daniel Reyes",
+        "title": "Cloud Architecture",
+        "issuer": "Andes Tech Academy",
+        "year": "2026"
+      },
+      "event": {
+        "kind": "Logro",
+        "name": "Sofía Lin",
+        "title": "Ganadora del Hackathon",
+        "issuer": "ETH Bogotá",
+        "year": "2026"
+      }
+    }
+  },
+  "usecases": {
+    "label": "Hecho para quienes certifican a las personas",
+    "items": [
+      "Universidades",
+      "Bootcamps",
+      "Academias online",
+      "Equipos de RRHH",
+      "Hackathons y eventos",
+      "Entidades de licencias",
+      "Comunidades",
+      "Plataformas de empleo"
+    ]
+  },
+  "problem": {
+    "titleA": "Cualquiera puede falsificar un PDF.",
+    "titleB": "Nadie lo comprueba.",
+    "body": "Falsificar un certificado toma diez minutos. Verificarlo toma días de correos y llamadas, así que la mayoría nunca se revisa. Así fue como los diplomas falsos se volvieron un negocio de miles de millones.",
+    "chips": [
+      "diploma_FINAL_v3.pdf",
+      "✎ editado: ayer",
+      "habilidades: todas",
+      "emitido por: confía en mí",
+      "referencia: mi primo"
+    ],
+    "stats": [
+      {
+        "value": "$21B",
+        "label": "mueve al año la economía de credenciales falsas"
+      },
+      {
+        "value": "3–5 días",
+        "label": "toma revisar una credencial a mano"
+      },
+      {
+        "value": "46%",
+        "label": "de las veces las herramientas anti-fraude lo detectan"
+      }
+    ],
+    "statsNote": "Fuentes: Parchment, Velocity Network Foundation, Liminal, 2025."
+  },
+  "action": {
+    "title": "Míralo funcionar.",
+    "sub": "De una página en blanco a una credencial en la que cualquiera puede confiar, este es el viaje completo.",
+    "steps": [
+      {
+        "name": "Diseña",
+        "desc": "Parte de una plantilla o de un lienzo en blanco, ponle tu logo y tus colores, y tenlo listo en minutos."
+      },
+      {
+        "name": "Emite",
+        "desc": "Una persona o toda una cohorte. Sube una hoja de cálculo, dale al botón, listo."
+      },
+      {
+        "name": "Entrega",
+        "desc": "Cada quien recibe la suya por email, con una página para compartir donde sea, LinkedIn incluido."
+      },
+      {
+        "name": "Verifica",
+        "desc": "Empleadores y plataformas comprueban cualquier credencial en menos de un segundo, sin crear cuentas y sin llamar a nadie."
+      },
+      {
+        "name": "Audita",
+        "desc": "Cada verificación deja rastro. Puedes revocar, expirar o exportar cuando quieras."
+      }
+    ],
+    "scene": {
+      "toolLogo": "Logo",
+      "toolName": "Nombre",
+      "toolQr": "Código QR",
+      "certTitle": "Certificado de Finalización",
+      "certCourse": "Diseño de Producto · 2026",
+      "recipients": [
+        "María Torres",
+        "Daniel Reyes",
+        "Sofía Lin"
+      ],
+      "moreRecipients": "+1,844 más",
+      "issueButton": "Emitir todo",
+      "issuedChip": "1,847 emitidas",
+      "emailSubject": "Tu credencial está aquí 🎓",
+      "emailFrom": "Andes Tech Academy",
+      "walletShare": "Compartir en LinkedIn",
+      "verifyPlaceholder": "Pega cualquier enlace de credencial…",
+      "verifyChecks": [
+        "Emisor ✓",
+        "Titular ✓",
+        "No revocada ✓"
+      ],
+      "verifiedIn": "verificada en 0.18s",
+      "auditRows": [
+        [
+          "14:02",
+          "hr-platform.co",
+          "verificada ✓"
+        ],
+        [
+          "13:47",
+          "portal de empleo",
+          "verificada ✓"
+        ],
+        [
+          "11:20",
+          "credencial #291",
+          "revocada por el emisor"
+        ]
+      ],
+      "auditExport": "Exportar CSV"
+    }
+  },
+  "bento": {
+    "title": "Los detalles que hacen la diferencia",
+    "journey": {
+      "label": "La vida de una credencial",
+      "steps": [
+        "Emitida",
+        "Enviada",
+        "Verificada ×12",
+        "En LinkedIn"
+      ]
     },
-    "pulse": "verificado"
+    "whitelabel": {
+      "title": "Tu marca, no la nuestra",
+      "body": "Deslízalo: con nuestro sello, o sin nada.",
+      "before": "Con sello",
+      "after": "White-label"
+    },
+    "latency": {
+      "value": "0.18s",
+      "label": "tiempo medio de verificación",
+      "note": "más rápido que una duda"
+    },
+    "nolockin": {
+      "title": "Funciona incluso sin nosotros",
+      "body": "Todo sigue estándares abiertos. Expórtalo cuando quieras y seguirá verificándose sin nosotros.",
+      "chips": [
+        "W3C VC",
+        "Open Badges 3.0",
+        "Exporta cuando sea"
+      ]
+    },
+    "bulk": {
+      "value": "2,000",
+      "label": "credenciales en 4 minutos",
+      "note": "entra una hoja de cálculo, salen certificados"
+    }
+  },
+  "audiences": {
+    "title": "¿Para quién es Glemo?",
+    "tabs": [
+      {
+        "id": "issuers",
+        "label": "Quienes certifican",
+        "headline": "Universidades, bootcamps, academias, eventos.",
+        "points": [
+          "Certificados que se ven como tú, no como una plantilla",
+          "Envía uno o miles, el mismo esfuerzo",
+          "Tus estudiantes los comparten con un clic",
+          "Revoca o expira cualquier credencial, cuando sea"
+        ]
+      },
+      {
+        "id": "verifiers",
+        "label": "Quienes necesitan confiar",
+        "headline": "Equipos de RRHH, plataformas, marketplaces.",
+        "points": [
+          "Comprueba cualquier credencial en menos de un segundo",
+          "Un widget que insertas en tu producto",
+          "Funciona con credenciales de cualquier emisor",
+          "Se acabó llamar a universidades"
+        ]
+      },
+      {
+        "id": "developers",
+        "label": "Builders",
+        "headline": "Una API limpia para ambos lados.",
+        "points": [
+          "REST + webhooks que se comportan como esperas",
+          "Llaves sandbox, primera verificación en minutos",
+          "Estándares abiertos por debajo, sin lock-in",
+          "Docs escritas por gente que lee docs"
+        ]
+      }
+    ]
+  },
+  "dev": {
+    "title": "Para developers, es una llamada",
+    "body": "Una API REST que se porta bien. Verifica lo que sea, incluso credenciales que no emitiste, y recibe una respuesta con la que puedes actuar.",
+    "docs": "Lee la documentación",
+    "tabs": {
+      "curl": "cURL",
+      "node": "Node.js",
+      "python": "Python"
+    },
+    "responseNote": "Vista previa del producto: la API que vas a integrar."
   },
   "standards": {
-    "label": "Interoperable por diseño",
+    "label": "Sobre estándares abiertos",
     "items": [
       "W3C Verifiable Credentials",
       "Open Badges 3.0",
@@ -47,144 +252,56 @@
       "REST + Webhooks"
     ]
   },
-  "problem": {
-    "titleA": "Cualquiera puede falsificar un PDF.",
-    "titleB": "Nadie debería tener que confiar en uno.",
-    "body": "La IA volvió trivial falsificar diplomas, certificados y CVs. Verificarlos sigue siendo correos, llamadas y días de espera — así que la mayoría de credenciales nunca se verifican.",
-    "stats": [
-      { "value": "$21B", "label": "perdidos cada año por fraude académico" },
-      { "value": "3–5 días", "label": "toma un chequeo manual de educación o empleo" },
-      { "value": "46%", "label": "efectividad promedio de las herramientas anti-fraude actuales" }
-    ],
-    "statsNote": "Fuentes: Parchment, Velocity Network Foundation, Liminal — 2025."
-  },
-  "how": {
-    "title": "De emitida a verificada en milisegundos",
-    "steps": [
-      {
-        "num": "01",
-        "name": "Emitir",
-        "body": "Diseña y emite credenciales infalsificables — una a una o miles desde una hoja de cálculo. Cada persona recibe la suya por email: sin wallet, sin app, sin jerga.",
-        "mono": "POST /v1/credentials → 201 created"
-      },
-      {
-        "num": "02",
-        "name": "Portar",
-        "body": "Cada credencial está construida sobre estándares abiertos, es portable a cualquier lugar y pertenece a su titular. Sigue funcionando — incluso sin Glemo.",
-        "mono": "format: w3c-vc / ob-3.0 · portable: true"
-      },
-      {
-        "num": "03",
-        "name": "Verificar",
-        "body": "Cualquier plataforma, empleador o sistema comprueba la autenticidad en una sola llamada — sin contactar jamás al emisor.",
-        "mono": "status: verified ✓ · 180ms"
-      }
-    ]
-  },
-  "features": {
-    "title": "Todo lo que un emisor necesita. Nada que el receptor tenga que aprender.",
-    "scenes": [
-      {
-        "title": "Un estudio de diseño para credenciales",
-        "body": "Editor visual con tu marca, campos dinámicos y emisión masiva desde una hoja de cálculo. Certificados e insignias que se ven como tú — no como una plantilla.",
-        "mono": "bulk: 2,000 destinatarios · 4 min"
-      },
-      {
-        "title": "Entrega sin fricción",
-        "body": "Cada persona recibe un enlace por email y una página pública de verificación. Compartir en LinkedIn toma un clic. Cero pasos cripto, para todos, siempre.",
-        "mono": "entrega: email · wallet: invisible"
-      },
-      {
-        "title": "Revocación y auditoría integradas",
-        "body": "Revoca o expira cualquier credencial cuando quieras. Cada verificación queda registrada: tu trazabilidad se escribe sola.",
-        "mono": "revoked_at: null · checks: logged"
-      }
-    ]
-  },
-  "dev": {
-    "title": "Integra verificación en una tarde",
-    "body": "Una API REST limpia y SDKs. Verifica cualquier credencial — incluso las que no emitiste — con una sola llamada, y recibe una respuesta firmada en la que puedes confiar.",
-    "docs": "Lee la documentación",
-    "tabs": { "curl": "cURL", "node": "Node.js", "python": "Python" },
-    "responseNote": "Vista previa del producto — la API que vas a integrar."
-  },
-  "audiences": {
-    "title": "Dos lados. Una red.",
-    "tabs": [
-      {
-        "id": "verifiers",
-        "label": "Plataformas y empleadores",
-        "headline": "Confía en cualquier credencial sin perseguir a nadie.",
-        "points": [
-          "Una API para verificar credenciales de cualquier emisor",
-          "Widget de verificación embebible en tu producto",
-          "Respuestas en milisegundos, no en días",
-          "Cero trabajo de integración por cada emisor nuevo"
-        ]
-      },
-      {
-        "id": "issuers",
-        "label": "Instituciones",
-        "headline": "Emite credenciales en las que sí se puede confiar.",
-        "points": [
-          "Estudio visual, tu marca, emisión masiva",
-          "Tus destinatarios no necesitan saber nada técnico",
-          "Verificables para siempre — aunque cambies de plataforma",
-          "Revocación, expiración y auditoría integradas"
-        ]
-      },
-      {
-        "id": "developers",
-        "label": "Developers",
-        "headline": "Infraestructura de credenciales que se siente como una API moderna.",
-        "points": [
-          "REST + webhooks, errores sensatos, docs de verdad",
-          "SDKs y widget de verificación embebible",
-          "Estándares abiertos por debajo — sin lock-in",
-          "Llaves sandbox para empezar en minutos"
-        ]
-      }
-    ]
-  },
   "faq": {
     "title": "Preguntas justas",
     "items": [
       {
         "q": "¿Necesito saber algo de blockchain?",
-        "a": "No. Ni tú, ni tus destinatarios, ni tus verificadores. Glemo usa infraestructura criptográfica por debajo, pero todas las superficies que tocas son email, enlaces y una API REST."
+        "a": "No. Nadie necesita, ni tú, ni tus estudiantes, ni quien comprueba. Verás email, enlaces y un dashboard. La criptografía pesada se queda donde debe estar: fuera de la vista."
       },
       {
-        "q": "¿Qué pasa con las credenciales si Glemo desaparece?",
-        "a": "Siguen funcionando. Están construidas sobre estándares abiertos (W3C Verifiable Credentials, Open Badges 3.0) y son exportables y verificables independientemente de nosotros. El no-lock-in es un requisito de diseño, no una promesa."
+        "q": "¿Qué pasa si Glemo desaparece?",
+        "a": "Tus credenciales siguen funcionando. Están construidas sobre estándares abiertos, así que se pueden exportar y verificar sin nosotros. Creemos que es la única forma honesta de construir esto."
       },
       {
-        "q": "¿Puedo verificar una credencial que no se emitió en Glemo?",
-        "a": "Ese es el punto de la red. Glemo verifica credenciales basadas en estándares de cualquier emisor compatible — y nuestro roadmap extiende la verificación a fuentes que nunca adoptaron estándares."
+        "q": "¿Mis destinatarios pueden dañar algo?",
+        "a": "No hay nada que dañar. Reciben un email con un enlace. Esa es toda la experiencia, sin wallet, sin contraseña, sin apps que instalar."
       },
       {
         "q": "¿Dónde viven los datos personales?",
-        "a": "Fuera de cualquier infraestructura pública. Los datos personales permanecen en almacenamiento convencional y compatible con GDPR; públicamente solo se anclan pruebas criptográficas. Borrar los datos de una persona sigue siendo posible — por diseño."
+        "a": "En almacenamiento normal y compatible con GDPR, que se puede editar o borrar, nunca en algo público o permanente. Públicamente solo se anclan huellas infalsificables."
       },
       {
         "q": "¿Cuánto cuesta?",
-        "a": "Emitir está diseñado para ser accesible a instituciones de cualquier tamaño; la verificación se cobra por chequeo a plataformas con volumen. Estamos incorporando design partners ahora — los términos tempranos son generosos."
+        "a": "Emitir tiene un precio que cualquier institución puede pagar; la verificación intensiva se cobra por chequeo. Los design partners reciben condiciones generosas, podrías ser tú."
       }
     ]
   },
   "cta": {
-    "title": "Empieza a verificar hoy",
-    "body": "Únete al programa de design partners: construye con la API, o trae credenciales verificables a tu institución.",
-    "primary": "Empieza a construir",
+    "title": "Dale a tus credenciales un checkmark",
+    "body": "Estamos eligiendo un grupo pequeño de design partners. Construye con la API, o trae Glemo a tu institución.",
+    "primary": "Empieza gratis",
     "secondary": "Agenda una demo"
   },
   "footer": {
-    "tagline": "La red neutral de verificación para las credenciales del mundo.",
+    "tagline": "Credenciales en las que la gente puede confiar, desde donde sea, para siempre.",
     "product": "Producto",
-    "productLinks": { "how": "Cómo funciona", "features": "Para instituciones", "audiences": "Para plataformas" },
+    "productLinks": {
+      "how": "Míralo funcionar",
+      "features": "Para quién",
+      "audiences": "Los detalles"
+    },
     "developersCol": "Developers",
-    "developersLinks": { "api": "Vista previa de la API", "standards": "Estándares abiertos", "faq": "FAQ" },
+    "developersLinks": {
+      "api": "Vista previa de la API",
+      "standards": "Estándares abiertos",
+      "faq": "FAQ"
+    },
     "company": "Compañía",
-    "companyLinks": { "partners": "Design partners", "contact": "Contacto" },
+    "companyLinks": {
+      "partners": "Design partners",
+      "contact": "Contacto"
+    },
     "language": "Idioma",
     "rights": "© {year} Glemo. Todos los derechos reservados."
   }

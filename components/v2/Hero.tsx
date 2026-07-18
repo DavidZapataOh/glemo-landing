@@ -5,12 +5,13 @@ import { useTranslations } from "next-intl";
 import { gsap, registerGsap, prefersReducedMotion, EASE } from "@/lib/motion";
 import Button from "./ui/Button";
 import VerifyStroke from "./ui/VerifyStroke";
-import NetworkCanvas from "./NetworkCanvas";
+import HeroStack from "./HeroStack";
 
 /**
- * Hero — the one fully-choreographed entrance on the page (Developios recipe:
- * overlapped offsets, back.out reserved for the primary CTA). The headline's
- * key phrase is "signed" by the verification stroke once the timeline lands.
+ * Hero v3 — graphic-first (the Privado/Proof lesson): copy on the left, the
+ * credential stack as the hero object on the right. One overlapped entrance
+ * timeline; back.out reserved for the primary CTA; the verification stroke
+ * signs the key phrase once everything lands.
  */
 export default function Hero() {
   const t = useTranslations("hero");
@@ -36,9 +37,9 @@ export default function Hero() {
         )
         .from(".hero-trust", { opacity: 0, duration: 0.5 }, "-=0.3")
         .from(
-          ".hero-net",
-          { y: 44, opacity: 0, scale: 0.985, duration: 0.9 },
-          "-=0.55"
+          ".hero-stack",
+          { y: 40, opacity: 0, scale: 0.97, duration: 0.9 },
+          "-=0.75"
         );
     }, rootRef);
 
@@ -47,56 +48,48 @@ export default function Hero() {
 
   return (
     <section ref={rootRef} className="relative overflow-hidden" id="top">
-      {/* single, quiet atmosphere: a low glow where the network core sits */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[68%] h-[520px] w-[820px] -translate-x-1/2 rounded-full opacity-60"
-        style={{
-          background:
-            "radial-gradient(closest-side, oklch(0.82 0.155 165 / 0.07), transparent 70%)",
-        }}
-      />
-
-      <div className="container-g flex flex-col items-center pb-10 pt-24 text-center sm:pt-28">
-        <h1 className="text-display font-bold text-ink">
-          <span className="block overflow-hidden pb-1">
-            <span className="hero-line-inner block">{t("titleA")}</span>
-          </span>
-          <span className="block overflow-hidden pb-3">
-            <span className="hero-line-inner relative inline-block">
-              {t("titleB")}
-              <VerifyStroke
-                delay={1.45}
-                className="absolute -bottom-2 left-0 h-[0.22em] w-full sm:-bottom-3"
-              />
+      <div className="container-g grid items-center gap-14 pb-16 pt-24 sm:pt-28 lg:grid-cols-[1fr_1.02fr] lg:gap-8 lg:pb-20">
+        <div className="text-center lg:text-left">
+          <h1 className="text-display font-bold text-ink lg:text-[clamp(2.5rem,4.35vw,4.35rem)]">
+            <span className="block overflow-hidden pb-1">
+              <span className="hero-line-inner block">{t("titleA")}</span>
             </span>
-          </span>
-        </h1>
+            <span className="block overflow-hidden pb-3">
+              <span className="hero-line-inner relative inline-block">
+                {t("titleB")}
+                <VerifyStroke
+                  delay={1.45}
+                  className="absolute -bottom-2 left-0 h-[0.22em] w-full sm:-bottom-3"
+                />
+              </span>
+            </span>
+          </h1>
 
-        <p className="hero-sub mt-7 max-w-[36rem] text-body text-ink-2">
-          {t("sub")}
-        </p>
+          <p className="hero-sub mx-auto mt-7 max-w-[33rem] text-body text-ink-2 lg:mx-0">
+            {t("sub")}
+          </p>
 
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
-          <span className="hero-cta-primary inline-flex">
-            <Button href="#developers" size="lg">
-              {t("ctaPrimary")}
-            </Button>
-          </span>
-          <span className="hero-cta-ghost inline-flex">
-            <Button href="#institutions" size="lg" variant="ghost">
-              {t("ctaSecondary")}
-            </Button>
-          </span>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3.5 lg:justify-start">
+            <span className="hero-cta-primary inline-flex">
+              <Button href="#cta" size="lg">
+                {t("ctaPrimary")}
+              </Button>
+            </span>
+            <span className="hero-cta-ghost inline-flex">
+              <Button href="#action" size="lg" variant="ghost">
+                {t("ctaSecondary")}
+              </Button>
+            </span>
+          </div>
+
+          <p className="hero-trust mt-8 font-mono text-[11.5px] uppercase tracking-[0.12em] text-ink-2/80">
+            {t("microTrust")}
+          </p>
         </div>
 
-        <p className="hero-trust mt-8 font-mono text-[11.5px] uppercase tracking-[0.12em] text-ink-2/80">
-          {t("microTrust")}
-        </p>
-      </div>
-
-      <div className="hero-net container-g">
-        <NetworkCanvas className="mx-auto h-[280px] w-full max-w-[1080px] sm:h-[360px] lg:h-[420px]" />
+        <div className="hero-stack">
+          <HeroStack />
+        </div>
       </div>
     </section>
   );

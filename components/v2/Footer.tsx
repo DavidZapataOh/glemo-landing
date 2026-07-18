@@ -15,7 +15,7 @@ export default function Footer() {
     {
       title: t("product"),
       links: [
-        { label: t("productLinks.how"), href: "#how" },
+        { label: t("productLinks.how"), href: "#action" },
         { label: t("productLinks.features"), href: "#institutions" },
         { label: t("productLinks.audiences"), href: "#audiences" },
       ],

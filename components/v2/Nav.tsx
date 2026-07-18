@@ -7,7 +7,7 @@ import { getLenis } from "@/lib/motion";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const LINKS = [
-  { id: "how", key: "product" },
+  { id: "action", key: "product" },
   { id: "developers", key: "developers" },
   { id: "institutions", key: "institutions" },
   { id: "faq", key: "faq" },
