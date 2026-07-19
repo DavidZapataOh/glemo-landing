@@ -2,20 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------------------------
+   Glemo landing v2 — token values (OKLCH).
+   Dark, green-tinted ink canvas; verification green is the ONLY color that
+   glows and it is reserved for CTAs, verified states, pulses and key words.
+--------------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark canvas */
+  --bg: oklch(0.15 0.012 170);
+  --surface: oklch(0.19 0.014 170);
+  --surface-2: oklch(0.24 0.016 170);
+  --ink: oklch(0.96 0.005 165);
+  --ink-2: oklch(0.75 0.015 168);
+  --line: oklch(1 0 0 / 0.09);
+
+  /* Paper band */
+  --paper: oklch(0.97 0.006 165);
+  --paper-ink: oklch(0.2 0.015 170);
+  --paper-ink-2: oklch(0.45 0.02 168);
+  --paper-line: oklch(0 0 0 / 0.1);
+
+  /* Verification green */
+  --verify: oklch(0.82 0.155 165);
+  --verify-strong: oklch(0.87 0.17 163);
+  --verify-ink: oklch(0.52 0.11 166);
+  --verify-dim: oklch(0.82 0.155 165 / 0.12);
+
+  --container-gutter: clamp(1.25rem, 4vw, 2.5rem);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-satoshi), system-ui, sans-serif;
+  /* Light-on-dark: body weight bumped one notch, slight tracking, taller leading */
+  font-weight: 500;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--verify);
+  color: oklch(0.17 0.03 170);
+}
+
+:focus-visible {
+  outline: 2px solid var(--verify);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Utilities
+-------------------------------------------------------------------------- */
+@layer components {
+  .container-g {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: var(--container-gutter);
+  }
+
+  /* Constant-speed marquee (duration set inline from measured width / 50 px/s) */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Terminal caret */
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: caret-blink 1.1s steps(1) infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion: everything settles instantly; ambient loops stop.
+-------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
 }

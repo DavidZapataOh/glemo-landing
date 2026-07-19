@@ -1,246 +1,334 @@
 {
-    "nav": {
-      "home": "Home",
-      "features": "Features", 
-      "ecosystem": "Ecosystem",
-      "tools": "Tools",
-      "login": "Go to App"
-    },
-    "hero": {
-      "badge": "REVOLUTIONIZING DIGITAL CERTIFICATION",
-      "title": "Certificates that",
-      "verify": "verify",
-      "your": "your",
-      "description": "Create and issue verifiable digital certificates on blockchain with an immersive and secure experience.",
-      "createTemplate": "Create template",
-      "verifyCertificate": "Verify certificate",
-      "secureVerification": "Secure verification",
-      "certificatesIssued": "Certificates issued",
-      "discoverMore": "Discover more",
-      "blockchainTechnology": "Blockchain technology",
-      "features": "Features",
-      "verifiableCredentials": "Verifiable Credentials",
-      "secure": "Secure",
-      "permanent": "Permanent",
-      "skills": "skills",
-      "expertise": "expertise",
-      "knowledge": "knowledge",
-      "achievements": "achievements"
-    },
-    "features": {
-      "title": "Main features",
-      "description": "Our platform combines cutting-edge blockchain technology with intuitive tools to revolutionize the creation and issuance of digital certificates.",
-      "startNow": "Start now",
-      "items": {
-        "customizable": {
-          "title": "Customizable templates",
-          "description": "Create unique designs with pixel-level precision for each text and image element in your certificates."
-        },
-        "blockchain": {
-          "title": "Blockchain storage",
-          "description": "All certificates are stored on IPFS and blockchain to ensure security, permanence and decentralization."
-        },
-        "mass": {
-          "title": "Mass issuance",
-          "description": "Issue multiple certificates in a single transaction to optimize costs and speed up the process."
-        },
-        "verification": {
-          "title": "Instant verification",
-          "description": "Any person can verify the authenticity of a certificate at any time using a QR code or direct link."
-        },
-        "gallery": {
-          "title": "3D Gallery",
-          "description": "Exhibit your certificates and badges in a customizable and shareable 3D space."
-        },
-        "api": {
-          "title": "API for integrations",
-          "description": "Connect with your existing systems using our API to automate the issuance and verification of certificates."
-        }
-      }
-    },
-    "gallery": {
-      "badge": "DIGITAL PORTFOLIO",
-      "title": "Your 3D",
-      "gallery": "Digital Gallery",
-      "description": "Showcase and organize your credentials in an immersive 3D environment that you can customize to reflect your professional journey.",
-      "personalizedRoom": {
-        "title": "Personalized 3D Room",
-        "description": "Arrange and showcase your certificates, badges, and moments in your own virtual space."
+  "meta": {
+    "title": "Glemo · Credentials that prove themselves",
+    "description": "Design beautiful certificates, send thousands in one go, and let anyone check they're real in seconds. No more chasing issuers or trusting whatever a PDF says."
+  },
+  "announcement": {
+    "text": "We're choosing our first design partners",
+    "cta": "Join them"
+  },
+  "nav": {
+    "product": "Product",
+    "developers": "Developers",
+    "institutions": "Who it's for",
+    "faq": "FAQ",
+    "cta": "Start free"
+  },
+  "hero": {
+    "titleA": "Credentials that",
+    "titleB": "prove themselves.",
+    "sub": "Design beautiful certificates, send thousands in one go, and let anyone check they're real in seconds. No more chasing issuers or trusting whatever a PDF says.",
+    "ctaPrimary": "Start free",
+    "ctaSecondary": "Book a demo",
+    "microTrust": "Open standards · GDPR-ready · Nothing to install",
+    "verifiedChip": "Verified · 0.18s",
+    "cards": {
+      "diploma": {
+        "kind": "University degree",
+        "name": "María Torres",
+        "title": "B.A. Graphic Design",
+        "issuer": "Universidad del Valle",
+        "year": "Class of 2026"
       },
-      "interactive": {
-        "title": "Interactive Experience",
-        "description": "Visitors can navigate through your achievements and interact with each credential."
+      "cert": {
+        "kind": "Professional certificate",
+        "name": "Daniel Reyes",
+        "title": "Cloud Architecture",
+        "issuer": "Andes Tech Academy",
+        "year": "2026"
       },
-      "customizable": {
-        "title": "Customizable Layout",
-        "description": "Organize your achievements by categories, timeline, or importance."
-      }
-    },
-    "ecosystem": {
-      "badge": "CREDENTIAL ECOSYSTEM",
-      "title": "Beyond",
-      "certificates": "Certificates",
-      "description": "Our platform offers a comprehensive ecosystem of digital credentials to recognize various achievements and milestones.",
-      "types": {
-        "certificates": {
-          "title": "Certificates",
-          "description": "Formal recognition of completed courses, programs, or qualifications with detailed verification data.",
-          "features": {
-            "0": "Blockchain verification",
-            "1": "Detailed metadata",
-            "2": "Customizable design",
-            "3": "Instant validation"
-          }
-        },
-        "badges": {
-          "title": "Badges",
-          "description": "Visual representations of skills, accomplishments, or participation in specific activities or events.",
-          "features": {
-            "0": "Skill-specific",
-            "1": "Stackable credentials",
-            "2": "Social sharing",
-            "3": "Progressive levels"
-          }
-        },
-        "assets": {
-          "title": "Assets",
-          "description": "Digital representations of physical or virtual objects with verifiable ownership on blockchain.",
-          "features": {
-            "0": "Verifiable ownership",
-            "1": "Immutable metadata",
-            "2": "Secure transfer",
-            "3": "Guaranteed authenticity"
-          }
-        },
-        "credentials": {
-          "title": "Credentials",
-          "description": "Verifications of membership, privileges, or organizational affiliation with real-time validation.",
-          "features": {
-            "0": "Real-time verification",
-            "1": "Access levels",
-            "2": "Automatic expiration",
-            "3": "Organizational integration"
-          }
-        }
-      },
-      "features": "Features",
-      "learnMore": "Learn more"
-    },
-    "tools": {
-      "badge": "DEVELOPER TOOLS",
-      "title": "Powerful",
-      "integration": "API Integration",
-      "description": "Integrate our credential issuance system directly into your platforms with our comprehensive API suite. Create, manage, and verify credentials programmatically.",
-      "features": {
-        "automated": {
-          "title": "Automated Issuance",
-          "description": "Generate credentials automatically when users complete specific requirements in your platform."
-        },
-        "custom": {
-          "title": "Custom Integration",
-          "description": "Embed our verification services seamlessly into your existing systems and workflows."
-        },
-        "webhook": {
-          "title": "Webhook Events",
-          "description": "Receive real-time notifications when credentials are issued, viewed, or verified."
-        }
-      },
-      "exploreApi": "Explore API Docs",
-      "copyCode": "Copy code",
-      "responseStatus": "Response status",
-      "successRate": "Success Rate",
-      "responseTime": "Response Time"
-    },
-    "roles": {
-      "badge": "FOR EVERYONE",
-      "title": "For Your Role",
-      "tailored": "Tailored",
-      "description": "Our platform serves the diverse needs of everyone in the certification ecosystem with specialized features.",
-      "admin": {
-        "role": "Administrators",
-        "description": "Create templates, issue certificates in bulk, and manage your organization's credentials.",
-        "features": {
-          "0": "Template designer",
-          "1": "Batch issuance",
-          "2": "Analytics dashboard",
-          "3": "Team management"
-        },
-        "button": "Admin Portal"
-      },
-      "issuers": {
-        "role": "Issuers",
-        "description": "Educational institutions, training providers, and organizations that award credentials.",
-        "features": {
-          "0": "Custom branding",
-          "1": "Certificate validation",
-          "2": "Recipient management",
-          "3": "Bulk operations"
-        },
-        "button": "Start Issuing"
-      },
-      "recipients": {
-        "role": "Recipients",
-        "description": "Showcase your achievements and share verifiable credentials with employers.",
-        "features": {
-          "0": "Digital portfolio",
-          "1": "Easy sharing",
-          "2": "Social media integration",
-          "3": "Verification links"
-        },
-        "button": "View Your Credentials"
-      },
-      "verifiers": {
-        "role": "Verifiers",
-        "description": "Instantly verify the authenticity of any credential issued through our platform.",
-        "features": {
-          "0": "One-click verification",
-          "1": "QR code scanning",
-          "2": "API integration",
-          "3": "Verification history"
-        },
-        "button": "Verify Credential"
-      },
-      "featuresTitle": "Key Features"
-    },
-    "cta": {
-      "badge": "Join the future of digital credentials",
-      "title": "Start Your",
-      "certification": "Blockchain Certification",
-      "journey": "Journey Today",
-      "description": "Join the revolution in digital credentials. Create, issue, and verify certificates that are secure, permanent, and truly yours on the blockchain.",
-      "createFirst": "Create Your First Certificate",
-      "watchDemo": "Watch Demo",
-      "stats": {
-        "issued": "Certificates Issued",
-        "organizations": "Organizations",
-        "countries": "Countries", 
-        "successRate": "Success Rate"
-      }
-    },
-    "footer": {
-      "description": "Leading platform for issuing verifiable digital certificates on blockchain.",
-      "platform": "Platform",
-      "resources": "Resources",
-      "contact": "Contact us",
-      "contactDescription": "Have questions about the platform? Write to us and we will answer you as soon as possible.",
-      "emailPlaceholder": "Your email",
-      "copyright": "All rights reserved.",
-      "terms": "Terms",
-      "privacy": "Privacy",
-      "cookies": "Cookies",
-      "language": "Language",
-      "changeLanguage": "Change language",
-      "platformItems": {
-        "0": "Features",
-        "1": "Templates",
-        "2": "Issuance",
-        "3": "Verification"
-      },
-      "resourceItems": {
-        "0": "Documentation",
-        "1": "API",
-        "2": "Tutorials",
-        "3": "Blog"
+      "event": {
+        "kind": "Achievement",
+        "name": "Sofía Lin",
+        "title": "Hackathon Winner",
+        "issuer": "ETH Bogotá",
+        "year": "2026"
       }
     }
+  },
+  "usecases": {
+    "label": "Made for the people who certify people",
+    "items": [
+      "Universities",
+      "Bootcamps",
+      "Online academies",
+      "HR teams",
+      "Hackathons & events",
+      "Licensing bodies",
+      "Communities",
+      "Job platforms"
+    ]
+  },
+  "problem": {
+    "titleA": "Anyone can fake a PDF.",
+    "titleB": "Nobody checks.",
+    "body": "Faking a certificate takes ten minutes. Verifying one takes days of emails and calls, so most are never checked at all. That's how fake diplomas became a billion-dollar business.",
+    "chips": [
+      "diploma_FINAL_v3.pdf",
+      "✎ edited: yesterday",
+      "skills: all of them",
+      "issued by: trust me",
+      "reference: my cousin"
+    ],
+    "stats": [
+      {
+        "value": "$21B",
+        "label": "the yearly fake-credential economy"
+      },
+      {
+        "value": "3–5 days",
+        "label": "to check one credential by hand"
+      },
+      {
+        "value": "46%",
+        "label": "how often fraud tools actually catch it"
+      }
+    ],
+    "statsNote": "Sources: Parchment, Velocity Network Foundation, Liminal, 2025."
+  },
+  "action": {
+    "title": "Watch it work.",
+    "sub": "This is the whole journey, from a blank page to a credential anyone can trust.",
+    "steps": [
+      {
+        "name": "Design",
+        "desc": "Start from a template or a blank canvas, add your logo and your colors, and have it ready in minutes."
+      },
+      {
+        "name": "Issue",
+        "desc": "One person or a whole cohort. Upload a spreadsheet, press go, done."
+      },
+      {
+        "name": "Deliver",
+        "desc": "Everyone gets theirs by email, with a page they can share anywhere, LinkedIn included."
+      },
+      {
+        "name": "Verify",
+        "desc": "Employers and platforms check any credential in under a second, without an account and without calling anyone."
+      },
+      {
+        "name": "Audit",
+        "desc": "Every check leaves a trace. You can revoke, expire or export whenever you want."
+      }
+    ],
+    "scene": {
+      "toolLogo": "Logo",
+      "toolName": "Recipient name",
+      "toolQr": "QR code",
+      "certTitle": "Certificate of Completion",
+      "certCourse": "Product Design · 2026",
+      "recipients": [
+        "María Torres",
+        "Daniel Reyes",
+        "Sofía Lin"
+      ],
+      "moreRecipients": "+1,844 more",
+      "issueButton": "Issue all",
+      "issuedChip": "1,847 issued",
+      "emailSubject": "Your credential is here 🎓",
+      "emailFrom": "Andes Tech Academy",
+      "walletShare": "Share to LinkedIn",
+      "verifyPlaceholder": "Paste any credential link…",
+      "verifyChecks": [
+        "Issuer ✓",
+        "Holder ✓",
+        "Not revoked ✓"
+      ],
+      "verifiedIn": "verified in 0.18s",
+      "auditRows": [
+        [
+          "14:02",
+          "hr-platform.co",
+          "verified ✓"
+        ],
+        [
+          "13:47",
+          "employer portal",
+          "verified ✓"
+        ],
+        [
+          "11:20",
+          "credential #291",
+          "revoked by issuer"
+        ]
+      ],
+      "auditExport": "Export CSV"
+    }
+  },
+  "bento": {
+    "title": "The small things that make the difference",
+    "journey": {
+      "label": "One credential's life",
+      "steps": [
+        "Issued",
+        "Emailed",
+        "Verified ×12",
+        "On LinkedIn"
+      ]
+    },
+    "whitelabel": {
+      "title": "Your brand, not ours",
+      "body": "Slide it: with our badge, or with none at all.",
+      "before": "With badge",
+      "after": "White-label",
+      "brandA": "glemo verified",
+      "brandB": "verify.nova.edu"
+    },
+    "latency": {
+      "value": "0.18s",
+      "label": "median time to verify",
+      "note": "faster than a doubt",
+      "feed": [
+        "hr-platform.co · verified · 0.14s",
+        "talent-app.io · verified · 0.21s",
+        "edu-portal.mx · verified · 0.17s"
+      ]
+    },
+    "nolockin": {
+      "title": "Works even without us",
+      "body": "Everything follows open standards. Export it whenever you want and it keeps verifying without us.",
+      "chips": [
+        "W3C VC",
+        "Open Badges 3.0",
+        "Export anytime"
+      ],
+      "here": "On Glemo",
+      "anywhere": "Anywhere else"
+    },
+    "bulk": {
+      "value": "2,000",
+      "label": "credentials in 4 minutes",
+      "note": "spreadsheet in, certificates out",
+      "rows": [
+        "María Torres",
+        "Daniel Reyes",
+        "Sofía Lin"
+      ]
+    },
+    "flow": {
+      "label": "What a check looks like",
+      "rawTitle": "what arrives",
+      "rawLines": [
+        "credential_id: 8f3a…c21",
+        "issuer: andes-tech.edu ✓",
+        "signature: valid ✓",
+        "revoked: false"
+      ],
+      "resultTitle": "what your team sees",
+      "counter": "checked ×12 this week"
+    }
+  },
+  "audiences": {
+    "title": "Who is Glemo for?",
+    "tabs": [
+      {
+        "id": "issuers",
+        "label": "People who certify",
+        "headline": "Universities, bootcamps, academies, events.",
+        "points": [
+          "Certificates that look like you, not like a template",
+          "Send one or thousands, same effort",
+          "Your students share them with one click",
+          "Revoke or expire any credential, anytime"
+        ]
+      },
+      {
+        "id": "verifiers",
+        "label": "Teams who need to trust",
+        "headline": "HR teams, platforms, marketplaces.",
+        "points": [
+          "Check any credential in under a second",
+          "A widget you can drop into your product",
+          "Works for credentials from any issuer",
+          "No more calling universities"
+        ]
+      },
+      {
+        "id": "developers",
+        "label": "Builders",
+        "headline": "One clean API for both sides.",
+        "points": [
+          "REST + webhooks that behave like you'd expect",
+          "Sandbox keys, first verification in minutes",
+          "Open standards underneath, no lock-in",
+          "Docs written by people who read docs"
+        ]
+      }
+    ]
+  },
+  "dev": {
+    "title": "For developers, it's one call",
+    "body": "A REST API that behaves. Verify anything, even credentials you didn't issue, and get an answer you can act on.",
+    "docs": "Read the docs",
+    "tabs": {
+      "curl": "cURL",
+      "node": "Node.js",
+      "python": "Python"
+    },
+    "responseNote": "Product preview: the API you'll integrate."
+  },
+  "standards": {
+    "label": "Built on open standards",
+    "items": [
+      "W3C Verifiable Credentials",
+      "Open Badges 3.0",
+      "Decentralized Identifiers",
+      "OpenID for VC",
+      "GDPR-ready",
+      "REST + Webhooks"
+    ]
+  },
+  "faq": {
+    "title": "Fair questions",
+    "items": [
+      {
+        "q": "Do I need to know anything about blockchain?",
+        "a": "No. Nobody does, not you, not your students, not the person checking. You'll see email, links and a dashboard. The heavy cryptography stays where it belongs: out of sight."
+      },
+      {
+        "q": "What happens if Glemo disappears?",
+        "a": "Your credentials keep working. They're built on open standards, so they can be exported and verified without us. We think that's the only honest way to build this."
+      },
+      {
+        "q": "Can my recipients mess it up?",
+        "a": "There's nothing to mess up. They get an email with a link. That's the whole experience, no wallet, no password, no app to install."
+      },
+      {
+        "q": "Where does personal data live?",
+        "a": "In normal, GDPR-compliant storage that can be edited or deleted, never on anything public or permanent. Only tamper-proof fingerprints are anchored publicly."
+      },
+      {
+        "q": "What does it cost?",
+        "a": "Issuing is priced so any institution can afford it; heavy verification is billed per check. Design partners get generous early terms, that could be you."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Give your credentials a checkmark",
+    "body": "We're picking a small group of design partners. Build with the API, or bring Glemo to your institution.",
+    "primary": "Start free",
+    "secondary": "Book a demo"
+  },
+  "footer": {
+    "tagline": "Credentials people can trust, from anywhere, forever.",
+    "product": "Product",
+    "productLinks": {
+      "how": "Watch it work",
+      "features": "Who it's for",
+      "audiences": "The details"
+    },
+    "developersCol": "Developers",
+    "developersLinks": {
+      "api": "API preview",
+      "standards": "Open standards",
+      "faq": "FAQ"
+    },
+    "company": "Company",
+    "companyLinks": {
+      "partners": "Design partners",
+      "contact": "Contact"
+    },
+    "language": "Language",
+    "rights": "© {year} Glemo. All rights reserved."
   }
+}
