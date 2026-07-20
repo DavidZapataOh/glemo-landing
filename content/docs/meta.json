@@ -1,0 +1,13 @@
+{
+  "title": "Glemo",
+  "pages": [
+    "index",
+    "quickstart",
+    "api",
+    "---Understand---",
+    "concepts",
+    "guides",
+    "---Reference---",
+    "[API reference](/docs-reference)"
+  ]
+}

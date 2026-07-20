@@ -1,0 +1,75 @@
+---
+title: API essentials
+description: Authentication, environments, errors and rate limits.
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+Everything in Glemo is one HTTPS API described by an OpenAPI spec. This page
+covers what every integration needs; the
+[interactive reference](/docs-reference) documents every endpoint.
+
+## Authentication
+
+Send your API key as a Bearer token:
+
+```bash
+curl https://api.glemo.io/verify \
+  -H "Authorization: Bearer glemo_live_…"
+```
+
+Keys belong to a **relying party** and carry **scopes** (e.g. `verify:read`).
+Manage them — create, rotate, revoke — from your dashboard or the
+`/relying-parties/{id}/keys` endpoints.
+
+<Callout type="warn" title="Secrets are shown once">
+  A key's secret is returned only at creation or rotation. Store it in a secret
+  manager; if you lose it, rotate.
+</Callout>
+
+## Test vs live
+
+| Prefix | Environment | Use |
+|--------|-------------|-----|
+| `glemo_test_…` | Sandbox | Development, CI, the docs try-it |
+| `glemo_live_…` | Production | Real verifications |
+
+Sandbox keys come from the self-serve provisioner
+(`POST /sandbox/keys` — see the [quickstart](/docs/quickstart)) and only carry
+`verify:read`.
+
+### Publishable keys
+
+For browser surfaces (the `<glemo-verify>` widget), use a key whose **only**
+scope is `verify:read`. It can read verdicts and nothing else, so it's safe to
+ship in client code. Never embed a key with management scopes.
+
+## Errors
+
+Errors are JSON with a stable `error` code. The SDK maps them to typed
+exceptions:
+
+| HTTP | `error` | SDK error | What to do |
+|------|---------|-----------|------------|
+| 401 | `unauthorized` | `AuthenticationError` | Check the key / rotate |
+| 403 | `forbidden` | `PermissionError` | Key lacks the scope |
+| 422 | `validation` | `ValidationError` | Fix the request body |
+| 429 | `rate_limited` | `RateLimitError` (`retryAfter`) | Back off, then retry |
+| 5xx | — | `ApiError` | Retry with backoff |
+
+```json
+{ "error": "rate_limited", "message": "Too many requests" }
+```
+
+## Rate limits
+
+Limits are per key (or per IP on public endpoints). When throttled you get a
+`429` with a `Retry-After` header in seconds. The SDK retries network and 5xx
+failures once by default; it never retries 4xx.
+
+## Idempotency & latency
+
+Verification is a **read**: calling `/verify` twice is safe by design.
+Verdict computation is sub-millisecond server-side; the latency you observe is
+network. Every verification is also logged to your dashboard with its verdict
+and latency.

@@ -1,0 +1,40 @@
+---
+title: Webhooks
+description: Signed HMAC notifications for every verification.
+---
+
+Configure a `webhookUrl` and `webhookSecret` on your relying party and Glemo
+POSTs every verification result to your endpoint, signed with HMAC-SHA256.
+
+## Payload
+
+```json
+{
+  "event": "verification",
+  "result": { "status": "valid", "checks": [{ "name": "lookup", "ok": true }] }
+}
+```
+
+The signature travels in the `x-glemo-signature` header (hex HMAC-SHA256 of the
+raw body with your secret).
+
+## Verify the signature
+
+```js
+import { createHmac, timingSafeEqual } from "node:crypto";
+
+function verifySignature(rawBody, secret, signature) {
+  const expected = createHmac("sha256", secret).update(rawBody).digest("hex");
+  const a = Buffer.from(expected);
+  const b = Buffer.from(signature);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+```
+
+Always compare with a timing-safe function, never `===`.
+
+## Delivery
+
+Webhooks are best-effort with basic retries — they never delay the verification
+response itself. Treat them as notifications, not as the source of truth: the
+API is.

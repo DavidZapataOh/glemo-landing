@@ -1,0 +1,105 @@
+/* ---------------------------------------------------------------------------
+   Glemo docs theme — Fumadocs v14 (Tailwind preset).
+   Este archivo SOLO se carga en las rutas /docs, así que puede estilar `body`
+   directamente. Colores: canales HSL derivados de los OKLCH del design system.
+--------------------------------------------------------------------------- */
+:root,
+.dark {
+  --fd-background: 156 33% 4%;
+  --fd-foreground: 150 14% 94%;
+  --fd-card: 158 24% 7%;
+  --fd-card-foreground: 150 14% 94%;
+  --fd-popover: 158 24% 7%;
+  --fd-popover-foreground: 150 14% 94%;
+  --fd-muted: 158 17% 11%;
+  --fd-muted-foreground: 154 9% 70%;
+  --fd-border: 157 10% 14%;
+  --fd-primary: 159 74% 57%;
+  --fd-primary-foreground: 159 84% 4%;
+  --fd-secondary: 158 17% 11%;
+  --fd-secondary-foreground: 150 14% 94%;
+  --fd-accent: 158 17% 12%;
+  --fd-accent-foreground: 150 14% 94%;
+  --fd-ring: 159 74% 57%;
+}
+
+/* Tipografía de marca en TODO el árbol de docs (v14 no expone ids #nd-*) */
+body {
+  font-family: var(--font-satoshi), system-ui, sans-serif;
+  background: hsl(var(--fd-background));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+/* Headings con el peso/tracking del design system */
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-family: var(--font-satoshi), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.prose h1 {
+  font-weight: 900;
+}
+.prose h2 {
+  font-weight: 700;
+  border-bottom: 1px solid hsl(var(--fd-border));
+  padding-bottom: 0.4rem;
+}
+.prose p {
+  text-wrap: pretty;
+}
+
+/* Código: superficie de tinta, borde de línea, sin fondos genéricos */
+.prose :not(pre) > code {
+  background: hsl(var(--fd-muted));
+  border: 1px solid hsl(var(--fd-border));
+  border-radius: 6px;
+  padding: 0.15em 0.4em;
+  font-size: 0.85em;
+}
+figure[data-rehype-pretty-code-figure],
+.prose pre {
+  border: 1px solid hsl(var(--fd-border));
+  border-radius: 12px;
+}
+.prose pre {
+  background: hsl(158 24% 6%) !important;
+}
+
+/* Tablas estilo Stripe: cabecera muted, filas con línea fina */
+.prose table {
+  font-size: 0.9rem;
+}
+.prose thead th {
+  color: hsl(var(--fd-muted-foreground));
+  font-weight: 500;
+  text-transform: none;
+}
+.prose tbody tr {
+  border-bottom: 1px solid hsl(var(--fd-border));
+}
+
+/* Sidebar: item activo como pill verify (identidad, no solo un tinte) */
+aside a[data-active="true"] {
+  background: hsl(var(--fd-primary) / 0.12);
+  color: hsl(var(--fd-primary));
+  font-weight: 500;
+}
+
+/* ::selection de marca */
+::selection {
+  background: hsl(var(--fd-primary));
+  color: hsl(var(--fd-primary-foreground));
+}
+:focus-visible {
+  outline: 2px solid hsl(var(--fd-primary));
+  outline-offset: 2px;
+}

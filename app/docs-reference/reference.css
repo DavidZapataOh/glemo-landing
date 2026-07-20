@@ -1,0 +1,139 @@
+/* ---------------------------------------------------------------------------
+   Scalar con la identidad de Glemo. theme: "none" + estas variables.
+   Mismos tokens OKLCH del design system; Satoshi para UI, JetBrains para código.
+--------------------------------------------------------------------------- */
+.glemo-reference {
+  min-height: 100vh;
+  background: oklch(0.15 0.012 170);
+  /* Scalar offsetea sus elementos sticky (sidebar/search) bajo un header
+     custom cuando esta variable está definida. Debe igualar la altura del bar. */
+  --scalar-custom-header-height: 52px;
+}
+
+/* Top bar de marca (altura fija = --scalar-custom-header-height) */
+.glemo-reference-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 22px;
+  box-sizing: border-box;
+  background: oklch(0.15 0.012 170 / 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid oklch(1 0 0 / 0.09);
+  font-family: var(--font-satoshi), system-ui, sans-serif;
+}
+.glemo-reference-brand {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: oklch(0.82 0.155 165);
+}
+.glemo-reference-title {
+  font-size: 14px;
+  color: oklch(0.75 0.015 168);
+}
+.glemo-reference-back {
+  margin-left: auto;
+  font-size: 14px;
+  color: oklch(0.96 0.005 165);
+  text-decoration: none;
+  padding: 4px 12px;
+  border: 1px solid oklch(1 0 0 / 0.09);
+  border-radius: 999px;
+  transition: border-color 0.2s;
+}
+.glemo-reference-back:hover {
+  border-color: oklch(0.82 0.155 165 / 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   Variables de Scalar (theme none) — dark only, tokens Glemo
+-------------------------------------------------------------------------- */
+.glemo-reference .dark-mode,
+.glemo-reference .scalar-app {
+  --scalar-background-1: oklch(0.15 0.012 170);
+  --scalar-background-2: oklch(0.19 0.014 170);
+  --scalar-background-3: oklch(0.24 0.016 170);
+  --scalar-background-accent: oklch(0.82 0.155 165 / 0.12);
+
+  --scalar-color-1: oklch(0.96 0.005 165);
+  --scalar-color-2: oklch(0.75 0.015 168);
+  --scalar-color-3: oklch(0.62 0.015 168);
+  --scalar-color-accent: oklch(0.82 0.155 165);
+
+  --scalar-border-color: oklch(1 0 0 / 0.09);
+
+  --scalar-sidebar-background-1: oklch(0.15 0.012 170);
+  --scalar-sidebar-color-1: oklch(0.96 0.005 165);
+  --scalar-sidebar-color-2: oklch(0.75 0.015 168);
+  --scalar-sidebar-border-color: oklch(1 0 0 / 0.09);
+  --scalar-sidebar-item-hover-background: oklch(0.19 0.014 170);
+  --scalar-sidebar-item-active-background: oklch(0.82 0.155 165 / 0.12);
+  --scalar-sidebar-color-active: oklch(0.82 0.155 165);
+  --scalar-sidebar-search-background: oklch(0.19 0.014 170);
+  --scalar-sidebar-search-color: oklch(0.75 0.015 168);
+  --scalar-sidebar-search-border-color: oklch(1 0 0 / 0.09);
+
+  --scalar-button-1: oklch(0.82 0.155 165);
+  --scalar-button-1-color: oklch(0.17 0.03 170);
+  --scalar-button-1-hover: oklch(0.87 0.17 163);
+
+  --scalar-color-green: oklch(0.82 0.155 165);
+  --scalar-color-red: oklch(0.68 0.19 25);
+  --scalar-color-yellow: oklch(0.8 0.15 90);
+  --scalar-color-blue: oklch(0.75 0.12 220);
+  --scalar-color-orange: oklch(0.75 0.15 60);
+  --scalar-color-purple: oklch(0.72 0.12 300);
+
+  --scalar-font: var(--font-satoshi), system-ui, sans-serif;
+  --scalar-font-code: var(--font-jetbrains), ui-monospace, monospace;
+
+  --scalar-radius: 8px;
+  --scalar-radius-lg: 12px;
+  --scalar-radius-xl: 16px;
+}
+
+/* Chrome ajeno fuera: no son parte del producto */
+.glemo-reference a[href*="scalar.com"],
+.glemo-reference .darklight-reference-promo,
+.glemo-reference [class*="promo"] {
+  display: none !important;
+}
+/* Toolbar de Scalar (Developer Tools / Configure / Share / Deploy) */
+.glemo-reference header.api-reference-toolbar {
+  display: none !important;
+}
+/* Footer "Generate MCP" del sidebar */
+.glemo-reference .scalar-mcp-layer {
+  display: none !important;
+}
+/* Botón "Ask AI Agent" en la tarjeta de request */
+.glemo-reference form.agent-button-container {
+  display: none !important;
+}
+/* Botón "Ask AI" junto al search del sidebar (segundo botón del row) */
+.glemo-reference aside .flex.gap-1\.5.px-3 > button:not(:first-child) {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Polish del sidebar: denso y legible, sin gritos de color
+-------------------------------------------------------------------------- */
+.glemo-reference aside {
+  font-size: 13px;
+}
+.glemo-reference aside a {
+  line-height: 1.35;
+}
+/* Chips de método (GET/POST/DEL): discretos, no un semáforo */
+.glemo-reference aside .sidebar-heading-type,
+.glemo-reference aside [class*="method"] {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}

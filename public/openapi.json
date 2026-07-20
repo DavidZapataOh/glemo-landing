@@ -1,0 +1,761 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Glemo API",
+    "version": "0.1.0",
+    "description": "Glemo is a credential verification network: one API to verify\ncredentials from **any issuer** — W3C Verifiable Credentials 2.0 / Open\nBadges 3.0 — with a deterministic, cryptographic verdict.\n\n## Base URLs\n\n| Environment | URL |\n|-------------|-----|\n| Sandbox | `https://api-sandbox.glemo.io` |\n| Production | `https://api.glemo.io` |\n\n## Authentication\n\nSend your API key as a Bearer token:\n\n```bash\ncurl https://api-sandbox.glemo.io/verify \\\n  -H \"Authorization: Bearer glemo_test_...\"\n```\n\nNo key yet? `POST /sandbox/keys` provisions a test key plus two sample\ncredentials — no signup. Follow the\n[quickstart](https://glemo.io/docs/quickstart) for the 5-minute path.\n\n## Verdicts\n\nEvery verification resolves to exactly one of: `valid`, `revoked`,\n`expired`, `tampered`, `not_found`, `not_verifiable`. Never a maybe.\n\n## Errors & rate limits\n\nErrors are JSON with a stable `error` code (`unauthorized`, `forbidden`,\n`validation`, `rate_limited`). Throttled requests return `429` with a\n`Retry-After` header in seconds."
+  },
+  "servers": [
+    {
+      "url": "https://api-sandbox.glemo.io",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.glemo.io",
+      "description": "Production"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Verify",
+      "description": "The product: one call, a deterministic verdict."
+    },
+    {
+      "name": "Sandbox",
+      "description": "Self-serve test keys and sample credentials. No signup, rate-limited."
+    },
+    {
+      "name": "Public verification",
+      "description": "Verify a credential from a share link — no API key, rate-limited, no PII."
+    },
+    {
+      "name": "Relying parties",
+      "description": "Manage your relying parties, API keys, verification history and usage."
+    },
+    {
+      "name": "Status lists",
+      "description": "W3C Status List 2021 credentials — the standard revocation mechanism."
+    },
+    {
+      "name": "System",
+      "description": "Service health."
+    }
+  ],
+  "components": {
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Service health",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "uptime": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "version",
+                    "uptime"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/relying-parties": {
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "List my relying parties",
+        "responses": {
+          "200": {
+            "description": "Mine",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "relyingParties": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "createdAt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "relyingParties"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/keys": {
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "List API keys",
+        "description": "Returns key metadata only — the secret is never included in listings.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "keys": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "prefix": {
+                            "type": "string"
+                          },
+                          "scopes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "mode": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "lastUsedAt": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "revokedAt": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "prefix",
+                          "scopes",
+                          "mode",
+                          "createdAt",
+                          "lastUsedAt",
+                          "revokedAt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "keys"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Create an API key",
+        "description": "The response contains the secret — the only time it is shown. Store it safely.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": [
+                      "verify:read"
+                    ]
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "live",
+                      "test"
+                    ],
+                    "default": "live"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "New key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiKey": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apiKey"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/keys/{keyId}": {
+      "delete": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Revoke an API key",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "keyId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Revoked"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/keys/{keyId}/rotate": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Rotate an API key",
+        "description": "Revokes the old key and returns a new secret — the only time it is shown.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "keyId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "New key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiKey": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apiKey"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/verifications": {
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "List verification events",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 50
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "verdict",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "events": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "method": {
+                            "type": "string"
+                          },
+                          "verdict": {
+                            "type": "string"
+                          },
+                          "issuerRef": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "latencyMs": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "method",
+                          "verdict",
+                          "issuerRef",
+                          "latencyMs",
+                          "createdAt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "events"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/usage": {
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Get usage summary",
+        "description": "Verification counts by verdict and by day over the last 30 days.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "number"
+                    },
+                    "byVerdict": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "number"
+                      }
+                    },
+                    "byDay": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "day": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "day",
+                          "count"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "total",
+                    "byVerdict",
+                    "byDay"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/status-lists/{id}": {
+      "get": {
+        "tags": [
+          "Status lists"
+        ],
+        "summary": "Get a status list",
+        "description": "Serves the W3C Status List 2021 credential used for revocation checks. Public endpoint.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "StatusList2021Credential",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/verify": {
+      "post": {
+        "tags": [
+          "Verify"
+        ],
+        "summary": "Verify a credential",
+        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT from any issuer.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "byHash",
+                      "byVC"
+                    ]
+                  },
+                  "credentialId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "jwt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "method"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verdict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "ok": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "ok"
+                        ]
+                      }
+                    },
+                    "issuer": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "checks"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/public/verifications/{credentialId}": {
+      "get": {
+        "tags": [
+          "Public verification"
+        ],
+        "summary": "Verify a shared credential",
+        "description": "No auth — used by share links and QR codes. Rate-limited; the response never contains PII.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "credentialId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verdict (not_found is a verdict, never 404)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "issuerDid": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "validFrom": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "validUntil": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "checkedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "issuerDid",
+                    "validFrom",
+                    "validUntil",
+                    "checkedAt"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sandbox/keys": {
+      "post": {
+        "tags": [
+          "Sandbox"
+        ],
+        "summary": "Create a sandbox key",
+        "description": "Self-serve: returns a test API key plus one valid and one revoked sample credential. Rate-limited (5/hour per IP).",
+        "responses": {
+          "201": {
+            "description": "Test key + sample credential ids",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiKey": {
+                      "type": "string"
+                    },
+                    "credentials": {
+                      "type": "object",
+                      "properties": {
+                        "valid": {
+                          "type": "string"
+                        },
+                        "revoked": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "valid",
+                        "revoked"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "apiKey",
+                    "credentials"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

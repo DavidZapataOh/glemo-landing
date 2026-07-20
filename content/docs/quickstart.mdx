@@ -1,0 +1,114 @@
+---
+title: Quickstart
+description: Your first verification in under 5 minutes.
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+You'll provision a sandbox key, verify a sample credential and watch a
+revocation flip the verdict. No signup, no approval, nothing to install unless
+you want the SDK.
+
+<Steps>
+<Step>
+
+## Get a test key
+
+One request provisions a sandbox key plus two sample credentials — one valid,
+one revoked:
+
+```bash
+curl -X POST https://api-sandbox.glemo.io/sandbox/keys
+```
+
+```json
+{
+  "apiKey": "glemo_test_…",
+  "credentials": {
+    "valid": "3f2a…",
+    "revoked": "9c1b…"
+  }
+}
+```
+
+Keep the three values handy — that's everything you need.
+
+</Step>
+<Step>
+
+## Verify the valid credential
+
+<Tabs items={["curl", "Node", "Widget"]}>
+  <Tab value="curl">
+    ```bash
+    curl -X POST https://api-sandbox.glemo.io/verify \
+      -H "Authorization: Bearer $GLEMO_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{"method": "byHash", "credentialId": "<credentials.valid>"}'
+    ```
+  </Tab>
+  <Tab value="Node">
+    ```bash
+    npm install @glemo/sdk
+    ```
+
+    ```js
+    import { createGlemo } from "@glemo/sdk";
+
+    const glemo = createGlemo({
+      apiKey: process.env.GLEMO_API_KEY,
+      baseUrl: "https://api-sandbox.glemo.io",
+    });
+
+    const result = await glemo.verify({ credentialId: "<credentials.valid>" });
+    console.log(result.status); // "valid"
+    ```
+  </Tab>
+  <Tab value="Widget">
+    ```html
+    <script src="https://cdn.glemo.io/verify-widget.js"></script>
+
+    <glemo-verify
+      credential-id="<credentials.valid>"
+      publishable-key="glemo_test_…"
+      base-url="https://api-sandbox.glemo.io"
+    ></glemo-verify>
+    ```
+  </Tab>
+</Tabs>
+
+Expected response:
+
+```json
+{ "status": "valid", "checks": [{ "name": "lookup", "ok": true }] }
+```
+
+</Step>
+<Step>
+
+## Watch a revocation
+
+Run the same call with `credentials.revoked`:
+
+```json
+{ "status": "revoked", "checks": [{ "name": "status", "ok": false }] }
+```
+
+That's the whole loop — **one key, one call, a cryptographic verdict**. The
+revocation comes from a real W3C Status List, not a mock.
+
+</Step>
+</Steps>
+
+<Callout title="Getting a 429?">
+  The sandbox provisioner is rate-limited (5 keys/hour per IP). Reuse the key
+  you already have — it doesn't expire during your session.
+</Callout>
+
+## Next steps
+
+- [API essentials](/docs/api) — auth, test vs live, errors and rate limits.
+- [Concepts](/docs/concepts/credentials) — the model behind the verdicts.
+- [Interactive reference](/docs-reference) — try every endpoint live.

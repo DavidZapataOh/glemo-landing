@@ -1,16 +1,22 @@
 import type { Config } from "tailwindcss";
+import { createPreset } from "fumadocs-ui/tailwind-plugin";
 
 /**
  * Glemo landing v2 — design tokens.
  * Single source of truth for values lives in app/globals.css (OKLCH custom
  * properties); Tailwind maps semantic names onto those variables.
  * Strategy: Committed — green-tinted ink canvas, one reserved verification-green accent.
+ * Docs (/docs) usan el preset de Fumadocs; su theme se pinta con los mismos
+ * tokens vía app/docs/docs.css (--fd-* en canales HSL).
  */
 const config: Config = {
+  presets: [createPreset()],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./content/**/*.mdx",
+    "./node_modules/fumadocs-ui/dist/**/*.js",
   ],
   theme: {
     extend: {
