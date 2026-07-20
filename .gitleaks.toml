@@ -1,0 +1,13 @@
+title = "glemo-landing gitleaks config"
+
+[extend]
+useDefault = true
+
+# Documentation placeholders: fake API keys ending in a literal ellipsis
+# (`glemo_test_...` / `glemo_live_…`) inside docs and the generated OpenAPI
+# snapshot. A real key is `glemo_(test|live)_<hex>` and never contains `...`
+# or `…`, so real keys are still caught.
+[allowlist]
+description = "Doc placeholder API keys"
+regexTarget = "line"
+regexes = ['''glemo_(test|live)_(\.\.\.|…)''']

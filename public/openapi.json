@@ -574,7 +574,7 @@
           "Verify"
         ],
         "summary": "Verify a credential",
-        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT from any issuer.",
+        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -585,7 +585,8 @@
                     "type": "string",
                     "enum": [
                       "byHash",
-                      "byVC"
+                      "byVC",
+                      "byZkTls"
                     ]
                   },
                   "credentialId": {
@@ -594,6 +595,26 @@
                   },
                   "jwt": {
                     "type": "string"
+                  },
+                  "domain": {
+                    "type": "string",
+                    "example": "coursera.org"
+                  },
+                  "proof": {
+                    "type": "object",
+                    "properties": {
+                      "engine": {
+                        "type": "string",
+                        "example": "reclaim"
+                      },
+                      "payload": {
+                        "nullable": true,
+                        "description": "Proof payload as produced by the zkTLS engine"
+                      }
+                    },
+                    "required": [
+                      "engine"
+                    ]
                   }
                 },
                 "required": [
@@ -634,6 +655,12 @@
                     },
                     "issuer": {
                       "type": "string"
+                    },
+                    "claims": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
                     }
                   },
                   "required": [
