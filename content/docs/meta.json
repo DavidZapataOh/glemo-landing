@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "quickstart",
+    "issue",
     "api",
     "---Understand---",
     "concepts",

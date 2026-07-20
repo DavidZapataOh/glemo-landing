@@ -21,6 +21,10 @@
       "description": "The product: one call, a deterministic verdict."
     },
     {
+      "name": "Issue",
+      "description": "The supply side: issue verifiable credentials your recipients can hold and anyone can verify. Email is enough — no wallet required."
+    },
+    {
       "name": "Sandbox",
       "description": "Self-serve test keys and sample credentials. No signup, rate-limited."
     },
@@ -666,6 +670,116 @@
                   "required": [
                     "status",
                     "checks"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/issue": {
+      "post": {
+        "tags": [
+          "Issue"
+        ],
+        "summary": "Issue a credential",
+        "description": "Issues a W3C VC 2.0 / Open Badges 3.0 credential (VC-JWT plus a selectively-disclosable SD-JWT), anchors it, and — for email recipients — delivers it with a public verification link. Recipients don't need a wallet: an email address is enough.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "recipient": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "ada@university.edu"
+                      },
+                      "did": {
+                        "type": "string",
+                        "example": "did:web:alice.example.com"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Ada Lovelace"
+                      }
+                    }
+                  },
+                  "achievement": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "example": "Avalanche Fundamentals"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "criteria": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ]
+                  },
+                  "validUntil": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "soulbound": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "recipient",
+                  "achievement"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Credential issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "credentialId": {
+                      "type": "string"
+                    },
+                    "subjectId": {
+                      "type": "string"
+                    },
+                    "publicUrl": {
+                      "type": "string"
+                    },
+                    "jwt": {
+                      "type": "string"
+                    },
+                    "sdJwt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "credentialId",
+                    "subjectId",
+                    "publicUrl",
+                    "jwt",
+                    "sdJwt"
                   ]
                 }
               }

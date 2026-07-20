@@ -1,0 +1,99 @@
+---
+title: Issue credentials
+description: Issue verifiable Open Badges 3.0 credentials — your recipients only need an email.
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+One call issues a W3C Verifiable Credential 2.0 / Open Badges 3.0 credential:
+signed (VC-JWT), selectively disclosable (SD-JWT) and anchored. If the recipient
+is an email address, Glemo delivers it with a public verification link — **no
+wallet, no account, no crypto** on their side.
+
+<Steps>
+<Step>
+
+## Get a key with `issue:write`
+
+Issuance needs an API key with the `issue:write` scope. Sandbox keys from
+[the quickstart](/docs/quickstart) are verify-only — ask us for an issuer key,
+or use your live key if your organization is onboarded.
+
+</Step>
+<Step>
+
+## Issue your first credential
+
+<Tabs items={["SDK", "curl"]}>
+<Tab value="SDK">
+
+```ts
+import { createGlemo } from "@glemo/sdk";
+
+const glemo = createGlemo({ apiKey: process.env.GLEMO_API_KEY! });
+
+const credential = await glemo.issue({
+  recipient: { email: "ada@university.edu", name: "Ada Lovelace" },
+  achievement: {
+    name: "Avalanche Fundamentals",
+    description: "Completed the Avalanche Academy Fundamentals course",
+  },
+});
+
+console.log(credential.publicUrl);
+// → https://app.glemo.io/verify/3f2a…
+```
+
+</Tab>
+<Tab value="curl">
+
+```bash
+curl https://api.glemo.io/issue \
+  -H "Authorization: Bearer $GLEMO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "recipient": { "email": "ada@university.edu", "name": "Ada Lovelace" },
+    "achievement": { "name": "Avalanche Fundamentals" }
+  }'
+```
+
+</Tab>
+</Tabs>
+
+The response carries the `credentialId`, the signed `jwt`, the selectively
+disclosable `sdJwt` and the `publicUrl` your recipient received by email.
+
+</Step>
+<Step>
+
+## Close the loop: verify it
+
+The credential you just issued verifies like any other — by anyone:
+
+```ts
+const verdict = await glemo.verify({ credentialId: credential.credentialId });
+// verdict.status → "valid"
+```
+
+Or just open the `publicUrl` — the same verification, human-readable.
+
+</Step>
+</Steps>
+
+<Callout title="Selective disclosure is on by default">
+Every credential ships as an SD-JWT too: the holder can present only a subset
+of its claims (say, the achievement name without the description) and it still
+verifies. No premium tier, no flag — it's the default. See
+[concepts](/docs/concepts) for how disclosure works.
+</Callout>
+
+<Callout type="warn" title="Issuing is not idempotent">
+Two identical `issue()` calls create two credentials. The SDK therefore does
+not retry issuance by default — opt in with `glemo.issue(input, { retries: 1 })`
+only if your side deduplicates.
+</Callout>
+
+Bulk issuance (CSV, queued, idempotent per row) and visual templates are
+available from the issuer dashboard.
