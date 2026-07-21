@@ -95,6 +95,78 @@
         }
       }
     },
+    "/plans": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Public pricing plans",
+        "description": "The pricing plans (free/starter/scale) — the single source the pricing page renders.",
+        "responses": {
+          "200": {
+            "description": "Plans",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "plans": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "includedVerifications": {
+                            "type": "number"
+                          },
+                          "pricePerVerificationCents": {
+                            "type": "number"
+                          },
+                          "overagePolicy": {
+                            "type": "string"
+                          },
+                          "features": {
+                            "type": "object",
+                            "properties": {
+                              "byZkTls": {
+                                "type": "boolean"
+                              },
+                              "byImage": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "byZkTls",
+                              "byImage"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "includedVerifications",
+                          "pricePerVerificationCents",
+                          "overagePolicy",
+                          "features"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "plans"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/relying-parties": {
       "get": {
         "tags": [
@@ -1677,6 +1749,74 @@
           },
           "403": {
             "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/admin/compliance/erasure": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Erase credential PII (right to be forgotten)",
+        "description": "CNIL pattern: destroys the per-credential commitment key (making the on-chain anchor unlinkable) and scrubs all off-chain PII. Verification by hash keeps working — integrity proof without personal data. Logged in erasure_log.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "credentialId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "credentialId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Erasure result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "credentialId": {
+                      "type": "string"
+                    },
+                    "keyDestroyed": {
+                      "type": "boolean"
+                    },
+                    "offchainScrubbed": {
+                      "type": "boolean"
+                    },
+                    "jobRowsScrubbed": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "credentialId",
+                    "keyDestroyed",
+                    "offchainScrubbed",
+                    "jobRowsScrubbed"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Credential not found"
           }
         }
       }

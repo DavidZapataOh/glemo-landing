@@ -1,0 +1,29 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  landing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm audit --omit=dev --audit-level=high   # SCA: vulns high/critical fallan
+      # React2Shell-class: piso de Next parcheado — el CI revienta si baja
+      - run: |
+          node -e '
+            const v = require("./package.json").dependencies.next.replace(/^[\^~]/, "");
+            const [a, b, c] = v.split(".").map(Number);
+            const n = a * 1e6 + b * 1e3 + c;
+            if (n < 15_005_020) { console.error(`next ${v} < piso 15.5.20`); process.exit(1); }
+          '
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: gitleaks/gitleaks-action@v2

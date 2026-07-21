@@ -1,0 +1,37 @@
+{
+  "plans": [
+    {
+      "id": "free",
+      "name": "Free",
+      "includedVerifications": 100,
+      "pricePerVerificationCents": 0,
+      "overagePolicy": "block",
+      "features": {
+        "byZkTls": false,
+        "byImage": false
+      }
+    },
+    {
+      "id": "starter",
+      "name": "Starter",
+      "includedVerifications": 1000,
+      "pricePerVerificationCents": 3,
+      "overagePolicy": "charge",
+      "features": {
+        "byZkTls": true,
+        "byImage": true
+      }
+    },
+    {
+      "id": "scale",
+      "name": "Scale",
+      "includedVerifications": 10000,
+      "pricePerVerificationCents": 1,
+      "overagePolicy": "charge",
+      "features": {
+        "byZkTls": true,
+        "byImage": true
+      }
+    }
+  ]
+}
