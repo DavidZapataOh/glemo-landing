@@ -45,6 +45,10 @@
       "description": "W3C Status List 2021 credentials — the standard revocation mechanism."
     },
     {
+      "name": "Reputation",
+      "description": "Issuer reputation from real network activity — the signal only the center of the network can compute."
+    },
+    {
       "name": "System",
       "description": "Service health."
     }
@@ -1049,6 +1053,630 @@
           },
           "404": {
             "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/integrations": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Create an ATS integration",
+        "description": "Connects an ATS/HRIS (Greenhouse, …) so candidate credentials verify natively inside the hiring flow. The webhook secret is shown ONCE.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "fieldMapping": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "fieldMapping"
+                    ]
+                  }
+                },
+                "required": [
+                  "provider",
+                  "config"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Integration created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integrationId": {
+                      "type": "string"
+                    },
+                    "webhookSecret": {
+                      "type": "string"
+                    },
+                    "webhookUrl": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "integrationId",
+                    "webhookSecret",
+                    "webhookUrl"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Unknown provider"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "List ATS integrations",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Integrations (config and secret are never re-exposed)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integrations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "provider": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "provider",
+                          "status",
+                          "createdAt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "integrations"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/integrations/{integrationId}/pause": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Pause an ATS integration",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "integrationId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paused"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/admin/analytics/network": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Network analytics (admin)",
+        "description": "Moat metrics over an explicit window: verifications per month, active relying parties, cohort retention by first event, distinct issuers, credentials issued and revenue — all computed from the event store with the same cost function billing uses.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 36,
+              "default": 6
+            },
+            "required": false,
+            "name": "months",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network analytics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "window": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "from",
+                        "to"
+                      ]
+                    },
+                    "summary": {
+                      "type": "object",
+                      "properties": {
+                        "totalVerifications": {
+                          "type": "number"
+                        },
+                        "activeRelyingParties": {
+                          "type": "number"
+                        },
+                        "distinctIssuers": {
+                          "type": "number"
+                        },
+                        "credentialsIssued": {
+                          "type": "number"
+                        },
+                        "revenueCents": {
+                          "type": "number"
+                        },
+                        "momGrowthPct": {
+                          "type": "number",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "totalVerifications",
+                        "activeRelyingParties",
+                        "distinctIssuers",
+                        "credentialsIssued",
+                        "revenueCents",
+                        "momGrowthPct"
+                      ]
+                    },
+                    "verificationsPerMonth": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "month": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "month",
+                          "count"
+                        ]
+                      }
+                    },
+                    "activeRelyingParties": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "month": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "month",
+                          "count"
+                        ]
+                      }
+                    },
+                    "retention": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "cohort": {
+                            "type": "string"
+                          },
+                          "size": {
+                            "type": "number"
+                          },
+                          "retention": {
+                            "type": "array",
+                            "items": {
+                              "type": "number"
+                            }
+                          }
+                        },
+                        "required": [
+                          "cohort",
+                          "size",
+                          "retention"
+                        ]
+                      }
+                    },
+                    "issuers": {
+                      "type": "object",
+                      "properties": {
+                        "distinctIssuers": {
+                          "type": "number"
+                        },
+                        "credentialsPerMonth": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "month": {
+                                "type": "string"
+                              },
+                              "count": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "month",
+                              "count"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "distinctIssuers",
+                        "credentialsPerMonth"
+                      ]
+                    },
+                    "revenue": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "month": {
+                            "type": "string"
+                          },
+                          "totalCents": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "month",
+                          "totalCents"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "window",
+                    "summary",
+                    "verificationsPerMonth",
+                    "activeRelyingParties",
+                    "retention",
+                    "issuers",
+                    "revenue"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/reputation/issuers/{issuerRef}": {
+      "get": {
+        "tags": [
+          "Reputation"
+        ],
+        "summary": "Get issuer reputation",
+        "description": "Reputation score (0-100) for an issuer computed from real network activity: distinct credentials verified, verdict rates and average fraud signal. Aggregates only — never raw counts or event data. Issuers below the minimum sample return insufficient_data.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "issuerRef",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Issuer reputation (aggregates only)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "insufficient_data"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "status"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "scored"
+                          ]
+                        },
+                        "score": {
+                          "type": "number"
+                        },
+                        "volumeBand": {
+                          "type": "string"
+                        },
+                        "validRate": {
+                          "type": "number"
+                        },
+                        "revokedRate": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "status",
+                        "score",
+                        "volumeBand",
+                        "validRate",
+                        "revokedRate"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/admin/reputation": {
+      "get": {
+        "tags": [
+          "Reputation"
+        ],
+        "summary": "List issuer reputations (admin)",
+        "description": "All issuers in the window with full score components.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 36,
+              "default": 6
+            },
+            "required": false,
+            "name": "months",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Issuer reputations with components",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "window": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "from",
+                        "to"
+                      ]
+                    },
+                    "issuers": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "issuerRef": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "insufficient_data"
+                                ]
+                              },
+                              "distinctCredentials": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "issuerRef",
+                              "status",
+                              "distinctCredentials"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "issuerRef": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "scored"
+                                ]
+                              },
+                              "score": {
+                                "type": "number"
+                              },
+                              "volumeBand": {
+                                "type": "string"
+                              },
+                              "validRate": {
+                                "type": "number"
+                              },
+                              "revokedRate": {
+                                "type": "number"
+                              },
+                              "components": {
+                                "type": "object",
+                                "properties": {
+                                  "distinctCredentials": {
+                                    "type": "number"
+                                  },
+                                  "validRate": {
+                                    "type": "number"
+                                  },
+                                  "revokedRate": {
+                                    "type": "number"
+                                  },
+                                  "avgRisk": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "distinctCredentials",
+                                  "validRate",
+                                  "revokedRate",
+                                  "avgRisk"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "issuerRef",
+                              "status",
+                              "score",
+                              "volumeBand",
+                              "validRate",
+                              "revokedRate",
+                              "components"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "window",
+                    "issuers"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
