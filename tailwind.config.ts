@@ -2,12 +2,12 @@ import type { Config } from "tailwindcss";
 import { createPreset } from "fumadocs-ui/tailwind-plugin";
 
 /**
- * Glemo landing v2 — design tokens.
+ * Glemo landing v2: design tokens.
  * Single source of truth for values lives in app/globals.css (OKLCH custom
  * properties); Tailwind maps semantic names onto those variables.
- * Strategy: Committed — green-tinted ink canvas, one reserved verification-green accent.
- * Docs (/docs) usan el preset de Fumadocs; su theme se pinta con los mismos
- * tokens vía app/docs/docs.css (--fd-* en canales HSL).
+ * Strategy: Committed. Green-tinted ink canvas, one reserved verification-green accent.
+ * Docs (/docs) use the Fumadocs preset; its theme is painted with the same
+ * tokens via app/docs/docs.css (--fd-* in HSL channels).
  */
 const config: Config = {
   presets: [createPreset()],
@@ -65,7 +65,7 @@ const config: Config = {
         overlay: "50",
       },
       transitionTimingFunction: {
-        // Signature ease — cubic-bezier(0.625, 0.05, 0, 1), mirrors GSAP CustomEase "glemo"
+        // Signature ease: cubic-bezier(0.625, 0.05, 0, 1), mirrors GSAP CustomEase "glemo"
         glemo: "cubic-bezier(0.625, 0.05, 0, 1)",
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
       },

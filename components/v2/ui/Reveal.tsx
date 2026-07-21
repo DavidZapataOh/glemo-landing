@@ -6,14 +6,14 @@ import { cn } from "@/lib/utils";
 type Props = {
   children: React.ReactNode;
   className?: string;
-  /** pure-fade cascade (the Pop pattern) — no vertical travel */
+  /** pure-fade cascade (the Pop pattern), no vertical travel */
   delay?: number;
   y?: number;
 };
 
 /**
  * Restrained viewport reveal for content blocks: fade with minimal travel,
- * once only. Used sparingly — sections with purpose-built motion (terminal,
+ * once only. Used sparingly. Sections with purpose-built motion (terminal,
  * counters, pinned scrub) don't stack this on top.
  */
 export default function Reveal({ children, className, delay = 0, y = 14 }: Props) {

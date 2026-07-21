@@ -1,16 +1,16 @@
 /* ---------------------------------------------------------------------------
-   Scalar con la identidad de Glemo. theme: "none" + estas variables.
-   Mismos tokens OKLCH del design system; Satoshi para UI, JetBrains para código.
+   Scalar with Glemo's identity. theme: "none" + these variables.
+   Same OKLCH tokens as the design system; Satoshi for UI, JetBrains for code.
 --------------------------------------------------------------------------- */
 .glemo-reference {
   min-height: 100vh;
   background: oklch(0.15 0.012 170);
-  /* Scalar offsetea sus elementos sticky (sidebar/search) bajo un header
-     custom cuando esta variable está definida. Debe igualar la altura del bar. */
+  /* Scalar offsets its sticky elements (sidebar/search) below a custom
+     header when this variable is defined. It must match the bar's height. */
   --scalar-custom-header-height: 52px;
 }
 
-/* Top bar de marca (altura fija = --scalar-custom-header-height) */
+/* Branded top bar (fixed height = --scalar-custom-header-height) */
 .glemo-reference-bar {
   position: sticky;
   top: 0;
@@ -52,7 +52,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Variables de Scalar (theme none) — dark only, tokens Glemo
+   Scalar variables (theme none): dark only, Glemo tokens
 -------------------------------------------------------------------------- */
 .glemo-reference .dark-mode,
 .glemo-reference .scalar-app {
@@ -98,31 +98,31 @@
   --scalar-radius-xl: 16px;
 }
 
-/* Chrome ajeno fuera: no son parte del producto */
+/* Foreign chrome out: not part of the product */
 .glemo-reference a[href*="scalar.com"],
 .glemo-reference .darklight-reference-promo,
 .glemo-reference [class*="promo"] {
   display: none !important;
 }
-/* Toolbar de Scalar (Developer Tools / Configure / Share / Deploy) */
+/* Scalar toolbar (Developer Tools / Configure / Share / Deploy) */
 .glemo-reference header.api-reference-toolbar {
   display: none !important;
 }
-/* Footer "Generate MCP" del sidebar */
+/* Sidebar "Generate MCP" footer */
 .glemo-reference .scalar-mcp-layer {
   display: none !important;
 }
-/* Botón "Ask AI Agent" en la tarjeta de request */
+/* "Ask AI Agent" button in the request card */
 .glemo-reference form.agent-button-container {
   display: none !important;
 }
-/* Botón "Ask AI" junto al search del sidebar (segundo botón del row) */
+/* "Ask AI" button next to the sidebar search (second button in the row) */
 .glemo-reference aside .flex.gap-1\.5.px-3 > button:not(:first-child) {
   display: none !important;
 }
 
 /* --------------------------------------------------------------------------
-   Polish del sidebar: denso y legible, sin gritos de color
+   Sidebar polish: dense and legible, no loud colors
 -------------------------------------------------------------------------- */
 .glemo-reference aside {
   font-size: 13px;
@@ -130,7 +130,7 @@
 .glemo-reference aside a {
   line-height: 1.35;
 }
-/* Chips de método (GET/POST/DEL): discretos, no un semáforo */
+/* Method chips (GET/POST/DEL): subtle, not a traffic light */
 .glemo-reference aside .sidebar-heading-type,
 .glemo-reference aside [class*="method"] {
   font-size: 9px;

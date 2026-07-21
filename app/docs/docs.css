@@ -1,7 +1,7 @@
 /* ---------------------------------------------------------------------------
-   Glemo docs theme — Fumadocs v14 (Tailwind preset).
-   Este archivo SOLO se carga en las rutas /docs, así que puede estilar `body`
-   directamente. Colores: canales HSL derivados de los OKLCH del design system.
+   Glemo docs theme: Fumadocs v14 (Tailwind preset).
+   This file loads ONLY on the /docs routes, so it can style `body`
+   directly. Colors: HSL channels derived from the design system's OKLCH.
 --------------------------------------------------------------------------- */
 :root,
 .dark {
@@ -23,7 +23,7 @@
   --fd-ring: 159 74% 57%;
 }
 
-/* Tipografía de marca en TODO el árbol de docs (v14 no expone ids #nd-*) */
+/* Brand typography across the WHOLE docs tree (v14 doesn't expose #nd-* ids) */
 body {
   font-family: var(--font-satoshi), system-ui, sans-serif;
   background: hsl(var(--fd-background));
@@ -37,7 +37,7 @@ samp {
   font-family: var(--font-jetbrains), ui-monospace, monospace;
 }
 
-/* Headings con el peso/tracking del design system */
+/* Headings with the design system's weight/tracking */
 .prose h1,
 .prose h2,
 .prose h3 {
@@ -57,7 +57,7 @@ samp {
   text-wrap: pretty;
 }
 
-/* Código: superficie de tinta, borde de línea, sin fondos genéricos */
+/* Code: ink surface, line border, no generic backgrounds */
 .prose :not(pre) > code {
   background: hsl(var(--fd-muted));
   border: 1px solid hsl(var(--fd-border));
@@ -74,7 +74,7 @@ figure[data-rehype-pretty-code-figure],
   background: hsl(158 24% 6%) !important;
 }
 
-/* Tablas estilo Stripe: cabecera muted, filas con línea fina */
+/* Stripe-style tables: muted header, rows with a thin line */
 .prose table {
   font-size: 0.9rem;
 }
@@ -87,14 +87,14 @@ figure[data-rehype-pretty-code-figure],
   border-bottom: 1px solid hsl(var(--fd-border));
 }
 
-/* Sidebar: item activo como pill verify (identidad, no solo un tinte) */
+/* Sidebar: active item as a verify pill (identity, not just a tint) */
 aside a[data-active="true"] {
   background: hsl(var(--fd-primary) / 0.12);
   color: hsl(var(--fd-primary));
   font-weight: 500;
 }
 
-/* ::selection de marca */
+/* Branded ::selection */
 ::selection {
   background: hsl(var(--fd-primary));
   color: hsl(var(--fd-primary-foreground));

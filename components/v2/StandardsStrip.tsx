@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import Marquee from "./ui/Marquee";
 
 /**
- * Standards marquee — honest social proof: what we're built on, not fake
+ * Standards marquee. Honest social proof: what we're built on, not fake
  * client logos. Mono chips, constant speed.
  */
 export default function StandardsStrip() {

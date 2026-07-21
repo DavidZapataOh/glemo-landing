@@ -8,7 +8,7 @@ import VerifyStroke from "./ui/VerifyStroke";
 import HeroStack from "./HeroStack";
 
 /**
- * Hero v3 — graphic-first (the Privado/Proof lesson): copy on the left, the
+ * Hero v3: graphic-first (the Privado/Proof lesson): copy on the left, the
  * credential stack as the hero object on the right. One overlapped entrance
  * timeline; back.out reserved for the primary CTA; the verification stroke
  * signs the key phrase once everything lands.

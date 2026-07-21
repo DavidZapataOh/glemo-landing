@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 /**
- * Footer — columns above, then the giant GLEMO wordmark cut by the viewport
+ * Footer: columns above, then the giant GLEMO wordmark cut by the viewport
  * edge (the Osmo/Supaste close). The wordmark is the brand's final gesture.
  */
 export default function Footer() {

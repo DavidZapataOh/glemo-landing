@@ -8,9 +8,9 @@ import "./reference.css";
 const specUrl = process.env.NEXT_PUBLIC_OPENAPI_URL ?? "/openapi.json";
 
 /**
- * Referencia interactiva con la identidad de Glemo: theme "none" + variables
- * --scalar-* propias (reference.css), tipografía Satoshi/JetBrains, top bar
- * de marca con vuelta a las docs, y sin chrome ajeno.
+ * Interactive reference with Glemo's identity: theme "none" + our own
+ * --scalar-* variables (reference.css), Satoshi/JetBrains typography, a branded
+ * top bar with a link back to the docs, and no foreign chrome.
  */
 export default function ApiReferencePage() {
   return (

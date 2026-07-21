@@ -160,7 +160,7 @@ export default function HeroStack({ className }: { className?: string }) {
       role="img"
       aria-label={`${t("cards.diploma.kind")} · ${t("cards.cert.kind")} · ${t("cards.event.kind")}`}
     >
-      {/* faint network arcs behind the stack — texture, not diagram */}
+      {/* faint network arcs behind the stack: texture, not diagram */}
       <svg
         viewBox="0 0 560 420"
         className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.16]"

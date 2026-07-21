@@ -12,11 +12,11 @@ const Gallery3D = () => {
   // useEffect(() => {
   //   if (typeof window === 'undefined' || !containerRef.current) return;
 
-  //   // Crear escena
+  //   // Create scene
   //   const scene = new THREE.Scene();
   //   sceneRef.current = scene;
 
-  //   // Crear cámara ortográfica con zoom más cercano
+  //   // Create orthographic camera with a closer zoom
   //   const width = containerRef.current.clientWidth;
   //   const height = containerRef.current.clientHeight;
   //   const aspect = width / height;
@@ -34,7 +34,7 @@ const Gallery3D = () => {
   //   camera.lookAt(0, 0, 0);
   //   cameraRef.current = camera;
     
-  //   // Crear renderer optimizado
+  //   // Create optimized renderer
   //   const renderer = new THREE.WebGLRenderer({ 
   //     antialias: true, 
   //     alpha: true,
@@ -42,19 +42,19 @@ const Gallery3D = () => {
   //   });
   //   renderer.setSize(width, height);
   //   renderer.setClearColor(0x1a1a1a, 0);
-  //   // Desactivar sombras para mejor rendimiento
+  //   // Disable shadows for better performance
   //   renderer.shadowMap.enabled = false;
   //   rendererRef.current = renderer;
 
   //   containerRef.current.appendChild(renderer.domElement);
 
-  //   // Iluminación optimizada sin sombras
-  //   const ambientLight = new THREE.AmbientLight(0x404040, 0.8); // Aumenté la intensidad
+  //   // Optimized lighting without shadows
+  //   const ambientLight = new THREE.AmbientLight(0x404040, 0.8); // Bumped up the intensity
   //   scene.add(ambientLight);
 
   //   const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
   //   directionalLight.position.set(10, 10, 5);
-  //   // Sin sombras para mejor rendimiento
+  //   // No shadows for better performance
   //   directionalLight.castShadow = false;
   //   scene.add(directionalLight);
     
@@ -62,7 +62,7 @@ const Gallery3D = () => {
   //   pointLight.position.set(-5, 5, -5);
   //   scene.add(pointLight);
 
-  //   // Cargar modelo
+  //   // Load model
   //   const loader = new GLTFLoader();
   //   loader.load(
   //     '/models/room.glb',
@@ -70,19 +70,19 @@ const Gallery3D = () => {
   //       const model = gltf.scene;
   //       modelRef.current = model;
         
-  //       // Configurar el modelo sin sombras para mejor rendimiento
+  //       // Set up the model without shadows for better performance
   //       model.traverse((child) => {
   //         if (child instanceof THREE.Mesh) {
-  //           // Desactivar sombras para todos los objetos
+  //           // Disable shadows for every object
   //           child.castShadow = false;
   //           child.receiveShadow = false;
-            
-  //           // Optimizar materiales
+
+  //           // Optimize materials
   //           if (child.material) {
   //             if (Array.isArray(child.material)) {
   //               child.material.forEach((material: THREE.Material) => {
   //                 material.needsUpdate = true;
-  //                 // Optimizar para mejor rendimiento
+  //                 // Optimize for better performance
   //                 if (material instanceof THREE.MeshStandardMaterial) {
   //                   material.envMapIntensity = 0.5;
   //                 }
@@ -97,7 +97,7 @@ const Gallery3D = () => {
   //         }
   //       });
 
-  //       // Calcular el bounding box del modelo
+  //       // Compute the model's bounding box
   //       const box = new THREE.Box3().setFromObject(model);
   //       const center = box.getCenter(new THREE.Vector3());
   //       const size = box.getSize(new THREE.Vector3());
@@ -105,12 +105,12 @@ const Gallery3D = () => {
   //       console.log('Model center:', center);
   //       console.log('Model size:', size);
 
-  //       // Centrar el modelo solo en X y Z, mantener Y en 0
+  //       // Center the model on X and Z only, keep Y at 0
   //       model.position.x = -center.x;
   //       model.position.z = -center.z;
   //       model.position.y = 0;
         
-  //       // Escalar el modelo para que sea visible
+  //       // Scale the model so it is visible
   //       const maxSize = Math.max(size.x, size.y, size.z);
   //       let scale = 1;
         
@@ -122,7 +122,7 @@ const Gallery3D = () => {
   //       console.log('Model scale:', scale);
   //       console.log('Model position after centering:', model.position);
 
-  //       // Ajustar la posición de la cámara
+  //       // Adjust the camera position
   //       camera.position.set(0.3, 0.6, 0.3);
   //       camera.lookAt(0, 0, 0);
         
@@ -136,16 +136,16 @@ const Gallery3D = () => {
   //     },
   //     (error) => {
   //       console.error('Error loading model:', error);
-  //       setError('Error al cargar el modelo 3D');
+  //       setError('Error loading the 3D model');
   //     }
   //   );
 
-  //   // Función de renderizado optimizada
+  //   // Optimized render function
   //   let lastTime = 0;
   //   const animate = (currentTime: number) => {
   //     requestAnimationFrame(animate);
       
-  //     // Limitar FPS para mejor rendimiento
+  //     // Cap FPS for better performance
   //     if (currentTime - lastTime > 16) { // ~60 FPS
   //       if (modelRef.current) {
   //         modelRef.current.rotation.y += 0.005;
@@ -158,7 +158,7 @@ const Gallery3D = () => {
 
   //   animate(0);
 
-  //   // Manejar redimensionamiento
+  //   // Handle resizing
   //   const handleResize = () => {
   //     if (!containerRef.current || !camera || !renderer) return;
 
@@ -166,7 +166,7 @@ const Gallery3D = () => {
   //     const height = containerRef.current.clientHeight;
   //     const aspect = width / height;
       
-  //     // Actualizar los límites de la cámara ortográfica
+  //     // Update the orthographic camera bounds
   //     camera.left = -0.2 * aspect;
   //     camera.right = 0.2 * aspect;
   //     camera.top = 0.25;
@@ -178,7 +178,7 @@ const Gallery3D = () => {
 
   //   window.addEventListener('resize', handleResize);
 
-  //   // Limpieza
+  //   // Cleanup
   //   return () => {
   //     window.removeEventListener('resize', handleResize);
   //     if (rendererRef.current) {
@@ -199,7 +199,7 @@ const Gallery3D = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
           </div>
-          <p className="text-sm mb-2">Error de renderizado 3D</p>
+          <p className="text-sm mb-2">3D rendering error</p>
           <p className="text-xs opacity-70">{error}</p>
         </div>
       </div>
@@ -215,14 +215,14 @@ const Gallery3D = () => {
           fill
           className="object-cover rounded-2xl"
           onLoad={() => setIsLoaded(true)}
-          onError={() => setError('Error al cargar la imagen del room')}
+          onError={() => setError('Error loading the room image')}
         />
         
-        {/* Overlay de información */}
+        {/* Info overlay */}
         <div className="absolute bottom-4 left-4 bg-elementBackground/80 backdrop-blur-md p-2 rounded-lg border border-white/10 text-xs z-10">
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full ${isLoaded ? 'bg-green-400' : 'bg-yellow-400'} animate-pulse`}></div>
-            Gallery 3D personalizable
+            Customizable 3D Gallery
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { prefersReducedMotion } from "@/lib/motion";
 
 /**
- * The verification network — the hero visual and brand motif.
+ * The verification network: the hero visual and brand motif.
  * Canvas draws the links and the traveling light pulses; HTML chips carry the
  * node labels (crisper type, accessible). A pulse travels issuer → core →
  * verifier; on arrival the verifier chip flashes its "verified ✓" state.

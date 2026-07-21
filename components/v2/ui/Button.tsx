@@ -13,7 +13,7 @@ type Props = {
 
 /**
  * CTA button. `primary` is the only element on the page allowed to wear the
- * verification green as a fill — accent discipline is the brand.
+ * verification green as a fill. Accent discipline is the brand.
  */
 export default function Button({
   children,

@@ -12,7 +12,7 @@ import {
 
 /**
  * Lenis smooth scroll synced to the GSAP ticker (Osmo tuning: smooth but fast).
- * Disabled entirely under prefers-reduced-motion — native scroll takes over.
+ * Disabled entirely under prefers-reduced-motion. Native scroll takes over.
  */
 export default function SmoothScroll({
   children,

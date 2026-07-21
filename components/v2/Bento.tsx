@@ -8,7 +8,7 @@ import Reveal from "./ui/Reveal";
 import { cn } from "@/lib/utils";
 
 /**
- * Bento v2 — the Spade/Bitwage/Aave grammar: every tile is a working UI
+ * Bento v2: the Spade/Bitwage/Aave grammar. Every tile is a working UI
  * fragment that explains itself, with mono evidence chips as proof.
  * Row 1: raw→verified flow (span 2) · dramatic white-label swap.
  * Row 2: live latency counter · portable-anywhere · bulk table→certs.
@@ -186,7 +186,7 @@ function FlowTile() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 2 · White-label — a full brand swap, not a footnote                 */
+/* 2 · White-label: a full brand swap, not a footnote                 */
 /* ------------------------------------------------------------------ */
 function WhitelabelTile() {
   const t = useTranslations("bento.whitelabel");
@@ -263,7 +263,7 @@ function WhitelabelTile() {
   );
 }
 
-/** Two complete identities — the swap must be unmistakable */
+/** Two complete identities: the swap must be unmistakable */
 function BrandScene({ brand, domain }: { brand: "glemo" | "nova"; domain: string }) {
   const isGlemo = brand === "glemo";
   return (
@@ -333,7 +333,7 @@ function BrandScene({ brand, domain }: { brand: "glemo" | "nova"; domain: string
 }
 
 /* ------------------------------------------------------------------ */
-/* 3 · Latency — segmented ring (chosen: option B). Smartwatch dial:    */
+/* 3 · Latency: segmented ring (chosen: option B). Smartwatch dial:     */
 /* segments light up in sequence, then all pulse + "VERIFIED ✓".        */
 /* ------------------------------------------------------------------ */
 const RING = { cx: 70, cy: 70, rIn: 48, rOut: 58, N: 44, A0: -140, A1: 140 };
@@ -490,7 +490,7 @@ function LatencyTile() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 4 · Portable — verifies here, verifies anywhere                     */
+/* 4 · Portable: verifies here, verifies anywhere                      */
 /* ------------------------------------------------------------------ */
 function PortableTile() {
   const t = useTranslations("bento.nolockin");
@@ -570,7 +570,7 @@ function PortableTile() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 5 · Bulk — spreadsheet in, certificates out (Bitwage table lesson)  */
+/* 5 · Bulk: spreadsheet in, certificates out (Bitwage table lesson)   */
 /* ------------------------------------------------------------------ */
 function BulkTile() {
   const t = useTranslations("bento.bulk");

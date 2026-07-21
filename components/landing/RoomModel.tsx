@@ -13,23 +13,23 @@ export function Model({ onError, onLoad }: ModelProps) {
   const modelRef = useRef<THREE.Group>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   
-  // Cargar el modelo usando useGLTF de manera correcta
+  // Load the model correctly using useGLTF
   const { scene } = useGLTF('/models/room.glb');
 
-  // Configurar el modelo cuando se carga
+  // Set up the model once it loads
   useEffect(() => {
     if (scene && modelRef.current) {
       try {
-        // Clonar la escena para evitar problemas de referencia
+        // Clone the scene to avoid reference issues
         const clonedScene = scene.clone();
-        
-        // Configurar el modelo
+
+        // Set up the model
         clonedScene.traverse((child: THREE.Object3D) => {
           if (child instanceof THREE.Mesh) {
             child.castShadow = true;
             child.receiveShadow = true;
             
-            // Configurar materiales
+            // Set up materials
             if (child.material) {
               if (Array.isArray(child.material)) {
                 child.material.forEach((material: THREE.Material) => {
@@ -42,12 +42,12 @@ export function Model({ onError, onLoad }: ModelProps) {
           }
         });
 
-        // Centrar y escalar el modelo
+        // Center and scale the model
         const box = new THREE.Box3().setFromObject(clonedScene);
         const center = box.getCenter(new THREE.Vector3());
         clonedScene.position.sub(center);
-        
-        // Escalar si es necesario
+
+        // Scale if needed
         const size = box.getSize(new THREE.Vector3());
         const maxSize = Math.max(size.x, size.y, size.z);
         if (maxSize > 5) {
@@ -55,7 +55,7 @@ export function Model({ onError, onLoad }: ModelProps) {
           clonedScene.scale.setScalar(scale);
         }
 
-        // Limpiar y agregar el modelo
+        // Clear and add the model
         modelRef.current.clear();
         modelRef.current.add(clonedScene);
         
@@ -63,12 +63,12 @@ export function Model({ onError, onLoad }: ModelProps) {
         onLoad?.();
       } catch (error) {
         console.error('Error configuring model:', error);
-        onError?.('Error al configurar el modelo 3D');
+        onError?.('Error configuring the 3D model');
       }
     }
   }, [scene, onError, onLoad]);
 
-  // Animación sutil
+  // Subtle animation
   useFrame((state) => {
     if (modelRef.current && isLoaded) {
       modelRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.05;
@@ -78,5 +78,5 @@ export function Model({ onError, onLoad }: ModelProps) {
   return <group ref={modelRef} />;
 }
 
-// Precargar el modelo
+// Preload the model
 useGLTF.preload('/models/room.glb');

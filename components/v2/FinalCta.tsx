@@ -6,7 +6,7 @@ import VerifyStroke from "./ui/VerifyStroke";
 import Reveal from "./ui/Reveal";
 
 /**
- * Final CTA — a glow-edged panel; the verification stroke signs the last word
+ * Final CTA: a glow-edged panel; the verification stroke signs the last word
  * (its second and final appearance on the page).
  */
 export default function FinalCta() {

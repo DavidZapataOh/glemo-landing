@@ -12,7 +12,7 @@ type Step = { name: string; desc: string };
 const SCENE_SECONDS = [5.2, 4.6, 4.8, 4.6, 3.8];
 
 /**
- * "Watch it work" — the Certifier lesson executed for Glemo: a simulated
+ * "Watch it work": the Certifier lesson executed for Glemo. A simulated
  * cursor builds a credential, issues a cohort, delivers it, verifies it and
  * audits it, while the lifecycle rail auto-advances. Click any step to jump.
  * Reduced motion / mobile: manual tabs with finished states, no cursor.

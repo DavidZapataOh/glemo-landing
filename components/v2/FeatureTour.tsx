@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 type Scene = { title: string; body: string; mono: string };
 
 /**
- * Issuer feature tour — the paper interlude (light band for institutional
+ * Issuer feature tour: the paper interlude (light band for institutional
  * warmth). Three alternating scenes, each with a distinct product-shaped
  * visual; no identical card grid.
  */
@@ -119,7 +119,7 @@ function SceneVisual({ index }: { index: number }) {
                 strokeLinejoin="round"
               />
             </svg>
-            glemo.io/verify/8f3a…c21 — verified
+            glemo.io/verify/8f3a…c21, verified
           </p>
         </div>
       </div>

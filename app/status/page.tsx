@@ -48,7 +48,7 @@ async function probe(): Promise<Health> {
       checkedAt,
     };
   } catch {
-    // El caso que importa: el API no responde. Estado diseñado, sin crash.
+    // The case that matters: the API doesn't respond. A designed state, no crash.
     return { api: "unreachable", db: "unreachable", redis: "unreachable", checkedAt };
   }
 }

@@ -31,7 +31,7 @@ const RESPONSE = [
 ];
 
 /**
- * Developer section — the credibility no competitor shows: real code, typing
+ * Developer section. The credibility no competitor shows: real code, typing
  * itself, answering with the verified state. Typing starts when the panel
  * enters the viewport; reduced motion renders everything instantly.
  */

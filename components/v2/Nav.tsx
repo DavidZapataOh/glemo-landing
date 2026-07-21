@@ -37,7 +37,7 @@ export default function Nav() {
 
   return (
     <>
-      {/* announcement — scrolls away with the page */}
+      {/* announcement: scrolls away with the page */}
       <div className="relative z-10 border-b border-line bg-surface/60">
         <div className="container-g flex items-center justify-center gap-3 py-2.5">
           <span className="h-1.5 w-1.5 rounded-full bg-verify" aria-hidden="true" />
@@ -54,7 +54,7 @@ export default function Nav() {
         </div>
       </div>
 
-      {/* floating pill — sticky: sits below the announcement at load, pins on scroll */}
+      {/* floating pill, sticky: sits below the announcement at load, pins on scroll */}
       <header className="sticky top-3 z-nav mt-3 flex justify-center px-4">
         <nav
           className="flex w-full max-w-[860px] items-center justify-between gap-2 rounded-full border border-line bg-bg/75 py-2 pl-5 pr-2 backdrop-blur-md"
@@ -64,7 +64,7 @@ export default function Nav() {
             href="#top"
             onClick={onLink("#top")}
             className="flex shrink-0 items-center gap-2.5"
-            aria-label="Glemo — home"
+            aria-label="Glemo, home"
           >
             <Image
               src="/logos/logo.png"

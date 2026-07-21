@@ -8,7 +8,7 @@ const Footer = () => {
   const t = useTranslations();
   const { locale, changeLanguage } = useLanguage();
 
-  // Configuración de redes sociales
+  // Social media configuration
   const socialLinks = [
     {
       name: 'X (Twitter)',

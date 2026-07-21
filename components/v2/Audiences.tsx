@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 type Tab = { id: string; label: string; headline: string; points: string[] };
 
 /**
- * Audiences — the Auth0 sticky-rail idea distilled into a tab rail. One
+ * Audiences: the Auth0 sticky-rail idea distilled into a tab rail. One
  * section serves both sides of the network (plus developers) without
  * duplicating the page or falling into an identical card grid.
  */

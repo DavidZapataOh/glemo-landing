@@ -12,14 +12,14 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npx tsc --noEmit
-      - run: npm audit --omit=dev --audit-level=high   # SCA: vulns high/critical fallan
-      # React2Shell-class: piso de Next parcheado — el CI revienta si baja
+      - run: npm audit --omit=dev --audit-level=high   # SCA: high/critical vulns fail
+      # React2Shell-class: patched Next floor. CI breaks if it drops below.
       - run: |
           node -e '
             const v = require("./package.json").dependencies.next.replace(/^[\^~]/, "");
             const [a, b, c] = v.split(".").map(Number);
             const n = a * 1e6 + b * 1e3 + c;
-            if (n < 15_005_020) { console.error(`next ${v} < piso 15.5.20`); process.exit(1); }
+            if (n < 15_005_020) { console.error(`next ${v} < floor 15.5.20`); process.exit(1); }
           '
   secrets:
     runs-on: ubuntu-latest

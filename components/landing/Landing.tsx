@@ -73,19 +73,19 @@ const Landing = () => {
     
     const handleTyping = () => {
       if (isDeleting) {
-        // Borrar letras
+        // Delete letters
         setTypedWord(currentWord.substring(0, typedWord.length - 1));
-        
-        // Cuando se borra completamente, cambiar al siguiente
+
+        // Once fully deleted, move to the next word
         if (typedWord === "") {
           setIsDeleting(false);
           setWordIndex((prev) => (prev + 1) % words.length);
         }
       } else {
-        // Escribir letras
+        // Type letters
         setTypedWord(currentWord.substring(0, typedWord.length + 1));
-        
-        // Cuando se completa la palabra, esperar y luego borrar
+
+        // Once the word is complete, wait and then delete
         if (typedWord === currentWord) {
           setTimeout(() => {
             setIsDeleting(true);
@@ -129,7 +129,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-background text-text">
-      {/* Navegación fija */}
+      {/* Fixed navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-white/10">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-1">
@@ -490,7 +490,7 @@ const Landing = () => {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
-            {/* Reemplazar esto en la sección Digital Gallery */}
+            {/* Replace this in the Digital Gallery section */}
             <div className="lg:col-span-3 relative h-96 lg:h-[550px] rounded-2xl overflow-hidden backdrop-blur-sm border border-white/10">
               <motion.div
                 className="absolute inset-0 z-10"
@@ -502,7 +502,7 @@ const Landing = () => {
                 <Gallery3D />
               </motion.div>
               
-              {/* Botón interactivo */}
+              {/* Interactive button */}
               <motion.div
                 className="absolute bottom-6 right-6 p-3 bg-elementBackground/80 backdrop-blur-md border border-white/10 rounded-full shadow-lg z-20"
                 whileHover={{ scale: 1.05 }}
@@ -697,19 +697,19 @@ const Landing = () => {
                 accentColor: "bg-green-500/10",
                 visual: (
                   <div className="w-32 h-32 bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg border-2 border-green-200 shadow-lg relative overflow-hidden">
-                    {/* Gorra/Camiseta representation */}
+                    {/* Cap/T-shirt representation */}
                     <div className="absolute inset-4 flex flex-col items-center justify-center">
-                      {/* Gorra */}
+                      {/* Cap */}
                       <div className="w-16 h-12 bg-gradient-to-b from-green-600 to-green-700 rounded-t-full relative">
-                        {/* Visera de la gorra */}
+                        {/* Cap brim */}
                         <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-20 h-3 bg-green-800 rounded-full"></div>
-                        {/* Logo/Texto en la gorra */}
+                        {/* Logo/Text on the cap */}
                         <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-8 h-6 bg-white/20 rounded flex items-center justify-center">
                           <div className="w-4 h-4 bg-white rounded-sm"></div>
                         </div>
                       </div>
                       
-                      {/* Texto debajo */}
+                      {/* Text below */}
                       <div className="mt-2 text-center">
                         <div className="text-xs font-bold text-green-800">GLEMO</div>
                         <div className="text-xs text-green-600">#001</div>
@@ -735,14 +735,14 @@ const Landing = () => {
                       <div className="text-xs font-bold text-white">ID CARD</div>
                     </div>
                     
-                    {/* Photo area - más pequeña y mejor posicionada */}
+                    {/* Photo area, smaller and better positioned */}
                     <div className="absolute top-10 left-4 right-4 h-8 bg-white/90 rounded flex items-center justify-center">
                       <div className="w-5 h-5 bg-orange-300 rounded-full flex items-center justify-center">
                         <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                       </div>
                     </div>
                     
-                    {/* Credential Content - mejor espaciado */}
+                    {/* Credential Content, better spacing */}
                     <div className="absolute top-20 left-2 right-2 px-1 text-center">
                       <div className="text-xs font-bold text-orange-800 mb-0.5">JOHN DOE</div>
                       <div className="text-xs text-orange-700 mb-0.5">MEMBER</div>

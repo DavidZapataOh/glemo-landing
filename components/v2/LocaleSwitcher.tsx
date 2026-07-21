@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * EN/ES toggle. Locale is stored in a cookie (services/locale) and the page
- * re-renders server-side — full copy parity between both languages.
+ * re-renders server-side. Full copy parity between both languages.
  */
 export default function LocaleSwitcher({
   variant = "dark",

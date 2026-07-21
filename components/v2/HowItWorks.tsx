@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 type Step = { num: string; name: string; body: string; mono: string };
 
 /**
- * How it works — the page's one pinned sequence (a real ordered flow, which is
+ * How it works: the page's one pinned sequence (a real ordered flow, which is
  * what earns the numbers). Desktop: CSS-sticky viewport, scroll progress
  * drives the active step. Mobile & reduced motion: honest stacked flow.
  */

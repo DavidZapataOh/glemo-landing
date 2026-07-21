@@ -5,7 +5,7 @@ import { gsap, registerGsap, prefersReducedMotion } from "@/lib/motion";
 
 /**
  * The brand ritual: a hand-drawn verification stroke that "signs" the key
- * word — an underline that resolves into a check. Draws itself in after a
+ * word: an underline that resolves into a check. Draws itself in after a
  * delay (post hero-timeline). Used twice on the whole page: hero + final CTA.
  */
 export default function VerifyStroke({
@@ -63,7 +63,7 @@ export default function VerifyStroke({
       className={className}
       preserveAspectRatio="none"
     >
-      {/* Underline that ends in a check tick — drawn like a signature */}
+      {/* Underline that ends in a check tick, drawn like a signature */}
       <path
         ref={pathRef}
         d="M4 18 C 50 23, 120 21, 168 15 C 176 14, 182 15, 186 19 L 193 24 L 215 3"

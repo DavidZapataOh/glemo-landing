@@ -3,7 +3,7 @@
   "info": {
     "title": "Glemo API",
     "version": "0.1.0",
-    "description": "Glemo is a credential verification network: one API to verify\ncredentials from **any issuer** — W3C Verifiable Credentials 2.0 / Open\nBadges 3.0 — with a deterministic, cryptographic verdict.\n\n## Base URLs\n\n| Environment | URL |\n|-------------|-----|\n| Sandbox | `https://api-sandbox.glemo.io` |\n| Production | `https://api.glemo.io` |\n\n## Authentication\n\nSend your API key as a Bearer token:\n\n```bash\ncurl https://api-sandbox.glemo.io/verify \\\n  -H \"Authorization: Bearer glemo_test_...\"\n```\n\nNo key yet? `POST /sandbox/keys` provisions a test key plus two sample\ncredentials — no signup. Follow the\n[quickstart](https://glemo.io/docs/quickstart) for the 5-minute path.\n\n## Verdicts\n\nEvery verification resolves to exactly one of: `valid`, `revoked`,\n`expired`, `tampered`, `not_found`, `not_verifiable`. Never a maybe.\n\n## Errors & rate limits\n\nErrors are JSON with a stable `error` code (`unauthorized`, `forbidden`,\n`validation`, `rate_limited`). Throttled requests return `429` with a\n`Retry-After` header in seconds."
+    "description": "Glemo is a credential verification network: one API to verify\ncredentials from **any issuer** (W3C Verifiable Credentials 2.0 / Open\nBadges 3.0) with a deterministic, cryptographic verdict.\n\n## Base URLs\n\n| Environment | URL |\n|-------------|-----|\n| Sandbox | `https://api-sandbox.glemo.io` |\n| Production | `https://api.glemo.io` |\n\n## Authentication\n\nSend your API key as a Bearer token:\n\n```bash\ncurl https://api-sandbox.glemo.io/verify \\\n  -H \"Authorization: Bearer glemo_test_...\"\n```\n\nNo key yet? `POST /sandbox/keys` provisions a test key plus two sample\ncredentials. No signup. Follow the\n[quickstart](https://glemo.io/docs/quickstart) for the 5-minute path.\n\n## Verdicts\n\nEvery verification resolves to exactly one of: `valid`, `revoked`,\n`expired`, `tampered`, `not_found`, `not_verifiable`. Never a maybe.\n\n## Errors & rate limits\n\nErrors are JSON with a stable `error` code (`unauthorized`, `forbidden`,\n`validation`, `rate_limited`). Throttled requests return `429` with a\n`Retry-After` header in seconds."
   },
   "servers": [
     {
@@ -22,7 +22,7 @@
     },
     {
       "name": "Issue",
-      "description": "The supply side: issue verifiable credentials your recipients can hold and anyone can verify. Email is enough — no wallet required."
+      "description": "The supply side: issue verifiable credentials your recipients can hold and anyone can verify. Email is enough. No wallet required."
     },
     {
       "name": "Sandbox",
@@ -30,11 +30,11 @@
     },
     {
       "name": "Trust marks",
-      "description": "Portable \"Verified by Glemo\" badges tied to real verification events — each links to a public, server-backed proof."
+      "description": "Portable \"Verified by Glemo\" badges tied to real verification events. Each links to a public, server-backed proof."
     },
     {
       "name": "Public verification",
-      "description": "Verify a credential from a share link — no API key, rate-limited, no PII."
+      "description": "Verify a credential from a share link. No API key, rate-limited, no PII."
     },
     {
       "name": "Relying parties",
@@ -42,11 +42,11 @@
     },
     {
       "name": "Status lists",
-      "description": "W3C Status List 2021 credentials — the standard revocation mechanism."
+      "description": "W3C Status List 2021 credentials: the standard revocation mechanism."
     },
     {
       "name": "Reputation",
-      "description": "Issuer reputation from real network activity — the signal only the center of the network can compute."
+      "description": "Issuer reputation from real network activity: the signal only the center of the network can compute."
     },
     {
       "name": "System",
@@ -101,7 +101,7 @@
           "System"
         ],
         "summary": "Public pricing plans",
-        "description": "The pricing plans (free/starter/scale) — the single source the pricing page renders.",
+        "description": "The pricing plans (free/starter/scale): the single source the pricing page renders.",
         "responses": {
           "200": {
             "description": "Plans",
@@ -220,7 +220,7 @@
           "Relying parties"
         ],
         "summary": "List API keys",
-        "description": "Returns key metadata only — the secret is never included in listings.",
+        "description": "Returns key metadata only. The secret is never included in listings.",
         "parameters": [
           {
             "schema": {
@@ -301,7 +301,7 @@
           "Relying parties"
         ],
         "summary": "Create an API key",
-        "description": "The response contains the secret — the only time it is shown. Store it safely.",
+        "description": "The response contains the secret, the only time it is shown. Store it safely.",
         "parameters": [
           {
             "schema": {
@@ -409,7 +409,7 @@
           "Relying parties"
         ],
         "summary": "Rotate an API key",
-        "description": "Revokes the old key and returns a new secret — the only time it is shown.",
+        "description": "Revokes the old key and returns a new secret, the only time it is shown.",
         "parameters": [
           {
             "schema": {
@@ -628,7 +628,7 @@
           "Relying parties"
         ],
         "summary": "Get usage by period",
-        "description": "Exact, event-derived usage: the current calendar month (computed live) plus closed period snapshots — the same numbers billing uses.",
+        "description": "Exact, event-derived usage: the current calendar month (computed live) plus closed period snapshots, the same numbers billing uses.",
         "parameters": [
           {
             "schema": {
@@ -738,7 +738,7 @@
           "Relying parties"
         ],
         "summary": "Get billing and fee disclosure",
-        "description": "Verifier-pays fee disclosure: the plan, its pricing, live usage for the current period and the projected cost — computed with the exact same function billing uses. Issuing is free.",
+        "description": "Verifier-pays fee disclosure: the plan, its pricing, live usage for the current period and the projected cost, computed with the exact same function billing uses. Issuing is free.",
         "parameters": [
           {
             "schema": {
@@ -849,7 +849,7 @@
           "Trust marks"
         ],
         "summary": "Issue a trust mark",
-        "description": "Issues a portable \"Verified by Glemo\" mark tied to one of YOUR verification events with a valid verdict. The badge links to a public, server-backed proof — it cannot be forged without a real verification.",
+        "description": "Issues a portable \"Verified by Glemo\" mark tied to one of YOUR verification events with a valid verdict. The badge links to a public, server-backed proof. It cannot be forged without a real verification.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1321,7 +1321,7 @@
           "System"
         ],
         "summary": "Network analytics (admin)",
-        "description": "Moat metrics over an explicit window: verifications per month, active relying parties, cohort retention by first event, distinct issuers, credentials issued and revenue — all computed from the event store with the same cost function billing uses.",
+        "description": "Moat metrics over an explicit window: verifications per month, active relying parties, cohort retention by first event, distinct issuers, credentials issued and revenue, all computed from the event store with the same cost function billing uses.",
         "parameters": [
           {
             "schema": {
@@ -1528,7 +1528,7 @@
           "Reputation"
         ],
         "summary": "Get issuer reputation",
-        "description": "Reputation score (0-100) for an issuer computed from real network activity: distinct credentials verified, verdict rates and average fraud signal. Aggregates only — never raw counts or event data. Issuers below the minimum sample return insufficient_data.",
+        "description": "Reputation score (0-100) for an issuer computed from real network activity: distinct credentials verified, verdict rates and average fraud signal. Aggregates only, never raw counts or event data. Issuers below the minimum sample return insufficient_data.",
         "parameters": [
           {
             "schema": {
@@ -1759,7 +1759,7 @@
           "System"
         ],
         "summary": "Erase credential PII (right to be forgotten)",
-        "description": "CNIL pattern: destroys the per-credential commitment key (making the on-chain anchor unlinkable) and scrubs all off-chain PII. Verification by hash keeps working — integrity proof without personal data. Logged in erasure_log.",
+        "description": "CNIL pattern: destroys the per-credential commitment key (making the on-chain anchor unlinkable) and scrubs all off-chain PII. Verification by hash keeps working: an integrity proof without personal data. Logged in erasure_log.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2001,7 +2001,7 @@
           "Issue"
         ],
         "summary": "Issue a credential",
-        "description": "Issues a W3C VC 2.0 / Open Badges 3.0 credential (VC-JWT plus a selectively-disclosable SD-JWT), anchors it, and — for email recipients — delivers it with a public verification link. Recipients don't need a wallet: an email address is enough.",
+        "description": "Issues a W3C VC 2.0 / Open Badges 3.0 credential (VC-JWT plus a selectively-disclosable SD-JWT), anchors it, and, for email recipients, delivers it with a public verification link. Recipients don't need a wallet: an email address is enough.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2111,7 +2111,7 @@
           "Public verification"
         ],
         "summary": "Verify a shared credential",
-        "description": "No auth — used by share links and QR codes. Rate-limited; the response never contains PII.",
+        "description": "No auth. Used by share links and QR codes. Rate-limited; the response never contains PII.",
         "parameters": [
           {
             "schema": {

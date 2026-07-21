@@ -3,7 +3,7 @@ import Link from "next/link";
 import plansData from "@/public/plans.json";
 
 export const metadata: Metadata = {
-  title: "Pricing — Glemo",
+  title: "Pricing - Glemo",
   description: "Verifier-pays pricing. Issuing is always free.",
 };
 
@@ -21,7 +21,7 @@ const fmt = new Intl.NumberFormat("en");
 
 function overageLabel(plan: Plan): string {
   if (plan.pricePerVerificationCents === 0) {
-    return plan.overagePolicy === "block" ? "Hard cap — no overage" : "No overage charge";
+    return plan.overagePolicy === "block" ? "Hard cap, no overage" : "No overage charge";
   }
   return `$${(plan.pricePerVerificationCents / 100).toFixed(2)} / verification beyond that`;
 }
@@ -33,7 +33,7 @@ export default function PricingPage() {
         <header className="mb-14 max-w-2xl">
           <h1 className="font-sans text-5xl font-bold tracking-tight sm:text-6xl">Pricing</h1>
           <p className="mt-4 text-lg text-[var(--ink-2)]">
-            Verifiers pay for verifications. Issuing credentials is always free — no wallet,
+            Verifiers pay for verifications. Issuing credentials is always free. No wallet,
             no per-seat fees, no lock-in.
           </p>
         </header>
@@ -106,7 +106,7 @@ function Feature({ on, children }: { on: boolean; children: React.ReactNode }) {
         className="font-mono text-sm"
         style={{ color: on ? "var(--verify)" : "var(--ink-2)" }}
       >
-        {on ? "✓" : "—"}
+        {on ? "✓" : "-"}
       </span>
       <span style={{ color: on ? "var(--ink)" : "var(--ink-2)" }}>{children}</span>
     </li>

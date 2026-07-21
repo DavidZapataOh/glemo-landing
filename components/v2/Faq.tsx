@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 type Item = { q: string; a: string };
 
 /**
- * FAQ — where "blockchain invisible" is executed in words: the objections a
+ * FAQ: where "blockchain invisible" is executed in words: the objections a
  * serious buyer actually has, answered in human language.
  */
 export default function Faq() {

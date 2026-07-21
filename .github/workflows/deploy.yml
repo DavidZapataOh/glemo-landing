@@ -1,6 +1,6 @@
 name: deploy
-# CD a producción vía Vercel. Rollback por dispatch.
-# Secrets requeridos: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID.
+# CD to production via Vercel. Rollback by dispatch.
+# Required secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID.
 on:
   push:
     branches: [main]

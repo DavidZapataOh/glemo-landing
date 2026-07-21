@@ -24,7 +24,7 @@ type Props = {
 /**
  * Masked-line reveal (the Osmo pattern): lines rise from behind a mask with a
  * slight rotation that straightens. Reserved for the hero and the two
- * statement headings — not a universal section reflex.
+ * statement headings, not a universal section reflex.
  * Content is visible by default; the animation only *starts* from a hidden
  * state when JS + motion are available (no blank sections in headless/reader).
  */

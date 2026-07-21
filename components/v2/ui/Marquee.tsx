@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 type Props = {
   children: React.ReactNode;
   className?: string;
-  /** px per second — constant speed regardless of content width (Osmo rule) */
+  /** px per second, constant speed regardless of content width (Osmo rule) */
   speed?: number;
 };
 
