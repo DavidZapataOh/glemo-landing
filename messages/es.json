@@ -12,7 +12,8 @@
     "developers": "Developers",
     "institutions": "Para quién",
     "faq": "FAQ",
-    "cta": "Empieza gratis"
+    "cta": "Empieza gratis",
+    "signIn": "Iniciar sesión"
   },
   "hero": {
     "titleA": "Credenciales que",
@@ -307,7 +308,7 @@
     "title": "Dale a tus credenciales un checkmark",
     "body": "Estamos eligiendo un grupo pequeño de design partners. Construye con la API, o trae Glemo a tu institución.",
     "primary": "Empieza gratis",
-    "secondary": "Agenda una demo"
+    "secondary": "Ver precios"
   },
   "footer": {
     "tagline": "Credenciales en las que la gente puede confiar, desde donde sea, para siempre.",

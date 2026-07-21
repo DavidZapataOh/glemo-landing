@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { appUrl } from "@/lib/app-url";
 import { getLenis } from "@/lib/motion";
 import LocaleSwitcher from "./LocaleSwitcher";
 
@@ -96,8 +97,13 @@ export default function Nav() {
               <LocaleSwitcher />
             </span>
             <a
-              href="#cta"
-              onClick={onLink("#cta")}
+              href={appUrl("/login")}
+              className="rounded-full px-3.5 py-2.5 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 hover:text-ink"
+            >
+              {t("signIn")}
+            </a>
+            <a
+              href={appUrl("/signup")}
               className="rounded-full bg-verify px-5 py-2.5 text-[0.9rem] font-bold text-[oklch(0.17_0.03_170)] transition-colors duration-200 hover:bg-verify-strong"
             >
               {t("cta")}

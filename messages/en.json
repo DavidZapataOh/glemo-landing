@@ -12,7 +12,8 @@
     "developers": "Developers",
     "institutions": "Who it's for",
     "faq": "FAQ",
-    "cta": "Start free"
+    "cta": "Start free",
+    "signIn": "Sign in"
   },
   "hero": {
     "titleA": "Credentials that",
@@ -307,7 +308,7 @@
     "title": "Give your credentials a checkmark",
     "body": "We're picking a small group of design partners. Build with the API, or bring Glemo to your institution.",
     "primary": "Start free",
-    "secondary": "Book a demo"
+    "secondary": "See pricing"
   },
   "footer": {
     "tagline": "Credentials people can trust, from anywhere, forever.",

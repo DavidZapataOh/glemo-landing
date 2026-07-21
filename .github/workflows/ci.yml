@@ -11,6 +11,7 @@ jobs:
         with: { node-version: 20, cache: npm }
       - run: npm ci
       - run: npm run lint
+      - run: npm run check:links
       - run: npx tsc --noEmit
       - run: npm audit --omit=dev --audit-level=high   # SCA: high/critical vulns fail
       # React2Shell-class: patched Next floor. CI breaks if it drops below.
