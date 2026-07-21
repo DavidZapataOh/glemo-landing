@@ -29,6 +29,10 @@
       "description": "Self-serve test keys and sample credentials. No signup, rate-limited."
     },
     {
+      "name": "Trust marks",
+      "description": "Portable \"Verified by Glemo\" badges tied to real verification events — each links to a public, server-backed proof."
+    },
+    {
       "name": "Public verification",
       "description": "Verify a credential from a share link — no API key, rate-limited, no PII."
     },
@@ -442,6 +446,10 @@
                           },
                           "createdAt": {
                             "type": "string"
+                          },
+                          "risk": {
+                            "type": "number",
+                            "nullable": true
                           }
                         },
                         "required": [
@@ -450,7 +458,8 @@
                           "verdict",
                           "issuerRef",
                           "latencyMs",
-                          "createdAt"
+                          "createdAt",
+                          "risk"
                         ]
                       }
                     }
@@ -537,6 +546,513 @@
         }
       }
     },
+    "/relying-parties/{id}/usage/periods": {
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Get usage by period",
+        "description": "Exact, event-derived usage: the current calendar month (computed live) plus closed period snapshots — the same numbers billing uses.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usage periods",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "type": "object",
+                      "properties": {
+                        "periodStart": {
+                          "type": "string"
+                        },
+                        "total": {
+                          "type": "number"
+                        },
+                        "byVerdict": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number"
+                          }
+                        },
+                        "byMethod": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "required": [
+                        "periodStart",
+                        "total",
+                        "byVerdict",
+                        "byMethod"
+                      ]
+                    },
+                    "closed": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "periodStart": {
+                            "type": "string"
+                          },
+                          "periodEnd": {
+                            "type": "string"
+                          },
+                          "totalVerifications": {
+                            "type": "number"
+                          },
+                          "byVerdict": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number"
+                            }
+                          },
+                          "byMethod": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number"
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "periodStart",
+                          "periodEnd",
+                          "totalVerifications",
+                          "byVerdict",
+                          "byMethod"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "current",
+                    "closed"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/billing": {
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Get billing and fee disclosure",
+        "description": "Verifier-pays fee disclosure: the plan, its pricing, live usage for the current period and the projected cost — computed with the exact same function billing uses. Issuing is free.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Billing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "plan": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "includedVerifications": {
+                          "type": "number"
+                        },
+                        "pricePerVerificationCents": {
+                          "type": "number"
+                        },
+                        "overagePolicy": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "includedVerifications",
+                        "pricePerVerificationCents",
+                        "overagePolicy"
+                      ]
+                    },
+                    "currentPeriod": {
+                      "type": "object",
+                      "properties": {
+                        "periodStart": {
+                          "type": "string"
+                        },
+                        "periodEnd": {
+                          "type": "string"
+                        },
+                        "total": {
+                          "type": "number"
+                        },
+                        "cost": {
+                          "type": "object",
+                          "properties": {
+                            "included": {
+                              "type": "number"
+                            },
+                            "overage": {
+                              "type": "number"
+                            },
+                            "overageCents": {
+                              "type": "number"
+                            },
+                            "totalCents": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "included",
+                            "overage",
+                            "overageCents",
+                            "totalCents"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "periodStart",
+                        "periodEnd",
+                        "total",
+                        "cost"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "plan",
+                    "currentPeriod"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/trust-marks": {
+      "post": {
+        "tags": [
+          "Trust marks"
+        ],
+        "summary": "Issue a trust mark",
+        "description": "Issues a portable \"Verified by Glemo\" mark tied to one of YOUR verification events with a valid verdict. The badge links to a public, server-backed proof — it cannot be forged without a real verification.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "verificationEventId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "verificationEventId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Trust mark",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "markId": {
+                      "type": "string"
+                    },
+                    "publicUrl": {
+                      "type": "string"
+                    },
+                    "badgeUrl": {
+                      "type": "string"
+                    },
+                    "embedHtml": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "markId",
+                    "publicUrl",
+                    "badgeUrl",
+                    "embedHtml"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Event belongs to another relying party"
+          },
+          "404": {
+            "description": "Event not found"
+          },
+          "422": {
+            "description": "Event verdict is not valid"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/trust-marks": {
+      "post": {
+        "tags": [
+          "Trust marks"
+        ],
+        "summary": "Issue a trust mark (dashboard)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "verificationEventId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "verificationEventId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Trust mark",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "markId": {
+                      "type": "string"
+                    },
+                    "publicUrl": {
+                      "type": "string"
+                    },
+                    "badgeUrl": {
+                      "type": "string"
+                    },
+                    "embedHtml": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "markId",
+                    "publicUrl",
+                    "badgeUrl",
+                    "embedHtml"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Event verdict is not valid"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Trust marks"
+        ],
+        "summary": "List trust marks",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trust marks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "trustMarks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "markId": {
+                            "type": "string"
+                          },
+                          "publicUrl": {
+                            "type": "string"
+                          },
+                          "badgeUrl": {
+                            "type": "string"
+                          },
+                          "embedHtml": {
+                            "type": "string"
+                          },
+                          "verifiedAt": {
+                            "type": "string"
+                          },
+                          "issuerRef": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "verificationEventId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "markId",
+                          "publicUrl",
+                          "badgeUrl",
+                          "embedHtml",
+                          "verifiedAt",
+                          "issuerRef",
+                          "verificationEventId"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "trustMarks"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/public/trust-marks/{id}": {
+      "get": {
+        "tags": [
+          "Trust marks"
+        ],
+        "summary": "Get trust mark proof",
+        "description": "The public, server-backed proof a badge links to: verdict, method, issuer and verification date. No API key, no PII.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proof",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "markId": {
+                      "type": "string"
+                    },
+                    "verdict": {
+                      "type": "string"
+                    },
+                    "method": {
+                      "type": "string"
+                    },
+                    "issuerRef": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "verifiedAt": {
+                      "type": "string"
+                    },
+                    "relyingPartyName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "markId",
+                    "verdict",
+                    "method",
+                    "issuerRef",
+                    "verifiedAt",
+                    "relyingPartyName"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
     "/status-lists/{id}": {
       "get": {
         "tags": [
@@ -578,7 +1094,7 @@
           "Verify"
         ],
         "summary": "Verify a credential",
-        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry.",
+        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry; `byImage` matches a credential image by hash and runs AI-fraud analysis. Every verdict includes an anti-fraud `risk` score.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -590,7 +1106,8 @@
                     "enum": [
                       "byHash",
                       "byVC",
-                      "byZkTls"
+                      "byZkTls",
+                      "byImage"
                     ]
                   },
                   "credentialId": {
@@ -619,6 +1136,10 @@
                     "required": [
                       "engine"
                     ]
+                  },
+                  "imageBase64": {
+                    "type": "string",
+                    "description": "Credential image (PNG/JPEG) or PDF, base64. Max 2 MB decoded."
                   }
                 },
                 "required": [
@@ -665,6 +1186,25 @@
                       "additionalProperties": {
                         "type": "string"
                       }
+                    },
+                    "risk": {
+                      "type": "object",
+                      "properties": {
+                        "score": {
+                          "type": "number"
+                        },
+                        "signals": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "score",
+                        "signals"
+                      ],
+                      "description": "Anti-fraud risk score 0-100. A signal, never a verdict override."
                     }
                   },
                   "required": [
@@ -678,8 +1218,11 @@
           "401": {
             "description": "Unauthorized"
           },
+          "402": {
+            "description": "Monthly quota exceeded (block-policy plans). Upgrade to continue."
+          },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden (missing scope or plan feature)"
           }
         }
       }
