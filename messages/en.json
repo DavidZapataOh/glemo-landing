@@ -13,7 +13,9 @@
     "institutions": "Who it's for",
     "faq": "FAQ",
     "cta": "Start free",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "pricing": "Pricing",
+    "docs": "Docs"
   },
   "hero": {
     "titleA": "Credentials that",
@@ -316,13 +318,16 @@
     "productLinks": {
       "how": "Watch it work",
       "features": "Who it's for",
-      "audiences": "The details"
+      "audiences": "The details",
+      "pricing": "Pricing"
     },
     "developersCol": "Developers",
     "developersLinks": {
       "api": "API preview",
       "standards": "Open standards",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "docs": "Docs",
+      "status": "Status"
     },
     "company": "Company",
     "companyLinks": {

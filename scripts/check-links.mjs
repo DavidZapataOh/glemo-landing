@@ -42,6 +42,19 @@ for (const mustUseAppUrl of [
   }
 }
 
+// Unification: the whole surface must be reachable, so nav and footer link the routes.
+const mustLink = [
+  { file: "components/v2/Nav.tsx", hrefs: ["/pricing", "/docs"] },
+  { file: "components/v2/Footer.tsx", hrefs: ["/pricing", "/docs", "/status"] },
+  { file: "app/not-found.tsx", hrefs: ["/docs"] },
+];
+for (const { file, hrefs } of mustLink) {
+  const src = readFileSync(join(ROOT, file), "utf8");
+  for (const href of hrefs) {
+    if (!src.includes(`"${href}"`)) failures.push(`${file}: missing link to ${href}`);
+  }
+}
+
 if (failures.length > 0) {
   console.error("check-links FAIL:");
   for (const f of failures) console.error(`  - ${f}`);

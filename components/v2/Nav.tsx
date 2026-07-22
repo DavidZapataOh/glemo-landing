@@ -3,15 +3,21 @@
 import { useCallback } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { appUrl } from "@/lib/app-url";
 import { getLenis } from "@/lib/motion";
 import LocaleSwitcher from "./LocaleSwitcher";
 
-const LINKS = [
+// Home-section anchors (smooth-scroll on home, navigate to /#id from elsewhere).
+const SECTIONS = [
   { id: "action", key: "product" },
   { id: "developers", key: "developers" },
-  { id: "institutions", key: "institutions" },
-  { id: "faq", key: "faq" },
+] as const;
+// Real routes, so the site reads as one product from any page.
+const ROUTES = [
+  { href: "/pricing", key: "pricing" },
+  { href: "/docs", key: "docs" },
 ] as const;
 
 /**
@@ -21,6 +27,7 @@ const LINKS = [
 export default function Nav() {
   const t = useTranslations("nav");
   const ta = useTranslations("announcement");
+  const pathname = usePathname();
 
   const scrollTo = useCallback((hash: string) => {
     const lenis = getLenis();
@@ -30,10 +37,14 @@ export default function Nav() {
     else el.scrollIntoView({ behavior: "smooth" });
   }, []);
 
+  // On home, intercept for a smooth scroll; elsewhere let the /#id href navigate home.
   const onLink =
-    (hash: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (pathname !== "/") return;
+      const el = document.querySelector(`#${id}`);
+      if (!el) return;
       e.preventDefault();
-      scrollTo(hash);
+      scrollTo(`#${id}`);
     };
 
   return (
@@ -80,16 +91,29 @@ export default function Nav() {
           </a>
 
           <div className="hidden items-center gap-1 md:flex">
-            {LINKS.map((l) => (
+            {SECTIONS.map((l) => (
               <a
                 key={l.id}
-                href={`#${l.id}`}
-                onClick={onLink(`#${l.id}`)}
+                href={`/#${l.id}`}
+                onClick={onLink(l.id)}
                 className="rounded-full px-3.5 py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 hover:bg-surface hover:text-ink"
               >
                 {t(l.key)}
               </a>
             ))}
+            {ROUTES.map((r) => {
+              const active = pathname.startsWith(r.href);
+              return (
+                <Link
+                  key={r.href}
+                  href={r.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`rounded-full px-3.5 py-2 text-[0.9rem] font-medium transition-colors duration-200 hover:bg-surface hover:text-ink ${active ? "text-ink" : "text-ink-2"}`}
+                >
+                  {t(r.key)}
+                </Link>
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-2">

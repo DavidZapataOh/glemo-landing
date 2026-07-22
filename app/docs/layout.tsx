@@ -1,6 +1,7 @@
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { RootProvider } from "fumadocs-ui/provider";
 import Link from "next/link";
+import { appUrl } from "@/lib/app-url";
 import { source } from "@/lib/source";
 import "./docs.css";
 
@@ -10,6 +11,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <DocsLayout
         tree={source.pageTree}
         disableThemeSwitch
+        // The docs live on the (dark) marketing site: keep them dark to match their host,
+        // but always offer the way back to the site and into the app.
+        links={[
+          { text: "Site", url: "/" },
+          { text: "Open app", url: appUrl("/") },
+        ]}
         nav={{
           title: (
             <span className="inline-flex items-baseline gap-2">

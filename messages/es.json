@@ -13,7 +13,9 @@
     "institutions": "Para quién",
     "faq": "FAQ",
     "cta": "Empieza gratis",
-    "signIn": "Iniciar sesión"
+    "signIn": "Iniciar sesión",
+    "pricing": "Precios",
+    "docs": "Docs"
   },
   "hero": {
     "titleA": "Credenciales que",
@@ -316,13 +318,16 @@
     "productLinks": {
       "how": "Míralo funcionar",
       "features": "Para quién",
-      "audiences": "Los detalles"
+      "audiences": "Los detalles",
+      "pricing": "Precios"
     },
     "developersCol": "Developers",
     "developersLinks": {
       "api": "Vista previa de la API",
       "standards": "Estándares abiertos",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "docs": "Docs",
+      "status": "Estado"
     },
     "company": "Compañía",
     "companyLinks": {

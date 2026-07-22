@@ -15,17 +15,17 @@ export default function Footer() {
     {
       title: t("product"),
       links: [
-        { label: t("productLinks.how"), href: "#action" },
-        { label: t("productLinks.features"), href: "#institutions" },
-        { label: t("productLinks.audiences"), href: "#audiences" },
+        { label: t("productLinks.how"), href: "/#action" },
+        { label: t("productLinks.features"), href: "/#institutions" },
+        { label: t("productLinks.pricing"), href: "/pricing" },
       ],
     },
     {
       title: t("developersCol"),
       links: [
-        { label: t("developersLinks.api"), href: "#developers" },
-        { label: t("developersLinks.standards"), href: "#top" },
-        { label: t("developersLinks.faq"), href: "#faq" },
+        { label: t("developersLinks.api"), href: "/#developers" },
+        { label: t("developersLinks.docs"), href: "/docs" },
+        { label: t("developersLinks.status"), href: "/status" },
       ],
     },
     {

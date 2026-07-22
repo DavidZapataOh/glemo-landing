@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PricingFaq } from "@/components/v2/PricingFaq";
 import { appUrl } from "@/lib/app-url";
 import plansData from "@/public/plans.json";
 
@@ -94,6 +95,8 @@ export default function PricingPage() {
           Every plan includes the independent trust mark, the public verification page and the
           full API. Overage on paid plans is billed monthly at the per-verification rate above.
         </p>
+
+        <PricingFaq />
       </div>
     </main>
   );
