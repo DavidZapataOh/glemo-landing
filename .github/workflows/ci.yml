@@ -12,6 +12,8 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run check:links
+      - run: npm run check:sdk-copy     # Regla #4: dev copy must match the real SDK surface
+      - run: npm run check:quickstart   # doc snippet must use the real SDK surface (live run is local)
       - run: npx tsc --noEmit
       - run: npm audit --omit=dev --audit-level=high   # SCA: high/critical vulns fail
       # React2Shell-class: patched Next floor. CI breaks if it drops below.

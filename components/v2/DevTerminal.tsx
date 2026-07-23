@@ -7,26 +7,29 @@ import Reveal from "./ui/Reveal";
 import { cn } from "@/lib/utils";
 
 const SNIPPETS: Record<string, string> = {
-  curl: `curl -X POST https://api.glemo.io/v1/verifications \\
-  -H "Authorization: Bearer glm_sk_…" \\
-  -d '{ "credential": "glm_cred_8f3a…c21" }'`,
-  node: `import { Glemo } from "@glemo/sdk";
+  curl: `curl -X POST https://api.glemo.io/verify \\
+  -H "Authorization: Bearer glemo_live_…" \\
+  -H "Content-Type: application/json" \\
+  -d '{ "method": "byHash", "credentialId": "a1b2c3d4-…" }'`,
+  node: `import { createGlemo } from "@glemo/sdk";
 
-const glemo = new Glemo("glm_sk_…");
-const check = await glemo.verify("glm_cred_8f3a…c21");`,
-  python: `from glemo import Glemo
+const glemo = createGlemo({ apiKey: "glemo_live_…" });
+const result = await glemo.verify({ credentialId: "a1b2c3d4-…" });`,
+  python: `import requests
 
-glemo = Glemo("glm_sk_…")
-check = glemo.verify("glm_cred_8f3a…c21")`,
+r = requests.post("https://api.glemo.io/verify",
+    headers={"Authorization": "Bearer glemo_live_…"},
+    json={"method": "byHash", "credentialId": "a1b2c3d4-…"})
+print(r.json()["status"])  # "valid"`,
 };
 
 const RESPONSE = [
   `{`,
-  `  "status": "verified",`,
-  `  "issuer": "Andes Tech Academy",`,
-  `  "issued_at": "2026-03-14",`,
-  `  "revoked": false,`,
-  `  "latency_ms": 40`,
+  `  "status": "valid",`,
+  `  "issuer": "did:web:andes.academy",`,
+  `  "checks": [{ "name": "signature", "ok": true }],`,
+  `  "risk": { "score": 3, "signals": [] },`,
+  `  "latencyMs": 40`,
   `}`,
 ];
 
@@ -161,7 +164,7 @@ export default function DevTerminal() {
                       key={i}
                       className={cn(
                         "block",
-                        line.includes("verified") && "text-verify"
+                        line.includes('"valid"') && "text-verify"
                       )}
                     >
                       {line}
