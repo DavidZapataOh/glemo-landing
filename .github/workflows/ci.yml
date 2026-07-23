@@ -12,6 +12,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run check:links
+      - run: npm run check:cdn-url     # docs must not point at the undeployed cdn.glemo.io
       - run: npm run check:sdk-copy     # Regla #4: dev copy must match the real SDK surface
       - run: npm run check:quickstart   # doc snippet must use the real SDK surface (live run is local)
       - run: npx tsc --noEmit

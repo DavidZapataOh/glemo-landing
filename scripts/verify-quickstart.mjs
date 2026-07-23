@@ -15,7 +15,7 @@ import { join, resolve } from "node:path";
 
 const BASE = process.env.GLEMO_QUICKSTART_BASE_URL ?? "http://localhost:3000";
 const MDX = resolve(process.cwd(), "content/docs/quickstart.mdx");
-const SDK_DIR = resolve(process.cwd(), "../glemo-frontend");
+const SDK_DIR = resolve(process.cwd(), "../glemo-js");
 
 /** Extracts the JS code block from the `<Tab value="Node">` of the quickstart. */
 export function extractNodeSnippet(mdx) {
