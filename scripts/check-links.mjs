@@ -34,7 +34,7 @@ for (const scope of SCOPES) {
 for (const mustUseAppUrl of [
   "components/v2/FinalCta.tsx",
   "components/v2/Nav.tsx",
-  "app/pricing/page.tsx",
+  "app/(site)/pricing/page.tsx",
 ]) {
   const src = readFileSync(join(ROOT, mustUseAppUrl), "utf8");
   if (!src.includes("appUrl(")) {
@@ -45,7 +45,10 @@ for (const mustUseAppUrl of [
 // Unification: the whole surface must be reachable, so nav and footer link the routes.
 const mustLink = [
   { file: "components/v2/Nav.tsx", hrefs: ["/pricing", "/docs"] },
-  { file: "components/v2/Footer.tsx", hrefs: ["/pricing", "/docs", "/status"] },
+  {
+    file: "components/v2/Footer.tsx",
+    hrefs: ["/pricing", "/docs", "/status", "/privacy", "/dpa", "/processor-terms"],
+  },
   { file: "app/not-found.tsx", hrefs: ["/docs"] },
 ];
 for (const { file, hrefs } of mustLink) {

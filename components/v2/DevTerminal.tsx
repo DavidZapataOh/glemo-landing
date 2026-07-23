@@ -26,7 +26,7 @@ const RESPONSE = [
   `  "issuer": "Andes Tech Academy",`,
   `  "issued_at": "2026-03-14",`,
   `  "revoked": false,`,
-  `  "latency_ms": 182`,
+  `  "latency_ms": 40`,
   `}`,
 ];
 

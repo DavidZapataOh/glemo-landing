@@ -392,12 +392,12 @@ function LatencyTile() {
       })
       // segments illuminate in sequence while the digits race
       .to(counter, {
-        v: 0.18,
+        v: 0.04,
         duration: 1.2,
         ease: "power2.out",
         onUpdate: () => {
           if (numEl) numEl.textContent = counter.v.toFixed(2);
-          paintSegs(counter.v / 0.18);
+          paintSegs(counter.v / 0.04);
         },
       })
       // the "verified" beat: all lit segments pulse + label swaps
@@ -455,7 +455,7 @@ function LatencyTile() {
         {/* digits + label centered in the ring */}
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
           <p className="font-mono text-[2rem] font-medium leading-none text-verify">
-            <span className="lt-num">{reduced ? "0.18" : "0.00"}</span>
+            <span className="lt-num">{reduced ? "0.04" : "0.00"}</span>
             <span className="text-[0.95rem] text-ink-2">s</span>
           </p>
           <p

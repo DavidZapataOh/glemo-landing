@@ -35,6 +35,14 @@ export default function Footer() {
         { label: t("companyLinks.contact"), href: "mailto:hello@glemo.io" },
       ],
     },
+    {
+      title: t("legal"),
+      links: [
+        { label: t("legalLinks.privacy"), href: "/privacy" },
+        { label: t("legalLinks.dpa"), href: "/dpa" },
+        { label: t("legalLinks.processorTerms"), href: "/processor-terms" },
+      ],
+    },
   ];
 
   return (
@@ -51,7 +59,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
             {cols.map((col) => (
               <div key={col.title}>
                 <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-2/70">

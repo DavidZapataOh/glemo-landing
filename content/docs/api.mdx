@@ -70,6 +70,7 @@ failures once by default; it never retries 4xx.
 ## Idempotency & latency
 
 Verification is a **read**: calling `/verify` twice is safe by design.
-Verdict computation is sub-millisecond server-side; the latency you observe is
-network. Every verification is also logged to your dashboard with its verdict
-and latency.
+Verdict computation takes tens of milliseconds server-side (p50 ~40ms in our
+load test); the rest of what you observe is network. Every response carries its
+measured `latencyMs`, and every verification is logged to your dashboard with
+its verdict and latency.

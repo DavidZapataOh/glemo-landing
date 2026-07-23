@@ -24,7 +24,7 @@
     "ctaPrimary": "Empieza gratis",
     "ctaSecondary": "Agenda una demo",
     "microTrust": "Estándares abiertos · GDPR-ready · Nada que instalar",
-    "verifiedChip": "Verificado · 0.18s",
+    "verifiedChip": "Verificado · 0.04s",
     "cards": {
       "diploma": {
         "kind": "Título universitario",
@@ -137,7 +137,7 @@
         "Titular ✓",
         "No revocada ✓"
       ],
-      "verifiedIn": "verificada en 0.18s",
+      "verifiedIn": "verificada en 0.04s",
       "auditRows": [
         [
           "14:02",
@@ -178,13 +178,13 @@
       "brandB": "verify.nova.edu"
     },
     "latency": {
-      "value": "0.18s",
+      "value": "0.04s",
       "label": "tiempo medio de verificación",
       "note": "más rápido que una duda",
       "feed": [
-        "hr-platform.co · verificada · 0.14s",
-        "talent-app.io · verificada · 0.21s",
-        "edu-portal.mx · verificada · 0.17s"
+        "hr-platform.co · verificada · 0.04s",
+        "talent-app.io · verificada · 0.05s",
+        "edu-portal.mx · verificada · 0.03s"
       ]
     },
     "nolockin": {
@@ -333,6 +333,12 @@
     "companyLinks": {
       "partners": "Design partners",
       "contact": "Contacto"
+    },
+    "legal": "Legal",
+    "legalLinks": {
+      "privacy": "Privacidad",
+      "dpa": "DPA",
+      "processorTerms": "Términos de procesador"
     },
     "language": "Idioma",
     "rights": "© {year} Glemo. Todos los derechos reservados."
