@@ -6,8 +6,8 @@ description: One API to verify credentials from any issuer.
 import { Card, Cards } from "fumadocs-ui/components/card";
 
 Glemo is a **credential verification network**. You're hiring, admitting or
-onboarding someone who claims a credential — a degree, a certification, a
-license. Instead of emails and 3–5 day manual checks, you make one API call and
+onboarding someone who claims a credential, a degree, a certification, a
+license. Instead of emails and 3-5 day manual checks, you make one API call and
 get a **cryptographic verdict in milliseconds**, for credentials issued by
 **any** issuer on open standards (W3C Verifiable Credentials 2.0, Open
 Badges 3.0).
@@ -25,7 +25,7 @@ Badges 3.0).
   />
   <Card
     title="Concepts"
-    description="Credentials, DIDs, verification and revocation — the model."
+    description="Credentials, DIDs, verification and revocation, the model."
     href="/docs/concepts/credentials"
   />
   <Card
@@ -37,11 +37,11 @@ Badges 3.0).
 
 ## How it works
 
-1. **Someone presents a credential** — an id from Glemo's registry, or a
+1. **Someone presents a credential**, an id from Glemo's registry, or a
    portable signed credential (VC-JWT) issued by anyone.
 2. **You call `POST /verify`** with your API key.
-3. **Glemo runs the checks** — signature, issuer identity (DID), schema,
-   revocation status, validity window — and returns a verdict with the
+3. **Glemo runs the checks**, signature, issuer identity (DID), schema,
+   revocation status, validity window, and returns a verdict with the
    evidence.
 
 ```bash
@@ -64,7 +64,7 @@ curl -X POST https://api.glemo.io/verify \
 
 ## Verdicts
 
-Every verification resolves to exactly one of six deterministic verdicts —
+Every verification resolves to exactly one of six deterministic verdicts:
 never a maybe:
 
 | Verdict | Meaning | Typical action |
@@ -72,16 +72,16 @@ never a maybe:
 | `valid` | Every check passed | Accept |
 | `revoked` | The issuer revoked it | Reject, show reason |
 | `expired` | Past its validity window | Ask for a renewal |
-| `tampered` | Signature or schema broken — content was altered | Reject, flag |
+| `tampered` | Signature or schema broken, content was altered | Reject, flag |
 | `not_found` | No credential with that id | Ask for the source |
 | `not_verifiable` | Issuer identity couldn't be resolved | Retry / manual review |
 
 ## Ways to integrate
 
-- **API** — `POST /verify`, one call, any stack. Start at the
+- **API**: `POST /verify`, one call, any stack. Start at the
   [quickstart](/docs/quickstart).
-- **SDK** — `@glemo/sdk` for Node, browsers and edge, with typed errors.
-- **Widget** — `<glemo-verify>`: paste a snippet, get a live verdict badge.
+- **SDK**: `@glemo/sdk` for Node, browsers and edge, with typed errors.
+- **Widget**: `<glemo-verify>`, paste a snippet, get a live verdict badge.
   No code beyond HTML.
-- **Webhooks** — signed notifications for every verification, for your
+- **Webhooks**: signed notifications for every verification, for your
   async pipelines. See [webhooks](/docs/guides/webhooks).

@@ -19,7 +19,7 @@ curl https://api.glemo.io/verify \
 ```
 
 Keys belong to a **relying party** and carry **scopes** (e.g. `verify:read`).
-Manage them — create, rotate, revoke — from your dashboard or the
+Manage them, create, rotate, revoke, from your dashboard or the
 `/relying-parties/{id}/keys` endpoints.
 
 <Callout type="warn" title="Secrets are shown once">
@@ -35,7 +35,7 @@ Manage them — create, rotate, revoke — from your dashboard or the
 | `glemo_live_…` | Production | Real verifications |
 
 Sandbox keys come from the self-serve provisioner
-(`POST /sandbox/keys` — see the [quickstart](/docs/quickstart)) and only carry
+(`POST /sandbox/keys`, see the [quickstart](/docs/quickstart)) and only carry
 `verify:read`.
 
 ### Publishable keys
@@ -55,7 +55,7 @@ exceptions:
 | 403 | `forbidden` | `PermissionError` | Key lacks the scope |
 | 422 | `validation` | `ValidationError` | Fix the request body |
 | 429 | `rate_limited` | `RateLimitError` (`retryAfter`) | Back off, then retry |
-| 5xx | — | `ApiError` | Retry with backoff |
+| 5xx |, | `ApiError` | Retry with backoff |
 
 ```json
 { "error": "rate_limited", "message": "Too many requests" }

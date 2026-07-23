@@ -13,15 +13,15 @@ the checks that produced it.
 | `valid` | Signature, schema, status and validity window all pass |
 | `revoked` | The issuer flipped this credential's bit in their status list |
 | `expired` | Past `validUntil` |
-| `tampered` | Signature or schema check failed — the content was altered |
+| `tampered` | Signature or schema check failed, the content was altered |
 | `not_found` | No credential with that id |
 | `not_verifiable` | The issuer's DID could not be resolved (network, unknown issuer) |
 
 ## Methods
 
-- **`byHash`** — look up a credential by id in the registry, check status and
+- **`byHash`**: look up a credential by id in the registry, check status and
   expiration. The fast path (sub-millisecond server compute).
-- **`byVC`** — verify a portable VC-JWT: resolve the issuer's DID, check the
+- **`byVC`**: verify a portable VC-JWT: resolve the issuer's DID, check the
   ES256 signature, the schema, the status list and the validity window. Works
   for credentials issued by **any** issuer, not just those registered in Glemo.
 
@@ -29,7 +29,7 @@ the checks that produced it.
 
 For external issuers, Glemo resolves `did:web` documents over HTTPS (with
 caching and timeouts) and fetches their status lists. If an issuer can't be
-resolved, the verdict is an explicit `not_verifiable` — never a hang, never a
+resolved, the verdict is an explicit `not_verifiable`, never a hang, never a
 guess.
 
 ## Webhooks
