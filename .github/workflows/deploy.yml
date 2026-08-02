@@ -31,7 +31,32 @@ jobs:
       - run: npx tsc --noEmit
       - run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
       - run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-      - run: npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy
+        id: deploy
+        run: echo "url=$(npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})" >> "$GITHUB_OUTPUT"
+      # Post-deploy smoke. The brand host serves the issuer identity: if
+      # /.well-known/did.json is not a JSON DID document with the expected id,
+      # nothing Glemo signs is independently verifiable, so the deploy fails.
+      - name: Smoke test
+        run: |
+          URL="${{ steps.deploy.outputs.url }}"
+          echo "Smoke testing $URL"
+          curl -fsS "$URL" | grep -qi "glemo" || { echo "::error::home does not render"; exit 1; }
+          BODY="$(curl -fsSL "$URL/.well-known/did.json")" || { echo "::error::did.json unreachable"; exit 1; }
+          printf '%s' "$BODY" | node -e '
+            let s = "";
+            process.stdin.on("data", (d) => (s += d));
+            process.stdin.on("end", () => {
+              let doc;
+              try { doc = JSON.parse(s); }
+              catch { console.error("did.json is not JSON (HTML or error page): " + s.slice(0, 80)); process.exit(1); }
+              if (doc.id !== "did:web:glemo.io") { console.error("did id is " + doc.id); process.exit(1); }
+              if (!Array.isArray(doc.verificationMethod) || doc.verificationMethod.length === 0) {
+                console.error("no verificationMethod entries"); process.exit(1);
+              }
+            });
+          ' || exit 1
+          echo "Smoke passed"
 
   rollback:
     if: github.event_name == 'workflow_dispatch' && inputs.action == 'rollback'
