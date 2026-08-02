@@ -99,14 +99,21 @@ export default function StatusPage() {
             {overall === "operational"
               ? "All systems operational"
               : overall === "unreachable"
-                ? "Status API unreachable"
+                ? "Private preview"
                 : overall === "loading"
                   ? "Checking…"
                   : "Some systems degraded"}
           </p>
         </div>
 
-        <ul className="mt-6 flex flex-col gap-3">
+        {overall === "unreachable" && (
+          <p className="mt-4 max-w-xl text-sm text-[var(--ink-2)]">
+            Glemo is in private preview. Live component status and uptime history will be
+            published here at public launch.
+          </p>
+        )}
+
+        <ul className="mt-6 flex flex-col gap-3" hidden={overall === "unreachable"}>
           {(["api", "db", "redis"] as const).map((key) => (
             <li
               key={key}

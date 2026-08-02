@@ -340,11 +340,14 @@ const RING = { cx: 70, cy: 70, rIn: 48, rOut: 58, N: 44, A0: -140, A1: 140 };
 
 function ringSeg(i: number) {
   const a = ((RING.A0 + (i / (RING.N - 1)) * (RING.A1 - RING.A0)) * Math.PI) / 180;
+  // Rounded so server and client render byte-identical attributes: trig is
+  // not bit-stable across engines and the drift shows up as hydration noise.
+  const r = (n: number) => Math.round(n * 1000) / 1000;
   return {
-    x1: RING.cx + RING.rIn * Math.sin(a),
-    y1: RING.cy - RING.rIn * Math.cos(a),
-    x2: RING.cx + RING.rOut * Math.sin(a),
-    y2: RING.cy - RING.rOut * Math.cos(a),
+    x1: r(RING.cx + RING.rIn * Math.sin(a)),
+    y1: r(RING.cy - RING.rIn * Math.cos(a)),
+    x2: r(RING.cx + RING.rOut * Math.sin(a)),
+    y2: r(RING.cy - RING.rOut * Math.cos(a)),
   };
 }
 

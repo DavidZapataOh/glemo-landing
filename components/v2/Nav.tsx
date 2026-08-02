@@ -135,6 +135,30 @@ export default function Nav() {
           </div>
         </nav>
       </header>
+
+      {/* phones: the pill hides its links, so give them a condensed row */}
+      <div className="z-nav mt-2 flex items-center justify-center gap-1 px-4 md:hidden">
+        {SECTIONS.map((l) => (
+          <a
+            key={l.id}
+            href={`/#${l.id}`}
+            onClick={onLink(l.id)}
+            className="rounded-full px-3 py-1.5 text-[0.85rem] font-medium text-ink-2 transition-colors duration-200 hover:text-ink"
+          >
+            {t(l.key)}
+          </a>
+        ))}
+        {ROUTES.map((r) => (
+          <Link
+            key={r.href}
+            href={r.href}
+            className="rounded-full px-3 py-1.5 text-[0.85rem] font-medium text-ink-2 transition-colors duration-200 hover:text-ink"
+          >
+            {t(r.key)}
+          </Link>
+        ))}
+        <LocaleSwitcher />
+      </div>
     </>
   );
 }

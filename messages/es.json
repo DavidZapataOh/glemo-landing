@@ -200,7 +200,7 @@
     },
     "bulk": {
       "value": "2,000",
-      "label": "credenciales en 4 minutos",
+      "label": "credenciales en un solo lote",
       "note": "entra una hoja de cálculo, salen certificados",
       "rows": [
         "María Torres",
@@ -342,5 +342,33 @@
     },
     "language": "Idioma",
     "rights": "© {year} Glemo. Todos los derechos reservados."
+  },
+  "pricing": {
+    "title": "Precios",
+    "subtitle": "Los verificadores pagan por verificaciones. Emitir credenciales siempre es gratis. Sin wallet, sin cobro por asiento, sin lock-in.",
+    "popular": "popular",
+    "basePrice": "$0 / mes",
+    "verificationsPerMonth": "verificaciones / mes",
+    "overageNone": "Tope fijo, sin excedentes",
+    "overageFree": "Sin cargo por excedente",
+    "overageRate": "{rate} por verificación adicional",
+    "featureCore": "Verificación por ID, enlace o archivo de credencial",
+    "featureZkTls": "Verifica credenciales de cualquier portal (zkTLS)",
+    "featureImage": "Verifica imágenes de certificados",
+    "cta": "Empieza gratis",
+    "footnote": "Todos los planes incluyen la marca de confianza independiente, la página pública de verificación y la API completa. El excedente en planes pagos se factura mensualmente a la tarifa por verificación indicada.",
+    "faqTitle": "Preguntas sobre precios",
+    "faq": {
+      "q1": "¿Qué cuenta como una verificación?",
+      "a1": "Una revisión de una credencial: por hash, por credencial verificable, por prueba zkTLS o por imagen de certificado. Emitir credenciales nunca cuenta, y volver a revisar una credencial ya verificada en el mismo periodo de facturación es gratis.",
+      "q2": "¿Qué pasa cuando supero mis verificaciones incluidas?",
+      "a2": "En Free la verificación tiene tope: las llamadas adicionales se bloquean hasta el siguiente periodo, así nunca hay cobros sorpresa. En Starter y Scale, las verificaciones extra se facturan mensualmente a la tarifa del plan.",
+      "q3": "¿Emitir es gratis de verdad?",
+      "a3": "Sí. Cualquiera puede emitir credenciales, diseñar plantillas y compartir la página pública sin costo. Solo paga el lado verificador, las relying parties que consumen la API.",
+      "q4": "¿Mis destinatarios necesitan wallet o cuenta?",
+      "a4": "No. Una credencial es un enlace. Los destinatarios lo abren, lo comparten y lo agregan a LinkedIn sin instalar nada, y los verificadores lo confirman con una llamada a la API.",
+      "q5": "¿Puedo cambiar de plan después?",
+      "a5": "Cuando quieras, desde tu workspace. Las mejoras aplican de inmediato; la cuota incluida y la tarifa por verificación cambian con el plan."
+    }
   }
 }

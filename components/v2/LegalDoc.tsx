@@ -9,9 +9,9 @@ export function LegalDoc({ title, children }: { title: string; children: ReactNo
       <article className="mx-auto max-w-2xl">
         <h1 className="font-sans text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
         <p className="mt-6 rounded-xl border p-4 text-sm text-[var(--ink-2)]" style={card}>
-          <strong className="text-[var(--ink)]">Draft template.</strong> A data-protection lawyer
-          must review this before it is final. It is published for transparency and describes the
-          system&apos;s real architecture.
+          <strong className="text-[var(--ink)]">Under legal review.</strong> This document
+          describes the system&apos;s real architecture and is published for transparency while
+          counsel finalizes the wording. Questions: privacy@glemo.io.
         </p>
         <div className="mt-10 flex flex-col gap-6 leading-relaxed text-[var(--ink-2)]">{children}</div>
       </article>

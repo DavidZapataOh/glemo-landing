@@ -188,7 +188,10 @@ export default function HeroStack({ className }: { className?: string }) {
         )}
       </svg>
 
-      <div ref={rootRef} className="relative mx-auto h-[340px] w-[352px] sm:h-[380px]">
+      <div
+        ref={rootRef}
+        className="relative mx-auto h-[300px] w-[352px] max-w-full origin-top scale-[0.85] sm:h-[380px] sm:scale-100"
+      >
         {cards.map((c, i) => (
           <div
             key={c.variant}

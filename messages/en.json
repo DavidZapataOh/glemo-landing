@@ -200,7 +200,7 @@
     },
     "bulk": {
       "value": "2,000",
-      "label": "credentials in 4 minutes",
+      "label": "credentials in one batch",
       "note": "spreadsheet in, certificates out",
       "rows": [
         "María Torres",
@@ -342,5 +342,33 @@
     },
     "language": "Language",
     "rights": "© {year} Glemo. All rights reserved."
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Verifiers pay for verifications. Issuing credentials is always free. No wallet, no per-seat fees, no lock-in.",
+    "popular": "popular",
+    "basePrice": "$0 / month",
+    "verificationsPerMonth": "verifications / mo",
+    "overageNone": "Hard cap, no overage",
+    "overageFree": "No overage charge",
+    "overageRate": "{rate} / verification beyond that",
+    "featureCore": "Verification by ID, link or credential file",
+    "featureZkTls": "Verify credentials from any portal (zkTLS)",
+    "featureImage": "Verify certificate images",
+    "cta": "Start free",
+    "footnote": "Every plan includes the independent trust mark, the public verification page and the full API. Overage on paid plans is billed monthly at the per-verification rate above.",
+    "faqTitle": "Pricing questions",
+    "faq": {
+      "q1": "What counts as a verification?",
+      "a1": "One check of one credential: by hash, by verifiable credential, by zkTLS proof, or by uploaded certificate image. Issuing credentials never counts, and re-checking a credential you already verified in the same billing period is free.",
+      "q2": "What happens when I pass my included verifications?",
+      "a2": "On Free, verification is capped: further calls are blocked until the next period, so you are never charged by surprise. On Starter and Scale, extra verifications are billed monthly at the per-verification rate on the plan.",
+      "q3": "Is issuing really free?",
+      "a3": "Yes. Anyone can issue credentials, design templates and share the public credential page at no cost. Only the verifier side, the relying parties consuming the API, pays.",
+      "q4": "Do my recipients need a wallet or an account?",
+      "a4": "No. A credential is a link. Recipients open it, share it and add it to LinkedIn without installing anything, and verifiers confirm it with one API call.",
+      "q5": "Can I change plans later?",
+      "a5": "Any time, from your workspace. Upgrades apply immediately; the included quota and the per-verification rate change with the plan."
+    }
   }
 }
