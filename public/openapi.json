@@ -101,7 +101,7 @@
           "System"
         ],
         "summary": "Public pricing plans",
-        "description": "The pricing plans (free/starter/scale): the single source the pricing page renders.",
+        "description": "The pricing plans (free/starter/scale): the single source the pricing page renders, with the public checkout price id for the in-app overlay.",
         "responses": {
           "200": {
             "description": "Plans",
@@ -144,6 +144,10 @@
                               "byZkTls",
                               "byImage"
                             ]
+                          },
+                          "priceId": {
+                            "type": "string",
+                            "nullable": true
                           }
                         },
                         "required": [
@@ -152,7 +156,8 @@
                           "includedVerifications",
                           "pricePerVerificationCents",
                           "overagePolicy",
-                          "features"
+                          "features",
+                          "priceId"
                         ]
                       }
                     }
@@ -163,6 +168,1081 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Create an account with email and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Account created; session token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign in with email and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Current session claims",
+        "responses": {
+          "200": {
+            "description": "The authenticated user's claims plus live account state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "nullable": true
+                    },
+                    "emailVerified": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "emailVerified"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/admin": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Admin role probe",
+        "responses": {
+          "200": {
+            "description": "Caller has the admin role",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not an admin"
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign in with a Google ID token (verified server-side)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idToken": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "idToken"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid Google token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/apple": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign in with an Apple identity token (verified server-side)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "identityToken": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "identityToken"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid Apple token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/verify-email/request": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Send (or re-send) the email verification link",
+        "responses": {
+          "200": {
+            "description": "Always ok; sending is fire-and-forget",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/verify-email/confirm": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Confirm an email with its one-time token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email verified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or already-used token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/password/forgot": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Request a password-reset email",
+        "description": "Anti-enumeration: the response is identical whether the account exists or not.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Always ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/password/reset": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Set a new password with a one-time reset token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8
+                  }
+                },
+                "required": [
+                  "token",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or already-used token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/wallet/challenge": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Issue a short-lived wallet sign-in challenge",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "address",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Challenge JWT to sign",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "challenge": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "challenge"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/wallet": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Verify a signed wallet challenge",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  },
+                  "challenge": {
+                    "type": "string"
+                  },
+                  "signature": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "address",
+                  "challenge",
+                  "signature"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signature valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid signature",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me/onboarding": {
+      "get": {
+        "tags": [
+          "Onboarding"
+        ],
+        "summary": "The caller's getting-started checklist",
+        "responses": {
+          "200": {
+            "description": "Intent, progress and per-step completion derived from real actions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "intent": {
+                      "type": "string",
+                      "nullable": true,
+                      "enum": [
+                        "verifier",
+                        "issuer"
+                      ]
+                    },
+                    "dismissed": {
+                      "type": "boolean"
+                    },
+                    "progressPct": {
+                      "type": "number"
+                    },
+                    "steps": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "minutes": {
+                            "type": "number"
+                          },
+                          "href": {
+                            "type": "string"
+                          },
+                          "done": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "minutes",
+                          "href",
+                          "done"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "intent",
+                    "dismissed",
+                    "progressPct",
+                    "steps"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Onboarding"
+        ],
+        "summary": "Set the caller's intent or dismiss the checklist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "intent": {
+                    "type": "string",
+                    "enum": [
+                      "verifier",
+                      "issuer"
+                    ]
+                  },
+                  "dismissed": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated checklist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "intent": {
+                      "type": "string",
+                      "nullable": true,
+                      "enum": [
+                        "verifier",
+                        "issuer"
+                      ]
+                    },
+                    "dismissed": {
+                      "type": "boolean"
+                    },
+                    "progressPct": {
+                      "type": "number"
+                    },
+                    "steps": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "minutes": {
+                            "type": "number"
+                          },
+                          "href": {
+                            "type": "string"
+                          },
+                          "done": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "minutes",
+                          "href",
+                          "done"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "intent",
+                    "dismissed",
+                    "progressPct",
+                    "steps"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Validation error"
           }
         }
       }
@@ -206,6 +1286,116 @@
                   },
                   "required": [
                     "relyingParties"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Create a relying party and mint its first API key",
+        "description": "The API key secret is returned ONCE and never again.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "verify:read",
+                        "issue:write"
+                      ]
+                    },
+                    "minItems": 1,
+                    "default": [
+                      "verify:read"
+                    ]
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "live",
+                      "test"
+                    ],
+                    "default": "live"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created; the apiKey secret is shown only in this response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "relyingParty": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name"
+                      ]
+                    },
+                    "apiKey": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "relyingParty",
+                    "apiKey"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Validation error (including a scope outside the canonical catalog)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
                   ]
                 }
               }
@@ -300,13 +1490,11 @@
         "tags": [
           "Relying parties"
         ],
-        "summary": "Create an API key",
-        "description": "The response contains the secret, the only time it is shown. Store it safely.",
+        "summary": "Mint an additional API key for a relying party you own",
         "parameters": [
           {
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             },
             "required": true,
             "name": "id",
@@ -314,7 +1502,6 @@
           }
         ],
         "requestBody": {
-          "required": false,
           "content": {
             "application/json": {
               "schema": {
@@ -323,8 +1510,13 @@
                   "scopes": {
                     "type": "array",
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "enum": [
+                        "verify:read",
+                        "issue:write"
+                      ]
                     },
+                    "minItems": 1,
                     "default": [
                       "verify:read"
                     ]
@@ -344,7 +1536,7 @@
         },
         "responses": {
           "201": {
-            "description": "New key",
+            "description": "The apiKey secret is shown only in this response",
             "content": {
               "application/json": {
                 "schema": {
@@ -361,8 +1553,56 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
-            "description": "Not found"
+            "description": "Not found (also when the RP is not yours; existence is not leaked)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -376,8 +1616,7 @@
         "parameters": [
           {
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             },
             "required": true,
             "name": "id",
@@ -385,8 +1624,7 @@
           },
           {
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             },
             "required": true,
             "name": "keyId",
@@ -395,10 +1633,34 @@
         ],
         "responses": {
           "204": {
-            "description": "Revoked"
+            "description": "Revoked (idempotent)"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found (also when the RP is not yours; existence is not leaked)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -559,7 +1821,7 @@
           "Relying parties"
         ],
         "summary": "Get usage summary",
-        "description": "Verification counts by verdict and by day over the last 30 days.",
+        "description": "Verification counts by verdict and by day over a selectable window (7, 30 or 90 days), plus the average anti-fraud risk in that window.",
         "parameters": [
           {
             "schema": {
@@ -569,6 +1831,20 @@
             "required": true,
             "name": "id",
             "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "7",
+                "30",
+                "90"
+              ],
+              "description": "Window length in days. Default 30."
+            },
+            "required": false,
+            "name": "days",
+            "in": "query"
           }
         ],
         "responses": {
@@ -605,12 +1881,17 @@
                           "count"
                         ]
                       }
+                    },
+                    "avgRisk": {
+                      "type": "number",
+                      "nullable": true
                     }
                   },
                   "required": [
                     "total",
                     "byVerdict",
-                    "byDay"
+                    "byDay",
+                    "avgRisk"
                   ]
                 }
               }
@@ -758,6 +2039,38 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "subscription": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "status": {
+                          "type": "string"
+                        },
+                        "scheduledChangeAction": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "scheduledChangeAt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "pendingPlanId": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "pendingEffectiveAt": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "status",
+                        "scheduledChangeAction",
+                        "scheduledChangeAt",
+                        "pendingPlanId",
+                        "pendingEffectiveAt"
+                      ]
+                    },
                     "plan": {
                       "type": "object",
                       "properties": {
@@ -830,6 +2143,7 @@
                     }
                   },
                   "required": [
+                    "subscription",
                     "plan",
                     "currentPeriod"
                   ]
@@ -839,6 +2153,215 @@
           },
           "404": {
             "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/billing/plan": {
+      "patch": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Change the plan",
+        "description": "Upgrades or downgrades the verifier-pays plan. Validated against the plans defined in code (the same source as GET /plans). Returns the recomputed billing view.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "plan": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "plan"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Plan changed"
+          },
+          "400": {
+            "description": "Unknown plan"
+          },
+          "402": {
+            "description": "Paid upgrade without a payment method (contact sales / add a card)"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/billing/reconcile": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Reconcile billing against the payment provider",
+        "description": "Reads the provider's current subscriptions for this relying party and converges local state onto them, recovering from any event that was never delivered. Idempotent.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reconciled (or nothing to reconcile)"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/admin/billing/close-periods": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Close last month's usage periods for every relying party",
+        "description": "Closes the previous month's snapshot per relying party (idempotent), reports usage to the payments provider where the plan charges and a subscription exists, and reconciles every snapshot against the raw events. Safe to re-run.",
+        "responses": {
+          "200": {
+            "description": "Summary of the run"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not an admin"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/billing/checkout": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Start a hosted checkout for a paid plan",
+        "description": "Returns the payment provider's hosted checkout URL, which collects a payment method for the chosen paid plan (nothing is charged today: usage is billed monthly). The plan upgrade is applied by the provider's webhook after payment is confirmed, never by this endpoint.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "plan": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "plan"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The provider checkout: `transactionId` for an in-app overlay, `url` for a hosted redirect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "transactionId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "transactionId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unknown or non-paid plan"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "503": {
+            "description": "Billing is not configured (missing price id for the plan)"
+          }
+        }
+      }
+    },
+    "/webhooks/stripe": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Stripe events (signature-authenticated)",
+        "description": "Applies payment outcomes: checkout.session.completed activates the paid plan; a deleted or unpaid subscription downgrades to free. Signature over the raw body is the authentication; deliveries are idempotent by event id.",
+        "responses": {
+          "200": {
+            "description": "Received (including duplicates and ignored types)"
+          },
+          "400": {
+            "description": "Bad signature or unparseable event"
+          },
+          "503": {
+            "description": "Webhook secret not configured"
+          }
+        }
+      }
+    },
+    "/webhooks/paddle": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Paddle events (signature-authenticated)",
+        "description": "Applies payment outcomes: a completed plan-purchase transaction activates the paid plan; a canceled subscription downgrades to free. Signature over the raw body is the authentication; deliveries are idempotent by event id.",
+        "responses": {
+          "200": {
+            "description": "Received (including duplicates and ignored types)"
+          },
+          "400": {
+            "description": "Bad signature or unparseable event"
+          },
+          "503": {
+            "description": "Webhook secret not configured"
           }
         }
       }
@@ -1311,6 +2834,1609 @@
           },
           "404": {
             "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/integrations/{integrationId}/resume": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Resume an ATS integration",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "integrationId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resumed"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/integrations/{integrationId}/rotate-secret": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Rotate the webhook secret",
+        "description": "Returns a fresh secret ONCE; the old one stops validating webhooks immediately.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "integrationId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New secret",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "webhookSecret": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "webhookSecret"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/integrations/{integrationId}/test": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Test the ATS connection",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "integrationId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/integrations/{integrationId}/simulate": {
+      "post": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Run a test verification (simulation)",
+        "description": "Runs the REAL verify pipeline over a synthetic candidate carrying a real credential id: a real verdict and run, only the origin is simulated (not an actual ATS webhook). Useful before a live ATS is wired.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "integrationId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "credentialId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "candidateName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "credentialId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Simulation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "wroteBack": {
+                      "type": "boolean"
+                    },
+                    "outcomes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "credential": {
+                            "type": "string"
+                          },
+                          "verdict": {
+                            "type": "string"
+                          },
+                          "riskScore": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "credential",
+                          "verdict",
+                          "riskScore"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "wroteBack"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/relying-parties/{id}/integrations/{integrationId}/runs": {
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "List integration runs",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "integrationId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Runs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "candidate": {
+                            "type": "string"
+                          },
+                          "outcomes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "credential": {
+                                  "type": "string"
+                                },
+                                "verdict": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "credential",
+                                "verdict"
+                              ]
+                            }
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "wroteBack": {
+                            "type": "boolean"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "candidate",
+                          "outcomes",
+                          "status",
+                          "wroteBack",
+                          "createdAt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "runs"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/rp/ping": {
+      "get": {
+        "tags": [
+          "Relying parties"
+        ],
+        "summary": "Probe an API key (auth + verify:read scope)",
+        "responses": {
+          "200": {
+            "description": "The relying party the key belongs to",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "relyingPartyId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "relyingPartyId"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Missing scope"
+          }
+        }
+      }
+    },
+    "/organizations": {
+      "post": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Create an organization; the caller becomes its owner",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "websiteUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created (status pending until an admin approves)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organization": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "status"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "organization"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{id}": {
+      "patch": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Update an organization's profile and white-label settings",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "websiteUrl": {
+                    "type": "string",
+                    "nullable": true,
+                    "format": "uri"
+                  },
+                  "brandColor": {
+                    "type": "string",
+                    "nullable": true,
+                    "pattern": "^#[0-9a-fA-F]{6}$"
+                  },
+                  "whiteLabel": {
+                    "type": "boolean"
+                  },
+                  "verifyDomain": {
+                    "type": "string",
+                    "nullable": true,
+                    "pattern": "^[a-z0-9.-]+$"
+                  },
+                  "walletDelivery": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organization": {
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not a member of this organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Another organization already owns this verify domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/orgs/by-domain": {
+      "get": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Resolve an organization by its custom verify domain",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "host",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Branding for the host",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "org": {
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No organization owns this host",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{id}/logo": {
+      "post": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Upload the organization logo",
+        "description": "Raw image body (png, jpeg or webp; max 2 MB) with the matching Content-Type header.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stored logo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "logoKey": {
+                      "type": "string"
+                    },
+                    "logoUrl": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "logoKey",
+                    "logoUrl"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Empty or oversized body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not a member of this organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported image type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/members": {
+      "get": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "List the organization's members",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "orgId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Members",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "members": {
+                      "type": "array",
+                      "items": {
+                        "nullable": true
+                      }
+                    }
+                  },
+                  "required": [
+                    "members"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not a member of this organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Invite an existing user to the organization",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "orgId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "owner",
+                      "admin",
+                      "issuer"
+                    ]
+                  }
+                },
+                "required": [
+                  "email",
+                  "role"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Member added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "member": {
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not a member of this organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No account exists for that email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already a member",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{id}/resubmit": {
+      "post": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Resubmit a rejected organization for review",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Back in the approval queue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organization": {
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Only the owner can resubmit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The organization is not in the rejected state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/organizations": {
+      "get": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "List organizations by review status (default: the pending queue)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "approved",
+                "rejected",
+                "suspended",
+                "all"
+              ]
+            },
+            "required": false,
+            "name": "status",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organizations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organizations": {
+                      "type": "array",
+                      "items": {
+                        "nullable": true
+                      }
+                    }
+                  },
+                  "required": [
+                    "organizations"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not an admin"
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/organizations/{id}/approve": {
+      "post": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Approve an organization",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Approved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organization": {
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not an admin"
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/organizations/{id}/reject": {
+      "post": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Reject an organization with a reason",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "reason"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organization": {
+                      "nullable": true
+                    },
+                    "reason": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "reason"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not an admin"
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/analytics/activation": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Activation funnel (admin)",
+        "description": "Soft-launch funnel: signups, first verification, first issuance and shares, with each stage as a percentage of signups. Sample data is excluded.",
+        "responses": {
+          "200": {
+            "description": "Activation funnel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "signups": {
+                      "type": "number"
+                    },
+                    "firstVerification": {
+                      "type": "number"
+                    },
+                    "firstIssuance": {
+                      "type": "number"
+                    },
+                    "shares": {
+                      "type": "number"
+                    },
+                    "conversion": {
+                      "type": "object",
+                      "properties": {
+                        "verification": {
+                          "type": "number"
+                        },
+                        "issuance": {
+                          "type": "number"
+                        },
+                        "share": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "verification",
+                        "issuance",
+                        "share"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "signups",
+                    "firstVerification",
+                    "firstIssuance",
+                    "shares",
+                    "conversion"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/analytics/demand": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Demand-side analytics (admin)",
+        "description": "The moat from the demand side: verifications grouped by source (each connected integration provider vs direct), by method, and issuer coverage (distinct issuers, and how many were touched through integrations). Sample data excluded.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 36,
+              "default": 6
+            },
+            "required": false,
+            "name": "months",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Demand-side analytics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "window": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "from",
+                        "to"
+                      ]
+                    },
+                    "bySource": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "source": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "source",
+                          "count"
+                        ]
+                      }
+                    },
+                    "byMethod": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "method": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "method",
+                          "count"
+                        ]
+                      }
+                    },
+                    "coverage": {
+                      "type": "object",
+                      "properties": {
+                        "distinctIssuers": {
+                          "type": "number"
+                        },
+                        "verificationsViaIntegrations": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "distinctIssuers",
+                        "verificationsViaIntegrations"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "window",
+                    "bySource",
+                    "byMethod",
+                    "coverage"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -1827,7 +4953,7 @@
           "Status lists"
         ],
         "summary": "Get a status list",
-        "description": "Serves the W3C Status List 2021 credential used for revocation checks. Public endpoint.",
+        "description": "Serves the W3C Bitstring Status List credential used for revocation checks, SIGNED as a VC-JWT by the issuer (content-type application/vc+jwt). A verifier must check the signature and that the `iss` matches the credential's issuer before trusting a bit; an unsigned list can never flip a verdict. Public endpoint.",
         "parameters": [
           {
             "schema": {
@@ -1841,17 +4967,41 @@
         ],
         "responses": {
           "200": {
-            "description": "StatusList2021Credential",
+            "description": "The signed BitstringStatusListCredential as a VC-JWT",
             "content": {
-              "application/json": {
+              "application/vc+jwt": {
                 "schema": {
-                  "nullable": true
+                  "type": "string"
                 }
               }
             }
           },
           "404": {
             "description": "Not found"
+          },
+          "500": {
+            "description": "The list belongs to an issuer this instance cannot sign for"
+          }
+        }
+      }
+    },
+    "/.well-known/did.json": {
+      "get": {
+        "tags": [
+          "Public verification"
+        ],
+        "summary": "The issuer's DID document (did:web)",
+        "description": "Publishes the public key credentials and status lists are signed with, per the did:web method. Any W3C-conformant verifier resolves the issuer through this document; without it, issued VC-JWTs are not independently verifiable.",
+        "responses": {
+          "200": {
+            "description": "The DID document",
+            "content": {
+              "application/did+json": {
+                "schema": {
+                  "nullable": true
+                }
+              }
+            }
           }
         }
       }
@@ -1862,7 +5012,7 @@
           "Verify"
         ],
         "summary": "Verify a credential",
-        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry; `byImage` matches a credential image by hash and runs AI-fraud analysis. Every verdict includes an anti-fraud `risk` score.",
+        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry; `byImage` matches the EXACT credential file by content hash (the original file as issued; a re-encoded, resized or photographed copy will not match and returns not_found by design, since a fuzzy match must never produce a cryptographic verdict) and runs anti-fraud signal analysis (heuristics and EXIF). Every verdict includes an anti-fraud `risk` score.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1973,11 +5123,16 @@
                         "signals"
                       ],
                       "description": "Anti-fraud risk score 0-100. A signal, never a verdict override."
+                    },
+                    "latencyMs": {
+                      "type": "number",
+                      "description": "Measured server-side verification time in milliseconds."
                     }
                   },
                   "required": [
                     "status",
-                    "checks"
+                    "checks",
+                    "latencyMs"
                   ]
                 }
               }
@@ -2014,7 +5169,7 @@
                       "email": {
                         "type": "string",
                         "format": "email",
-                        "example": "ada@university.edu"
+                        "example": "ada@example.com"
                       },
                       "did": {
                         "type": "string",
@@ -2051,6 +5206,10 @@
                   },
                   "soulbound": {
                     "type": "boolean"
+                  },
+                  "sendEmail": {
+                    "type": "boolean",
+                    "description": "false issues silently: you deliver the publicUrl yourself."
                   }
                 },
                 "required": [
@@ -2160,6 +5319,388 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/public/credentials/{credentialId}": {
+      "get": {
+        "tags": [
+          "Public verification"
+        ],
+        "summary": "Public display data for a shared credential",
+        "description": "No auth. Powers the public credential page: verdict + the shareable render (name, achievement, issuer, template). Rate-limited. Exposes no email, subjectId or subject DID.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "credentialId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Display payload (not_found is a status, never 404)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "credentialId": {
+                      "type": "string"
+                    },
+                    "display": {
+                      "type": "object",
+                      "properties": {
+                        "recipientName": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "achievementName": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "issueDate": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "recipientName",
+                        "achievementName",
+                        "issueDate"
+                      ]
+                    },
+                    "render": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "background": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "xPct": {
+                                "type": "number"
+                              },
+                              "yPct": {
+                                "type": "number"
+                              },
+                              "fontSizePx": {
+                                "type": "number"
+                              },
+                              "weight": {
+                                "type": "string"
+                              },
+                              "align": {
+                                "type": "string"
+                              },
+                              "color": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "xPct",
+                              "yPct",
+                              "fontSizePx",
+                              "weight",
+                              "align",
+                              "color"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "background",
+                        "fields"
+                      ]
+                    },
+                    "issuer": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "logoUrl": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "websiteUrl": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "brandColor": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "whiteLabel": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "logoUrl",
+                        "websiteUrl",
+                        "brandColor",
+                        "whiteLabel"
+                      ]
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "ok": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "ok"
+                        ]
+                      }
+                    },
+                    "validFrom": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "validUntil": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "checkedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "credentialId",
+                    "display",
+                    "render",
+                    "issuer",
+                    "checks",
+                    "validFrom",
+                    "validUntil",
+                    "checkedAt"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/verify/issuers": {
+      "get": {
+        "tags": [
+          "Public verification"
+        ],
+        "summary": "Supported issuers (the curated verification catalog)",
+        "description": "Active issuers Glemo can verify via zkTLS, with the claims each verification promises and whether the mapping is live or sandbox. Public and unauthenticated.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "q",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The catalog, optionally filtered by name or domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "providers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "domain": {
+                            "type": "string"
+                          },
+                          "sandbox": {
+                            "type": "boolean"
+                          },
+                          "claims": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "domain",
+                          "sandbox",
+                          "claims"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "providers",
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/public/credentials/{credentialId}/disclosable": {
+      "get": {
+        "tags": [
+          "Public verification"
+        ],
+        "summary": "List the selectively-disclosable fields of a shared credential",
+        "description": "No auth. Powers the holder's selective-presentation UI: which achievement fields (name, description, criteria) can be revealed, with their values. Rate-limited. 404 when the credential has no SD-JWT.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "credentialId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Disclosable fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "disclosable": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "field",
+                          "value"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "disclosable"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Credential not found or not selectively presentable"
+          }
+        }
+      }
+    },
+    "/public/credentials/{credentialId}/present": {
+      "post": {
+        "tags": [
+          "Public verification"
+        ],
+        "summary": "Generate a selective-disclosure presentation",
+        "description": "No auth. The holder chooses which achievement fields to reveal; the response is an SD-JWT presentation that discloses ONLY those fields (hidden fields never travel). Rate-limited. 404 when the credential has no SD-JWT.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "credentialId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reveal": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Achievement fields to disclose. Unknown fields are ignored.",
+                    "example": [
+                      "name"
+                    ]
+                  }
+                },
+                "required": [
+                  "reveal"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SD-JWT presentation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "presentation": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "presentation"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Credential not found or not selectively presentable"
           }
         }
       }
