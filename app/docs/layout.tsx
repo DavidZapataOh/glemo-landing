@@ -1,5 +1,5 @@
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
-import { RootProvider } from "fumadocs-ui/provider";
+import { RootProvider } from "fumadocs-ui/provider/next";
 import Link from "next/link";
 import { appUrl } from "@/lib/app-url";
 import { source } from "@/lib/source";
@@ -10,9 +10,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <RootProvider theme={{ defaultTheme: "dark", forcedTheme: "dark" }}>
       <DocsLayout
         tree={source.pageTree}
-        disableThemeSwitch
+        // v16 replaced the disableThemeSwitch flag with a slot that can be turned off.
         // The docs live on the (dark) marketing site: keep them dark to match their host,
-        // but always offer the way back to the site and into the app.
+        // and offering a switch that RootProvider already forces would be a dead control.
+        slots={{ themeSwitch: false }}
+        // Always offer the way back to the site and into the app.
         links={[
           { text: "Site", url: "/" },
           { text: "Open app", url: appUrl("/") },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { useReducedMotion } from "framer-motion";
 import { gsap, registerGsap, EASE } from "@/lib/motion";
@@ -17,6 +17,14 @@ const SCENE_SECONDS = [5.2, 4.6, 4.8, 4.6, 3.8];
  * audits it, while the lifecycle rail auto-advances. Click any step to jump.
  * Reduced motion / mobile: manual tabs with finished states, no cursor.
  */
+const DESKTOP_QUERY = "(min-width: 1024px)";
+
+function subscribeToDesktop(onChange: () => void): () => void {
+  const mql = window.matchMedia(DESKTOP_QUERY);
+  mql.addEventListener("change", onChange);
+  return () => mql.removeEventListener("change", onChange);
+}
+
 export default function GlemoInAction() {
   const t = useTranslations("action");
   const steps = t.raw("steps") as Step[];
@@ -42,14 +50,19 @@ export default function GlemoInAction() {
 
   const reduced = useReducedMotion();
   const [active, setActive] = useState(0);
-  const [animated, setAnimated] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
   const progressRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
-  // decide once on mount whether we run the cursor show (desktop + motion ok)
-  useEffect(() => {
-    setAnimated(!reduced && window.matchMedia("(min-width: 1024px)").matches);
-  }, [reduced]);
+  // Subscribed rather than read once on mount. The old version set state inside an
+  // effect, which costs a second render, and it also never re-read the query: a
+  // window resized past the breakpoint (or a tablet rotated) kept whichever answer
+  // was true at mount, so the cursor show ran on a phone-width viewport.
+  const isDesktop = useSyncExternalStore(
+    subscribeToDesktop,
+    () => window.matchMedia(DESKTOP_QUERY).matches,
+    () => false, // the server has no viewport; render the static frame
+  );
+  const animated = isDesktop && !reduced;
 
   useEffect(() => {
     if (!animated) return;

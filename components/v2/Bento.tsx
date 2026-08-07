@@ -495,26 +495,11 @@ function LatencyTile() {
 /* ------------------------------------------------------------------ */
 /* 4 · Portable: verifies here, verifies anywhere                      */
 /* ------------------------------------------------------------------ */
-function PortableTile() {
-  const t = useTranslations("bento.nolockin");
-  const chips = t.raw("chips") as string[];
-
-  const { rootRef, reduced } = useLoop((root) => {
-    const q = gsap.utils.selector(root);
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.8, paused: true });
-    tl.set(q(".pt-card-b"), { opacity: 0, x: -26, scale: 0.9 })
-      .set(q(".pt-check-b"), { opacity: 0, scale: 0.5 })
-      .to(q(".pt-card-b"), { opacity: 1, x: 0, scale: 1, duration: 0.6, ease: EASE, delay: 0.5 })
-      .fromTo(
-        q(".pt-check-b"),
-        { opacity: 0, scale: 0.5 },
-        { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }
-      )
-      .to({}, { duration: 1.2 });
-    return tl;
-  });
-
-  const MiniCard = ({ side }: { side: "a" | "b" }) => (
+/** Hoisted on purpose: declared inside PortableTile it became a new component type
+ *  on every render, so React remounted the subtree and the timeline animating
+ *  .pt-check-b lost the element it had captured. */
+function MiniCard({ side, reduced }: { side: "a" | "b"; reduced: boolean | null }) {
+  return (
     <div
       className={cn(
         "relative rounded-md border border-paper-line bg-white px-3 py-2.5",
@@ -534,6 +519,26 @@ function PortableTile() {
       </span>
     </div>
   );
+}
+
+function PortableTile() {
+  const t = useTranslations("bento.nolockin");
+  const chips = t.raw("chips") as string[];
+
+  const { rootRef, reduced } = useLoop((root) => {
+    const q = gsap.utils.selector(root);
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.8, paused: true });
+    tl.set(q(".pt-card-b"), { opacity: 0, x: -26, scale: 0.9 })
+      .set(q(".pt-check-b"), { opacity: 0, scale: 0.5 })
+      .to(q(".pt-card-b"), { opacity: 1, x: 0, scale: 1, duration: 0.6, ease: EASE, delay: 0.5 })
+      .fromTo(
+        q(".pt-check-b"),
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }
+      )
+      .to({}, { duration: 1.2 });
+    return tl;
+  });
 
   return (
     <div
@@ -548,7 +553,7 @@ function PortableTile() {
           <p className="mb-2 font-mono text-[8.5px] uppercase tracking-[0.14em] text-paper-ink-2/70">
             {t("here")}
           </p>
-          <MiniCard side="a" />
+          <MiniCard side="a" reduced={reduced} />
         </div>
         <svg width="26" height="10" aria-hidden="true">
           <line x1="0" y1="5" x2="24" y2="5" stroke="oklch(0.45 0.02 168 / 0.5)" strokeWidth="1.5" strokeDasharray="1 5" strokeLinecap="round" />
@@ -557,7 +562,7 @@ function PortableTile() {
           <p className="mb-2 font-mono text-[8.5px] uppercase tracking-[0.14em] text-paper-ink-2/70">
             {t("anywhere")}
           </p>
-          <MiniCard side="b" />
+          <MiniCard side="b" reduced={reduced} />
         </div>
       </div>
 

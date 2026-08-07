@@ -4,7 +4,13 @@ export const docs = defineDocs({ dir: "content/docs" });
 
 export default defineConfig({
   mdxOptions: {
-    // Syntax highlighting acorde a la marca (teal/verde sobre tinta oscura)
-    rehypeCodeOptions: { theme: "poimandres" },
+    // Both slots carry the same theme on purpose: the docs render on the dark ink
+    // canvas in either colour scheme, so a light variant would be a bright block in
+    // the middle of the page. v16 replaced the single `theme` key with this pair and
+    // falls back to github-light/dark when it is absent, which is not bundled and
+    // fails the build rather than degrading.
+    rehypeCodeOptions: {
+      themes: { light: "poimandres", dark: "poimandres" },
+    },
   },
 });

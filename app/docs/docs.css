@@ -1,32 +1,45 @@
 /* ---------------------------------------------------------------------------
-   Glemo docs theme: Fumadocs v14 (Tailwind preset).
-   This file loads ONLY on the /docs routes, so it can style `body`
-   directly. Colors: HSL channels derived from the design system's OKLCH.
+   Glemo docs theme: Fumadocs v16.
+   Loads ONLY on the /docs routes, so it can style `body` directly.
+
+   v14 declared bare HSL channels (`--fd-primary: 159 74% 57%`) that its own CSS
+   wrapped in hsl(). v16 moved to Tailwind 4 theme variables holding a complete
+   color (`--color-fd-primary: hsl(...)`), so both the names and the values change.
+   Keeping the old form would leave every token undefined and the docs unstyled.
+   The colors themselves are unchanged: same HSL, derived from the OKLCH system.
 --------------------------------------------------------------------------- */
+@import "fumadocs-ui/css/style.css";
+
+/* Declared as plain custom properties, NOT in @theme: Tailwind emits an imported
+   theme after the importing file's own, so an @theme block here loses to the
+   neutral palette that fumadocs-ui/css/style.css pulls in, and every token silently
+   fell back to its default. As :root declarations they are the last definition in
+   source order and win, which is what the cascade is for. The utilities fumadocs
+   ships (bg-fd-primary/10 and friends) read these through var(), so they follow. */
 :root,
 .dark {
-  --fd-background: 156 33% 4%;
-  --fd-foreground: 150 14% 94%;
-  --fd-card: 158 24% 7%;
-  --fd-card-foreground: 150 14% 94%;
-  --fd-popover: 158 24% 7%;
-  --fd-popover-foreground: 150 14% 94%;
-  --fd-muted: 158 17% 11%;
-  --fd-muted-foreground: 154 9% 70%;
-  --fd-border: 157 10% 14%;
-  --fd-primary: 159 74% 57%;
-  --fd-primary-foreground: 159 84% 4%;
-  --fd-secondary: 158 17% 11%;
-  --fd-secondary-foreground: 150 14% 94%;
-  --fd-accent: 158 17% 12%;
-  --fd-accent-foreground: 150 14% 94%;
-  --fd-ring: 159 74% 57%;
+  --color-fd-background: hsl(156 33% 4%);
+  --color-fd-foreground: hsl(150 14% 94%);
+  --color-fd-card: hsl(158 24% 7%);
+  --color-fd-card-foreground: hsl(150 14% 94%);
+  --color-fd-popover: hsl(158 24% 7%);
+  --color-fd-popover-foreground: hsl(150 14% 94%);
+  --color-fd-muted: hsl(158 17% 11%);
+  --color-fd-muted-foreground: hsl(154 9% 70%);
+  --color-fd-border: hsl(157 10% 14%);
+  --color-fd-primary: hsl(159 74% 57%);
+  --color-fd-primary-foreground: hsl(159 84% 4%);
+  --color-fd-secondary: hsl(158 17% 11%);
+  --color-fd-secondary-foreground: hsl(150 14% 94%);
+  --color-fd-accent: hsl(158 17% 12%);
+  --color-fd-accent-foreground: hsl(150 14% 94%);
+  --color-fd-ring: hsl(159 74% 57%);
 }
 
-/* Brand typography across the WHOLE docs tree (v14 doesn't expose #nd-* ids) */
+/* Brand typography across the whole docs tree */
 body {
   font-family: var(--font-satoshi), system-ui, sans-serif;
-  background: hsl(var(--fd-background));
+  background: var(--color-fd-background);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -50,7 +63,7 @@ samp {
 }
 .prose h2 {
   font-weight: 700;
-  border-bottom: 1px solid hsl(var(--fd-border));
+  border-bottom: 1px solid var(--color-fd-border);
   padding-bottom: 0.4rem;
 }
 .prose p {
@@ -59,15 +72,15 @@ samp {
 
 /* Code: ink surface, line border, no generic backgrounds */
 .prose :not(pre) > code {
-  background: hsl(var(--fd-muted));
-  border: 1px solid hsl(var(--fd-border));
+  background: var(--color-fd-muted);
+  border: 1px solid var(--color-fd-border);
   border-radius: 6px;
   padding: 0.15em 0.4em;
   font-size: 0.85em;
 }
 figure[data-rehype-pretty-code-figure],
 .prose pre {
-  border: 1px solid hsl(var(--fd-border));
+  border: 1px solid var(--color-fd-border);
   border-radius: 12px;
 }
 .prose pre {
@@ -79,27 +92,27 @@ figure[data-rehype-pretty-code-figure],
   font-size: 0.9rem;
 }
 .prose thead th {
-  color: hsl(var(--fd-muted-foreground));
+  color: var(--color-fd-muted-foreground);
   font-weight: 500;
   text-transform: none;
 }
 .prose tbody tr {
-  border-bottom: 1px solid hsl(var(--fd-border));
+  border-bottom: 1px solid var(--color-fd-border);
 }
 
 /* Sidebar: active item as a verify pill (identity, not just a tint) */
 aside a[data-active="true"] {
-  background: hsl(var(--fd-primary) / 0.12);
-  color: hsl(var(--fd-primary));
+  background: color-mix(in oklch, var(--color-fd-primary) 12%, transparent);
+  color: var(--color-fd-primary);
   font-weight: 500;
 }
 
 /* Branded ::selection */
 ::selection {
-  background: hsl(var(--fd-primary));
-  color: hsl(var(--fd-primary-foreground));
+  background: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
 }
 :focus-visible {
-  outline: 2px solid hsl(var(--fd-primary));
+  outline: 2px solid var(--color-fd-primary);
   outline-offset: 2px;
 }

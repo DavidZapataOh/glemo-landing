@@ -42,8 +42,6 @@ export default function DevTerminal() {
   const t = useTranslations("dev");
   const reduced = useReducedMotion();
   const [tab, setTab] = useState<keyof typeof SNIPPETS>("curl");
-  const [typed, setTyped] = useState(0);
-  const [showResponse, setShowResponse] = useState(false);
   const [started, setStarted] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -66,23 +64,30 @@ export default function DevTerminal() {
     return () => io.disconnect();
   }, [started]);
 
-  // typing loop (restarts on tab change)
+  // Typing loop, restarted whenever the tab changes. The reset used to happen with
+  // two synchronous setState calls at the top of the effect, which renders the old
+  // snippet at the old length for one frame before correcting itself. Deriving the
+  // reset from the snippet during render removes that flash and the extra pass.
+  const [progress, setProgress] = useState({ snippet, typed: 0, responded: false });
+  const current = progress.snippet === snippet ? progress : null;
+  // With motion reduced the snippet is simply shown complete: no timer, no effect.
+  const typed = reduced ? snippet.length : (current?.typed ?? 0);
+  const showResponse = reduced ? started : (current?.responded ?? false);
+
   useEffect(() => {
-    if (!started) return;
-    if (reduced) {
-      setTyped(snippet.length);
-      setShowResponse(true);
-      return;
-    }
-    setTyped(0);
-    setShowResponse(false);
+    // The reduced-motion case is derived above, not set here: there is nothing to
+    // animate, so writing it from an effect would only cost a second render.
+    if (!started || reduced) return;
     let i = 0;
     const interval = window.setInterval(() => {
       i += 2;
-      setTyped(Math.min(i, snippet.length));
+      setProgress({ snippet, typed: Math.min(i, snippet.length), responded: false });
       if (i >= snippet.length) {
         window.clearInterval(interval);
-        window.setTimeout(() => setShowResponse(true), 420);
+        window.setTimeout(
+          () => setProgress({ snippet, typed: snippet.length, responded: true }),
+          420,
+        );
       }
     }, 16);
     return () => window.clearInterval(interval);
