@@ -1,6 +1,10 @@
 name: deploy
 # CD to production via Vercel. Rollback by dispatch.
-# Required secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID.
+# Required secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID,
+# VERCEL_AUTOMATION_BYPASS_SECRET (Vercel > Project > Settings > Deployment
+# Protection > Protection Bypass for Automation). The bypass exists so this smoke
+# can read a protected deployment WITHOUT making previews public: turning the
+# protection off would expose every preview to anyone who guesses its URL.
 on:
   push:
     branches: [main]
@@ -37,12 +41,45 @@ jobs:
       # Post-deploy smoke. The brand host serves the issuer identity: if
       # /.well-known/did.json is not a JSON DID document with the expected id,
       # nothing Glemo signs is independently verifiable, so the deploy fails.
-      - name: Smoke test
+      # Two smokes, because they answer different questions. The first proves THIS
+      # build is sound; the second proves the brand host actually serves it. Only
+      # the second can exercise the did.json rewrite, which proxies to api.glemo.io
+      # and therefore does not exist on the deployment URL at all.
+      - name: Smoke the deployment
+        env:
+          BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           URL="${{ steps.deploy.outputs.url }}"
-          echo "Smoke testing $URL"
-          curl -fsS "$URL" | grep -qi "glemo" || { echo "::error::home does not render"; exit 1; }
-          BODY="$(curl -fsSL "$URL/.well-known/did.json")" || { echo "::error::did.json unreachable"; exit 1; }
+          echo "Smoke testing the deployment at $URL"
+          if [ -z "$BYPASS" ]; then
+            echo "::error::VERCEL_AUTOMATION_BYPASS_SECRET is not set. Protected deployments answer with the Vercel login page, so this check would fail on a perfectly good build. Add it from Project Settings > Deployment Protection."
+            exit 1
+          fi
+          curl -fsS -H "x-vercel-protection-bypass: $BYPASS" "$URL" \
+            | grep -qi "glemo" || { echo "::error::the deployed build does not render the home page"; exit 1; }
+          echo "Deployment renders"
+
+      # The brand host is what the rest of the world resolves, and the production
+      # alias takes a moment to move: without the retry this would sometimes measure
+      # the PREVIOUS deploy and pass by accident, which is worse than no check.
+      - name: Smoke the brand host
+        run: |
+          BRAND="https://www.glemo.io"
+          for i in $(seq 1 10); do
+            if curl -fsS "$BRAND" | grep -qi "glemo"; then
+              echo "Brand host renders (attempt $i)"; break
+            fi
+            [ "$i" = "10" ] && { echo "::error::$BRAND does not render after 10 attempts"; exit 1; }
+            sleep 6
+          done
+
+          # The issuer identity. did:web resolvers fetch it here, so if this is not a
+          # DID document, nothing Glemo signs is independently verifiable anywhere.
+          DID_URL="https://glemo.io/.well-known/did.json"
+          BODY="$(curl -fsSL "$DID_URL")" || {
+            echo "::error::$DID_URL is unreachable. The landing proxies this path to api.glemo.io; if the backend is not deployed there yet, this is expected and IS the blocker: no signed credential can be verified until it resolves."
+            exit 1
+          }
           printf '%s' "$BODY" | node -e '
             let s = "";
             process.stdin.on("data", (d) => (s += d));
