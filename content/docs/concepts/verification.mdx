@@ -15,7 +15,7 @@ the checks that produced it.
 | `expired` | Past `validUntil` |
 | `tampered` | Signature or schema check failed, the content was altered |
 | `not_found` | No credential with that id |
-| `not_verifiable` | The issuer's DID could not be resolved (network, unknown issuer) |
+| `not_verifiable` | We could not check it: the issuer's DID did not resolve (network, unknown issuer), or an uploaded image carries no credential we can read. Note the difference from `not_found`, which asserts the credential does not exist |
 
 ## Methods
 

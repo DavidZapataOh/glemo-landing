@@ -74,7 +74,7 @@ never a maybe:
 | `expired` | Past its validity window | Ask for a renewal |
 | `tampered` | Signature or schema broken, content was altered | Reject, flag |
 | `not_found` | No credential with that id | Ask for the source |
-| `not_verifiable` | Issuer identity couldn't be resolved | Retry / manual review |
+| `not_verifiable` | We could not check it: the issuer identity did not resolve, or an uploaded image carries no credential we can read | Retry / manual review |
 
 ## Ways to integrate
 

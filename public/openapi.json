@@ -5012,7 +5012,7 @@
           "Verify"
         ],
         "summary": "Verify a credential",
-        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry; `byImage` matches the EXACT credential file by content hash (the original file as issued; a re-encoded, resized or photographed copy will not match and returns not_found by design, since a fuzzy match must never produce a cryptographic verdict) and runs anti-fraud signal analysis (heuristics and EXIF). Every verdict includes an anti-fraud `risk` score.",
+        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry; `byImage` reads the credential baked into the image (Open Badges 3.0) and verifies it cryptographically, falling back to an exact content-hash match of the original file as issued. An image that carries neither returns `not_verifiable`, never `not_found`: a file we cannot read may still depict a credential that exists, and a fuzzy match must never produce a cryptographic verdict. It also runs anti-fraud signal analysis (heuristics and EXIF). Every verdict includes an anti-fraud `risk` score.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -5576,6 +5576,41 @@
           },
           "429": {
             "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/public/credentials/{credentialId}/image": {
+      "get": {
+        "tags": [
+          "Public verification"
+        ],
+        "summary": "The credential image, with the credential baked in (Open Badges 3.0)",
+        "description": "A PNG carrying the signed credential in an iTXt chunk, per the Open Badges 3.0 baking specification. Any Open Badges aware reader can extract and verify it offline, and uploading it to `POST /verify` with `byImage` returns the credential's real verdict.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "credentialId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The baked PNG",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The renderer is unavailable"
           }
         }
       }
