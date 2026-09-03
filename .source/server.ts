@@ -1,7 +1,7 @@
 // @ts-nocheck
-import * as __fd_glob_9 from "../content/docs/guides/webhooks.mdx?collection=docs"
-import * as __fd_glob_8 from "../content/docs/concepts/verification.mdx?collection=docs"
-import * as __fd_glob_7 from "../content/docs/concepts/credentials.mdx?collection=docs"
+import * as __fd_glob_9 from "../content/docs/concepts/verification.mdx?collection=docs"
+import * as __fd_glob_8 from "../content/docs/concepts/credentials.mdx?collection=docs"
+import * as __fd_glob_7 from "../content/docs/guides/webhooks.mdx?collection=docs"
 import * as __fd_glob_6 from "../content/docs/quickstart.mdx?collection=docs"
 import * as __fd_glob_5 from "../content/docs/issue.mdx?collection=docs"
 import * as __fd_glob_4 from "../content/docs/index.mdx?collection=docs"
@@ -17,4 +17,4 @@ const create = server<typeof Config, import("fumadocs-mdx/runtime/types").Intern
   }
 }>();
 
-export const docs = await create.docs("docs", "content/docs", {"meta.json": __fd_glob_0, "concepts/meta.json": __fd_glob_1, "guides/meta.json": __fd_glob_2, }, {"api.mdx": __fd_glob_3, "index.mdx": __fd_glob_4, "issue.mdx": __fd_glob_5, "quickstart.mdx": __fd_glob_6, "concepts/credentials.mdx": __fd_glob_7, "concepts/verification.mdx": __fd_glob_8, "guides/webhooks.mdx": __fd_glob_9, });
+export const docs = await create.docs("docs", "content/docs", {"meta.json": __fd_glob_0, "concepts/meta.json": __fd_glob_1, "guides/meta.json": __fd_glob_2, }, {"api.mdx": __fd_glob_3, "index.mdx": __fd_glob_4, "issue.mdx": __fd_glob_5, "quickstart.mdx": __fd_glob_6, "guides/webhooks.mdx": __fd_glob_7, "concepts/credentials.mdx": __fd_glob_8, "concepts/verification.mdx": __fd_glob_9, });

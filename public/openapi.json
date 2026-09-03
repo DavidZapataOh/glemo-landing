@@ -54,7 +54,66 @@
     }
   ],
   "components": {
-    "schemas": {},
+    "schemas": {
+      "Achievement": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "criteria": {
+            "type": "object",
+            "properties": {
+              "narrative": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "narrative"
+            ]
+          },
+          "achievementType": {
+            "type": "string"
+          },
+          "alignment": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "nullable": true
+              }
+            }
+          }
+        },
+        "required": [
+          "@context",
+          "id",
+          "type",
+          "name",
+          "description",
+          "criteria",
+          "achievementType"
+        ]
+      }
+    },
     "parameters": {}
   },
   "paths": {
@@ -5630,6 +5689,41 @@
           },
           "429": {
             "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/public/achievements/{achievementId}": {
+      "get": {
+        "tags": [
+          "Public verification"
+        ],
+        "summary": "The achievement a credential asserts",
+        "description": "No auth. This is the URL that appears as `credentialSubject.achievement.id` inside every credential of this achievement, and it resolves to the Open Badges 3.0 Achievement object. Archived achievements still resolve: credentials already issued point here forever.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "achievementId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Achievement as JSON-LD",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Achievement"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such achievement"
           }
         }
       }
