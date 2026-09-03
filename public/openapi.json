@@ -5237,14 +5237,21 @@
                         "example": "Avalanche Fundamentals"
                       },
                       "description": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1,
+                        "example": "Completed the fundamentals track."
                       },
                       "criteria": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "What the recipient had to do. Markdown is allowed and it is rendered inline: Open Badges 3.0 expects criteria to travel with the credential rather than as a link.",
+                        "example": "Attend every session and pass the final assessment."
                       }
                     },
                     "required": [
-                      "name"
+                      "name",
+                      "description",
+                      "criteria"
                     ]
                   },
                   "validUntil": {
