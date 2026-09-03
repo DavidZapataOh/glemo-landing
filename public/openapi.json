@@ -2241,8 +2241,8 @@
         "tags": [
           "Admin"
         ],
-        "summary": "Close last month's usage periods for every relying party",
-        "description": "Closes the previous month's snapshot per relying party (idempotent), reports usage to the payments provider where the plan charges and a subscription exists, and reconciles every snapshot against the raw events. Safe to re-run.",
+        "summary": "Close last month's usage periods",
+        "description": "Closes the previous month's snapshot for every relying party with something to close (usage recorded in the period, or a snapshot already written for it), reports usage to the payments provider where the plan charges and a subscription exists, and reconciles every snapshot against the raw events. Accounts are independent: one failure is counted in `failed` and skipped, never allowed to withhold the month from the rest. Safe to re-run.",
         "responses": {
           "200": {
             "description": "Summary of the run"
@@ -5012,7 +5012,7 @@
           "Verify"
         ],
         "summary": "Verify a credential",
-        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry; `byImage` reads the credential baked into the image (Open Badges 3.0) and verifies it cryptographically, falling back to an exact content-hash match of the original file as issued. An image that carries neither returns `not_verifiable`, never `not_found`: a file we cannot read may still depict a credential that exists, and a fuzzy match must never produce a cryptographic verdict. It also runs anti-fraud signal analysis (heuristics and EXIF). Every verdict includes an anti-fraud `risk` score.",
+        "description": "`byHash` verifies a registered credential by id; `byVC` verifies a portable VC-JWT (or selectively-disclosed SD-JWT presentation) from any issuer; `byZkTls` verifies a credential from a NON-integrated issuer via a zkTLS proof and Glemo's curated schema registry; `byImage` reads the credential baked into the image (Open Badges 3.0) and verifies it cryptographically, falling back to the verification QR the certificate carries, which names an exact credential and survives a screenshot but says nothing about the file. An image that carries neither returns `not_verifiable`, never `not_found`: a file we cannot read may still depict a credential that exists, and a fuzzy match must never produce a cryptographic verdict. It also runs anti-fraud signal analysis (heuristics and EXIF). Every verdict includes an anti-fraud `risk` score.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -5127,6 +5127,53 @@
                     "latencyMs": {
                       "type": "number",
                       "description": "Measured server-side verification time in milliseconds."
+                    },
+                    "evidence": {
+                      "type": "string",
+                      "enum": [
+                        "baked",
+                        "qr"
+                      ],
+                      "description": "Which layer produced an image verdict. `baked` verified a signed credential carried inside the file. `qr` resolved the credential the certificate points at, which survives a screenshot but says nothing about the file. Absent for the other methods, and absent when neither layer could read the image."
+                    },
+                    "subject": {
+                      "type": "object",
+                      "properties": {
+                        "recipientName": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "achievementName": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "recipientName",
+                        "achievementName"
+                      ],
+                      "description": "Who and what the credential names. Present when the verdict came from a credential this deployment hosts (`byHash`, and the QR layer of `byImage`). Show it NEXT TO the verdict: a bare `valid` is not actionable for someone holding a document, because a genuine QR can be photographed off a real certificate and placed on a forged one, and the mismatch is only visible if the verifier can read who the credential is actually about. Never includes email or the subject DID."
+                    },
+                    "provenance": {
+                      "type": "object",
+                      "properties": {
+                        "producer": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "edited": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "producer",
+                        "edited"
+                      ],
+                      "description": "Signed C2PA provenance the IMAGE carries about itself: who produced it, and whether it was edited after production. Absent when the file has no manifest, which is the common case (uploads, screenshots and platform transforms strip metadata) and is NOT evidence of anything."
+                    },
+                    "imageAuthenticated": {
+                      "type": "boolean",
+                      "description": "Whether the IMAGE itself was cryptographically verified, as opposed to the credential it refers to. False for `qr`: a real QR can be pasted onto a forged certificate, so a valid verdict there is about the credential and must not be presented as proof the picture is genuine."
                     }
                   },
                   "required": [
@@ -5585,8 +5632,8 @@
         "tags": [
           "Public verification"
         ],
-        "summary": "The credential image, with the credential baked in (Open Badges 3.0)",
-        "description": "A PNG carrying the signed credential in an iTXt chunk, per the Open Badges 3.0 baking specification. Any Open Badges aware reader can extract and verify it offline, and uploading it to `POST /verify` with `byImage` returns the credential's real verdict.",
+        "summary": "The credential image",
+        "description": "The rendered certificate. It carries a QR pointing at this credential's public verification page, so uploading it to `POST /verify` with `byImage` returns the credential's real verdict even after a screenshot. It does NOT embed the signed credential: this route needs no authentication, and the signed credential's subject is the recipient's address. The issuer download (`format=baked-png`, authenticated) is the Open Badges 3.0 baked file.",
         "parameters": [
           {
             "schema": {
@@ -5600,7 +5647,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The baked PNG",
+            "description": "The rendered PNG",
             "content": {
               "image/png": {
                 "schema": {
