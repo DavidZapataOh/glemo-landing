@@ -5503,13 +5503,22 @@
                           "items": {
                             "type": "object",
                             "properties": {
-                              "key": {
+                              "pointer": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string"
+                              },
+                              "overflow": {
                                 "type": "string"
                               },
                               "xPct": {
                                 "type": "number"
                               },
                               "yPct": {
+                                "type": "number"
+                              },
+                              "widthPct": {
                                 "type": "number"
                               },
                               "fontSizePx": {
@@ -5523,16 +5532,23 @@
                               },
                               "color": {
                                 "type": "string"
+                              },
+                              "locked": {
+                                "type": "boolean"
                               }
                             },
                             "required": [
-                              "key",
+                              "pointer",
+                              "kind",
+                              "overflow",
                               "xPct",
                               "yPct",
+                              "widthPct",
                               "fontSizePx",
                               "weight",
                               "align",
-                              "color"
+                              "color",
+                              "locked"
                             ]
                           }
                         }
@@ -5541,6 +5557,12 @@
                         "background",
                         "fields"
                       ]
+                    },
+                    "credential": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "nullable": true
+                      }
                     },
                     "issuer": {
                       "type": "object",
@@ -5608,6 +5630,7 @@
                     "credentialId",
                     "display",
                     "render",
+                    "credential",
                     "issuer",
                     "checks",
                     "validFrom",
