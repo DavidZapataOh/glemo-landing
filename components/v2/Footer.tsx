@@ -41,6 +41,9 @@ export default function Footer() {
         { label: t("legalLinks.privacy"), href: "/privacy" },
         { label: t("legalLinks.dpa"), href: "/dpa" },
         { label: t("legalLinks.processorTerms"), href: "/processor-terms" },
+        // The European Accessibility Act asks for a published statement, and the
+        // footer is where a person looks for one.
+        { label: t("legalLinks.accessibility"), href: "/accessibility" },
       ],
     },
   ];

@@ -338,7 +338,8 @@
     "legalLinks": {
       "privacy": "Privacidad",
       "dpa": "DPA",
-      "processorTerms": "Términos de procesador"
+      "processorTerms": "Términos de procesador",
+      "accessibility": "Accesibilidad"
     },
     "language": "Idioma",
     "rights": "© {year} Glemo. Todos los derechos reservados."
@@ -370,5 +371,33 @@
       "q5": "¿Puedo cambiar de plan después?",
       "a5": "Cuando quieras, desde tu workspace. Las mejoras aplican de inmediato; la cuota incluida y la tarifa por verificación cambian con el plan."
     }
+  },
+  "accessibility": {
+    "noticeLead": "Medido, no afirmado.",
+    "noticeBody": "Cada cifra de abajo sale de una comprobación que se ejecuta en cada cambio, y la sección de límites nombra lo que esas comprobaciones no pueden ver. Esto no es una afirmación de conformidad total.",
+    "title": "Declaración de accesibilidad",
+    "intro": "Glemo se compromete a que su red de verificación sea utilizable por cualquiera, incluidas las personas que navegan con teclado, con lector de pantalla o con la pantalla ampliada. Esta declaración dice qué medimos, qué muestran esas medidas y qué queda fuera de ellas.",
+    "standardTitle": "El estándar con el que nos medimos",
+    "standardBody": "EN 301 549, la norma armonizada europea, que remite a las WCAG 2.1 en nivel AA. Es el estándar al que apunta el Acta Europea de Accesibilidad (Directiva (UE) 2019/882, aplicable desde el 28 de junio de 2025) para los servicios digitales.",
+    "stateTitle": "Dónde estamos",
+    "stateBody": "Cada afirmación de abajo la produce una comprobación que se ejecuta en cada cambio, no una revisión puntual. Las cifras son las que esas comprobaciones informaron la última vez.",
+    "stateAxe": "Auditoría automática con axe-core sobre los conjuntos de reglas WCAG 2.1 A y AA, en las páginas de acceso, la aplicación, las superficies del emisor, la consola de administración y la página pública de credencial, incluido un color de marca deliberadamente hostil: cero violaciones de impacto grave o crítico.",
+    "stateLighthouse": "Lighthouse puntúa la categoría de accesibilidad en 1.0 en las páginas de acceso, registro y recuperación de contraseña, y la compilación falla por debajo de 0,95.",
+    "stateContrast": "El contraste de color es un test, no una opinión: once pares declarados de texto y fondo se calculan y se comparan con su ratio WCAG, 4,5:1 para texto y 3:1 para texto grande e iconos. El par más ajustado que pasa está en 4,80.",
+    "stateResponsive": "Los diseños se verifican a 1440 y 390 píxeles de ancho sin desplazamiento horizontal, para que una pantalla ampliada no deje contenido fuera de alcance.",
+    "stateMotion": "El movimiento respeta la preferencia de movimiento reducido del sistema operativo, verificado de punta a punta y no solo declarado.",
+    "limitsTitle": "Lo que esto no cubre",
+    "limitsBody": "Las herramientas automáticas encuentran una minoría de las barreras de accesibilidad. Nombrar los huecos es parte de la declaración, no un apéndice.",
+    "limitsAssistive": "No hemos hecho una auditoría con personas usuarias de tecnología de apoyo. No ha habido recorrido con lector de pantalla, ni sesión de uso solo con teclado, ni revisión por una persona con discapacidad. Es el hueco más importante, y la cobertura automática no lo sustituye.",
+    "limitsLighthouseScope": "Lighthouse se ejecuta sobre las tres páginas que no requieren cuenta. La aplicación con sesión iniciada está cubierta por axe y por las comprobaciones de diseño adaptable, pero no por Lighthouse.",
+    "limitsLanguage": "La aplicación está en inglés y español. La documentación para desarrolladores, las páginas legales y la página de estado del servicio están hoy solo en inglés.",
+    "limitsThirdParty": "La página de acceso incrusta el botón de inicio de sesión de Google, que no controlamos y que es la razón de que nuestra puntuación de buenas prácticas se quede en 0,96 en vez de 1,0.",
+    "limitsIssuerContent": "Los emisores eligen los textos, las imágenes y los colores de marca de las credenciales que diseñan. Comprobamos que nuestros propios componentes y paletas cumplen los requisitos de contraste; no podemos garantizar el contenido que escribe un emisor.",
+    "methodTitle": "Cómo lo medimos",
+    "methodBody": "Las comprobaciones anteriores se ejecutan en integración continua en cada cambio y bloquean la compilación cuando fallan. No son una foto fija: una regresión pone la compilación en rojo antes de que llegue a nadie.",
+    "reviewedTitle": "Última revisión",
+    "reviewedBody": "4 de septiembre de 2026. Esta declaración se revisa cada vez que cambian las comprobaciones que describe, y como mínimo una vez al año.",
+    "contactTitle": "Informar de una barrera",
+    "contactBody": "Si algo de aquí no te resulta utilizable, escribe a hello@glemo.io y cuenta qué estabas intentando hacer. Respondemos en cinco días laborables. Si nuestra respuesta no lo resuelve, puedes acudir al organismo de control del Acta Europea de Accesibilidad de tu país."
   }
 }

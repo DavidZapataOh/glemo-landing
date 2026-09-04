@@ -47,7 +47,7 @@ const mustLink = [
   { file: "components/v2/Nav.tsx", hrefs: ["/pricing", "/docs"] },
   {
     file: "components/v2/Footer.tsx",
-    hrefs: ["/pricing", "/docs", "/status", "/privacy", "/dpa", "/processor-terms"],
+    hrefs: ["/pricing", "/docs", "/status", "/privacy", "/dpa", "/processor-terms", "/accessibility"],
   },
   { file: "app/not-found.tsx", hrefs: ["/docs"] },
 ];

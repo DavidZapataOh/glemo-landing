@@ -338,7 +338,8 @@
     "legalLinks": {
       "privacy": "Privacy",
       "dpa": "DPA",
-      "processorTerms": "Processor terms"
+      "processorTerms": "Processor terms",
+      "accessibility": "Accessibility"
     },
     "language": "Language",
     "rights": "© {year} Glemo. All rights reserved."
@@ -370,5 +371,33 @@
       "q5": "Can I change plans later?",
       "a5": "Any time, from your workspace. Upgrades apply immediately; the included quota and the per-verification rate change with the plan."
     }
+  },
+  "accessibility": {
+    "noticeLead": "Measured, not asserted.",
+    "noticeBody": "Every figure below comes from a check that runs on each change, and the limits section names what those checks cannot see. This is not a claim of full conformity.",
+    "title": "Accessibility statement",
+    "intro": "Glemo is committed to making its verification network usable by everyone, including people who navigate with a keyboard, a screen reader, or a magnified screen. This statement says what we measure, what the measurements show, and what they do not cover.",
+    "standardTitle": "The standard we hold ourselves to",
+    "standardBody": "EN 301 549, the European harmonised standard, which references WCAG 2.1 at level AA. It is the standard the European Accessibility Act (Directive (EU) 2019/882, applicable since 28 June 2025) points to for digital services.",
+    "stateTitle": "Where we stand",
+    "stateBody": "Every claim below is produced by a check that runs on every change, not by a one-off review. The figures are the ones those checks last reported.",
+    "stateAxe": "Automated auditing with axe-core on the WCAG 2.1 A and AA rule sets, across the sign-in pages, the application, the issuer surfaces, the administration console and the public credential page, including a deliberately hostile issuer brand colour: zero violations of serious or critical impact.",
+    "stateLighthouse": "Lighthouse scores the accessibility category at 1.0 on the sign-in, sign-up and password-reset pages, and the build fails below 0.95.",
+    "stateContrast": "Colour contrast is a test, not an opinion: eleven declared foreground and background pairs are computed and checked against their WCAG ratio, 4.5:1 for text and 3:1 for large text and icons. The lowest passing pair sits at 4.80.",
+    "stateResponsive": "Layouts are verified at 1440 and 390 pixels wide with no horizontal scrolling, so a magnified screen does not push content out of reach.",
+    "stateMotion": "Motion respects the operating system's reduced-motion setting, verified end to end rather than declared.",
+    "limitsTitle": "What this does not cover",
+    "limitsBody": "Automated tools find a minority of accessibility barriers. Naming the gaps is part of the statement, not an appendix to it.",
+    "limitsAssistive": "We have not conducted an audit with assistive technology users. No screen reader walkthrough, no keyboard-only usability session, and no review by a person with a disability has been performed. This is the most significant gap, and automated coverage does not substitute for it.",
+    "limitsLighthouseScope": "Lighthouse runs against the three pages that need no account. The signed-in application is covered by axe and by the responsive checks, but not by Lighthouse.",
+    "limitsLanguage": "The application is available in English and Spanish. The developer documentation, the legal pages and the service status page are currently English only.",
+    "limitsThirdParty": "The sign-in page embeds Google's sign-in button, which we do not control and which is the reason our best-practices score sits at 0.96 rather than 1.0.",
+    "limitsIssuerContent": "Issuers choose the wording, images and brand colours on the credentials they design. We check that our own components and palettes meet contrast requirements; we cannot guarantee the content an issuer writes.",
+    "methodTitle": "How we measure it",
+    "methodBody": "The checks above run in continuous integration on every change and block the build when they fail. They are not a snapshot: a regression turns the build red before it reaches anyone.",
+    "reviewedTitle": "Last reviewed",
+    "reviewedBody": "4 September 2026. This statement is reviewed whenever the checks it describes change, and at least once a year.",
+    "contactTitle": "Report a barrier",
+    "contactBody": "If something here is not usable for you, write to hello@glemo.io and describe what you were trying to do. We answer within five working days. If our answer does not resolve it, you can escalate to the enforcement body for the European Accessibility Act in your country."
   }
 }
