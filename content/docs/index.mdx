@@ -76,6 +76,12 @@ never a maybe:
 | `not_found` | No credential with that id | Ask for the source |
 | `not_verifiable` | We could not check it: the issuer identity did not resolve, or an uploaded image carries no credential we can read | Retry / manual review |
 
+The verdict is the summary. Underneath it, every verification also returns the
+facts it rests on, one by one: the signature, the issuer's status list, the two
+ends of the validity window separately, and how the evidence reached us. A fact
+we could not check comes back as unchecked with its reason, never as a failure.
+See [Verification](/docs/concepts/verification) for the shape.
+
 ## Ways to integrate
 
 - **API**: `POST /verify`, one call, any stack. Start at the

@@ -1,6 +1,6 @@
 ---
 title: Verification
-description: Deterministic verdicts, cross-issuer.
+description: A verdict, and the separate facts behind it, cross-issuer.
 ---
 
 Verification is Glemo's product. One call returns a deterministic verdict with
@@ -16,6 +16,33 @@ the checks that produced it.
 | `tampered` | Signature or schema check failed, the content was altered |
 | `not_found` | No credential with that id |
 | `not_verifiable` | We could not check it: the issuer's DID did not resolve (network, unknown issuer), or an uploaded image carries no credential we can read. Note the difference from `not_found`, which asserts the credential does not exist |
+
+## The facts behind the verdict
+
+The verdict is a summary. Alongside it every verification returns a `report`: the
+facts, one by one, in the shape the [W3C VCDM 2.0 verification result](https://www.w3.org/TR/vc-data-model-2.0/#verification)
+defines. You do not have to accept our summary to use our answer.
+
+| Field | What it says |
+|-------|--------------|
+| `proof` | Whether the signature verified against the issuer's key |
+| `credentialStatus` | The issuer's status list, as a **list** whose value is an **integer**, not a boolean: a credential can be suspended rather than revoked, and a boolean cannot say so |
+| `validFrom`, `validUntil` | **Two facts, not one.** "Not valid yet" and "no longer valid" are different answers, and a single `expired` flag collapses them |
+| `provenance` | How the evidence reached us: `artifact`, `zktls`, `wallet` or `registry`. Two of the four work today, and every zkTLS recipe in the issuer registry is still **sandbox**: no real proof has been generated yet |
+| `observations.issuerTrusted` | Whether the issuer holds an accreditation |
+| `warnings`, `errors` | [RFC 9457 problem details](https://www.rfc-editor.org/rfc/rfc9457), split by whether they are recoverable |
+
+Two rules make the report honest, and both are worth knowing before you build on it:
+
+**A fact we did not check comes back `null` with its reason, never `false`.** If no
+trust registry is configured, `issuerTrusted` is not "the issuer is untrusted": it is
+"nobody asked". A verifier that renders those the same way is telling its user
+something we never said.
+
+**Errors and warnings are not the same kind of thing.** A signature that does not
+verify is an `error`: nothing downstream can recover from it. A credential listed in
+its issuer's status list is a `warning`: it is a fact about status, and what to do
+about it is the calling application's decision, not ours.
 
 ## Methods
 
