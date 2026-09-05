@@ -36,3 +36,44 @@ guess.
 
 Every verification can notify your systems: see
 [Webhooks](/docs/guides/webhooks).
+
+## Signed receipts
+
+Every authenticated verification returns a `signedEvidence` field: a signed record of
+what you checked, what came back, and when. It is a Security Event Token
+([RFC 8417](https://www.rfc-editor.org/rfc/rfc8417)), so it carries no expiry: it
+describes something that already happened, and a receipt you produce in three years to
+show what you checked must not have gone stale.
+
+Failed verdicts get a receipt too. Proving that you checked and it came back revoked is
+usually the reason you need one.
+
+**We keep no copy.** The receipt is yours; if you lose it we can issue a new one, but
+its `iat` will be today and the difference is visible in the token.
+
+### Verifying one, without asking us
+
+The receipt verifies against the published key set. This depends on `jose` and nothing
+of ours: no API key, no SDK, no call to a private endpoint.
+
+```js
+import { createRemoteJWKSet, jwtVerify } from "jose";
+
+const JWKS = createRemoteJWKSet(new URL("https://api.glemo.io/.well-known/jwks.json"));
+
+const { payload, protectedHeader } = await jwtVerify(signedEvidence, JWKS, {
+  issuer: "https://api.glemo.io",
+});
+
+console.log(protectedHeader.typ); // secevent+jwt
+console.log(payload.toe, payload.txn); // when it happened, which verification
+console.log(payload.events["https://glemo.io/ns/verification"]);
+```
+
+`toe` is when the verification ran and `iat` is when the receipt was signed: two
+instants, not one. `txn` correlates with the verification event in your own logs.
+
+A receipt whose payload was altered fails with `ERR_JWS_SIGNATURE_VERIFICATION_FAILED`;
+one signed with a key that is not in the set fails with `ERR_JWKS_NO_MATCHING_KEY`.
+Rotating our key does not invalidate old receipts, because the superseded key stays
+published.

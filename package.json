@@ -13,6 +13,7 @@
     "sync:openapi": "cp ../glemo-backend/openapi/openapi.json public/openapi.json",
     "check:links": "node scripts/check-links.mjs",
     "verify:quickstart": "node scripts/verify-quickstart.mjs",
+    "check:receipt": "node scripts/verify-receipt-snippet.mjs --extract-only",
     "check:quickstart": "node scripts/verify-quickstart.mjs --extract-only",
     "check:copy": "node scripts/check-copy.mjs",
     "check:sdk-copy": "node scripts/check-sdk-copy.mjs",
