@@ -7,7 +7,7 @@
       "pricePerVerificationCents": 0,
       "overagePolicy": "block",
       "features": {
-        "byZkTls": false,
+        "byZkTls": "no",
         "byImage": false
       }
     },
@@ -18,7 +18,7 @@
       "pricePerVerificationCents": 3,
       "overagePolicy": "charge",
       "features": {
-        "byZkTls": true,
+        "byZkTls": "sandbox",
         "byImage": true
       }
     },
@@ -29,7 +29,7 @@
       "pricePerVerificationCents": 1,
       "overagePolicy": "charge",
       "features": {
-        "byZkTls": true,
+        "byZkTls": "sandbox",
         "byImage": true
       }
     }

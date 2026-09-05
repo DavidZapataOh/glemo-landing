@@ -2,11 +2,15 @@ import { LegalDoc, LH2, LP } from "@/components/v2/LegalDoc";
 
 export const metadata = { title: "Data Processing Agreement · Glemo" };
 
+// A data processing agreement states what happens, not what could. Two entries were
+// wrong: the payment processor was named as Stripe when it is Paddle, and a public
+// network was declared an active subprocessor while the deploy default is offchain and
+// no contract is deployed to mainnet, so nothing reaches it. The network goes back on
+// this list the day it actually receives something.
 const subprocessors: [string, string, string][] = [
   ["Managed Postgres provider", "Primary storage", "All off-chain data"],
   ["Resend", "Credential email delivery", "Holder email"],
-  ["Stripe", "Customer billing", "Customer billing data"],
-  ["Avalanche (public network)", "Anchoring", "Keyed hashes only, no PII"],
+  ["Paddle", "Customer billing (merchant of record)", "Customer billing data"],
 ];
 
 export default function DpaPage() {

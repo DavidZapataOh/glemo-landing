@@ -44,9 +44,14 @@ export default function PrivacyPage() {
 
       <LH2>What we don&apos;t do</LH2>
       <ul className="flex max-w-[68ch] list-disc flex-col gap-2 pl-5">
+        {/* Was in the present indicative, which claimed anchoring happens on every
+            credential today. It does not: the deploy default is offchain. The docs
+            already said "can be anchored" in the same product, so the honest phrasing
+            existed in one place and not the other. */}
         <li>
-          We publish no personal data on any blockchain: only keyed hashes (commitments) travel
-          on-chain, and they cannot be reversed or linked without the key.
+          We publish no personal data on any public ledger. Credential data lives in ordinary,
+          erasable storage. Where an integrity anchor is used, it is a keyed hash (commitment)
+          that cannot be reversed or linked without the key.
         </li>
         <li>We don&apos;t sell data. We don&apos;t use claims for advertising.</li>
       </ul>

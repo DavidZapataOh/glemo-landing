@@ -63,8 +63,8 @@
     ]
   },
   "problem": {
-    "titleA": "Anyone can fake a PDF.",
-    "titleB": "Nobody checks.",
+    "titleA": "A PDF proves nothing.",
+    "titleB": "So nobody checks.",
     "body": "Faking a certificate takes ten minutes. Verifying one takes days of emails and calls, so most are never checked at all. That's how fake diplomas became a billion-dollar business.",
     "chips": [
       "diploma_FINAL_v3.pdf",
@@ -107,7 +107,7 @@
       },
       {
         "name": "Verify",
-        "desc": "Employers and platforms check any credential in under a second, without an account and without calling anyone."
+        "desc": "Employers and platforms check a Glemo credential in under a second, without an account and without calling anyone."
       },
       {
         "name": "Audit",
@@ -131,7 +131,7 @@
       "emailSubject": "Your credential is here 🎓",
       "emailFrom": "Andes Tech Academy",
       "walletShare": "Share to LinkedIn",
-      "verifyPlaceholder": "Paste any credential link…",
+      "verifyPlaceholder": "Paste a credential link…",
       "verifyChecks": [
         "Issuer ✓",
         "Holder ✓",
@@ -175,7 +175,7 @@
       "before": "With badge",
       "after": "White-label",
       "brandA": "glemo verified",
-      "brandB": "verify.nova.edu"
+      "brandB": "no badge at all"
     },
     "latency": {
       "value": "0.04s",
@@ -232,7 +232,7 @@
           "Certificates that look like you, not like a template",
           "Send one or thousands, same effort",
           "Your students share them with one click",
-          "Revoke or expire any credential, anytime"
+          "Revoke or expire a credential you issued, anytime"
         ]
       },
       {
@@ -240,9 +240,9 @@
         "label": "Teams who need to trust",
         "headline": "HR teams, platforms, marketplaces.",
         "points": [
-          "Check any credential in under a second",
+          "Check a credential in under a second",
           "A widget you can drop into your product",
-          "Works for credentials from any issuer",
+          "Works for credentials from the issuers in our registry",
           "No more calling universities"
         ]
       },
@@ -261,7 +261,7 @@
   },
   "dev": {
     "title": "For developers, it's one call",
-    "body": "A REST API that behaves. Verify anything, even credentials you didn't issue, and get an answer you can act on.",
+    "body": "A REST API that behaves. Verify credentials you did not issue, from the portals in our registry, and get an answer you can act on.",
     "docs": "Read the docs",
     "tabs": {
       "curl": "cURL",
@@ -276,7 +276,6 @@
       "W3C Verifiable Credentials",
       "Open Badges 3.0",
       "Decentralized Identifiers",
-      "OpenID for VC",
       "GDPR-ready",
       "REST + Webhooks"
     ]
@@ -354,14 +353,14 @@
     "overageFree": "No overage charge",
     "overageRate": "{rate} / verification beyond that",
     "featureCore": "Verification by ID, link or credential file",
-    "featureZkTls": "Verify credentials from any portal (zkTLS)",
+    "featureZkTls": "Verify credentials from a supported portal (zkTLS) — Sandbox",
     "featureImage": "Verify certificate images",
     "cta": "Start free",
     "footnote": "Every plan includes the independent trust mark, the public verification page and the full API. Overage on paid plans is billed monthly at the per-verification rate above.",
     "faqTitle": "Pricing questions",
     "faq": {
       "q1": "What counts as a verification?",
-      "a1": "One check of one credential: by hash, by verifiable credential, by zkTLS proof, or by uploaded certificate image. Issuing credentials never counts, and re-checking a credential you already verified in the same billing period is free.",
+      "a1": "One check of one credential: by hash, by verifiable credential, or by uploaded certificate image. Issuing credentials never counts, and re-checking a credential you already verified in the same billing period is free.",
       "q2": "What happens when I pass my included verifications?",
       "a2": "On Free, verification is capped: further calls are blocked until the next period, so you are never charged by surprise. On Starter and Scale, extra verifications are billed monthly at the per-verification rate on the plan.",
       "q3": "Is issuing really free?",

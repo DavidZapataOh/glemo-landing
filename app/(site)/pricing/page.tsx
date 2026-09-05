@@ -16,7 +16,10 @@ interface Plan {
   includedVerifications: number;
   pricePerVerificationCents: number;
   overagePolicy: string;
-  features: { byZkTls: boolean; byImage: boolean };
+  // Three states, not two. zkTLS works end to end and every recipe in the issuer
+  // registry is a mock, so it is available in Sandbox and not in Live. A boolean can
+  // only say yes or no, and "yes" was a green tick billing for a demo.
+  features: { byZkTls: "yes" | "sandbox" | "no"; byImage: boolean };
 }
 
 const { plans } = plansData as { plans: Plan[] };
@@ -98,17 +101,28 @@ export default async function PricingPage() {
   );
 }
 
-function Feature({ on, children }: { on: boolean; children: React.ReactNode }) {
+function Feature({
+  on,
+  children,
+}: {
+  on: boolean | "yes" | "sandbox" | "no";
+  children: React.ReactNode;
+}) {
+  // A boolean still works for the features that are simply on or off; the string form
+  // adds the middle state without making every caller carry it.
+  const state = on === true ? "yes" : on === false ? "no" : on;
+  const mark = state === "yes" ? "✓" : state === "sandbox" ? "◐" : "-";
+  const live = state === "yes";
   return (
     <li className="flex items-center gap-2.5">
       <span
         aria-hidden
         className="font-mono text-sm"
-        style={{ color: on ? "var(--verify)" : "var(--ink-2)" }}
+        style={{ color: live ? "var(--verify)" : "var(--ink-2)" }}
       >
-        {on ? "✓" : "-"}
+        {mark}
       </span>
-      <span style={{ color: on ? "var(--ink)" : "var(--ink-2)" }}>{children}</span>
+      <span style={{ color: live ? "var(--ink)" : "var(--ink-2)" }}>{children}</span>
     </li>
   );
 }

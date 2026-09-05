@@ -14,6 +14,7 @@
     "check:links": "node scripts/check-links.mjs",
     "verify:quickstart": "node scripts/verify-quickstart.mjs",
     "check:quickstart": "node scripts/verify-quickstart.mjs --extract-only",
+    "check:copy": "node scripts/check-copy.mjs",
     "check:sdk-copy": "node scripts/check-sdk-copy.mjs",
     "check:cdn-url": "node scripts/check-cdn-url.mjs"
   },

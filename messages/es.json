@@ -63,8 +63,8 @@
     ]
   },
   "problem": {
-    "titleA": "Cualquiera puede falsificar un PDF.",
-    "titleB": "Nadie lo comprueba.",
+    "titleA": "Un PDF no prueba nada.",
+    "titleB": "Y por eso nadie lo comprueba.",
     "body": "Falsificar un certificado toma diez minutos. Verificarlo toma días de correos y llamadas, así que la mayoría nunca se revisa. Así fue como los diplomas falsos se volvieron un negocio de miles de millones.",
     "chips": [
       "diploma_FINAL_v3.pdf",
@@ -107,7 +107,7 @@
       },
       {
         "name": "Verifica",
-        "desc": "Empleadores y plataformas comprueban cualquier credencial en menos de un segundo, sin crear cuentas y sin llamar a nadie."
+        "desc": "Empleadores y plataformas comprueban una credencial de Glemo en menos de un segundo, sin crear cuentas y sin llamar a nadie."
       },
       {
         "name": "Audita",
@@ -131,7 +131,7 @@
       "emailSubject": "Tu credencial está aquí 🎓",
       "emailFrom": "Andes Tech Academy",
       "walletShare": "Compartir en LinkedIn",
-      "verifyPlaceholder": "Pega cualquier enlace de credencial…",
+      "verifyPlaceholder": "Pega un enlace de credencial…",
       "verifyChecks": [
         "Emisor ✓",
         "Titular ✓",
@@ -175,7 +175,7 @@
       "before": "Con sello",
       "after": "White-label",
       "brandA": "glemo verified",
-      "brandB": "verify.nova.edu"
+      "brandB": "sin ningún sello"
     },
     "latency": {
       "value": "0.04s",
@@ -232,7 +232,7 @@
           "Certificados que se ven como tú, no como una plantilla",
           "Envía uno o miles, el mismo esfuerzo",
           "Tus estudiantes los comparten con un clic",
-          "Revoca o expira cualquier credencial, cuando sea"
+          "Revoca o expira una credencial que emitiste, cuando sea"
         ]
       },
       {
@@ -240,9 +240,9 @@
         "label": "Quienes necesitan confiar",
         "headline": "Equipos de RRHH, plataformas, marketplaces.",
         "points": [
-          "Comprueba cualquier credencial en menos de un segundo",
+          "Comprueba una credencial en menos de un segundo",
           "Un widget que insertas en tu producto",
-          "Funciona con credenciales de cualquier emisor",
+          "Funciona con credenciales de los emisores de nuestro registro",
           "Se acabó llamar a universidades"
         ]
       },
@@ -261,7 +261,7 @@
   },
   "dev": {
     "title": "Para developers, es una llamada",
-    "body": "Una API REST que se porta bien. Verifica lo que sea, incluso credenciales que no emitiste, y recibe una respuesta con la que puedes actuar.",
+    "body": "Una API REST que se porta bien. Verifica credenciales que no emitiste, de los portales de nuestro registro, y recibe una respuesta con la que puedes actuar.",
     "docs": "Lee la documentación",
     "tabs": {
       "curl": "cURL",
@@ -276,7 +276,6 @@
       "W3C Verifiable Credentials",
       "Open Badges 3.0",
       "Decentralized Identifiers",
-      "OpenID for VC",
       "GDPR-ready",
       "REST + Webhooks"
     ]
@@ -354,14 +353,14 @@
     "overageFree": "Sin cargo por excedente",
     "overageRate": "{rate} por verificación adicional",
     "featureCore": "Verificación por ID, enlace o archivo de credencial",
-    "featureZkTls": "Verifica credenciales de cualquier portal (zkTLS)",
+    "featureZkTls": "Verifica credenciales de un portal soportado (zkTLS) — Sandbox",
     "featureImage": "Verifica imágenes de certificados",
     "cta": "Empieza gratis",
     "footnote": "Todos los planes incluyen la marca de confianza independiente, la página pública de verificación y la API completa. El excedente en planes pagos se factura mensualmente a la tarifa por verificación indicada.",
     "faqTitle": "Preguntas sobre precios",
     "faq": {
       "q1": "¿Qué cuenta como una verificación?",
-      "a1": "Una revisión de una credencial: por hash, por credencial verificable, por prueba zkTLS o por imagen de certificado. Emitir credenciales nunca cuenta, y volver a revisar una credencial ya verificada en el mismo periodo de facturación es gratis.",
+      "a1": "Una revisión de una credencial: por hash, por credencial verificable o por imagen de certificado. Emitir credenciales nunca cuenta, y volver a revisar una credencial ya verificada en el mismo periodo de facturación es gratis.",
       "q2": "¿Qué pasa cuando supero mis verificaciones incluidas?",
       "a2": "En Free la verificación tiene tope: las llamadas adicionales se bloquean hasta el siguiente periodo, así nunca hay cobros sorpresa. En Starter y Scale, las verificaciones extra se facturan mensualmente a la tarifa del plan.",
       "q3": "¿Emitir es gratis de verdad?",
