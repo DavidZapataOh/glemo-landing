@@ -64,6 +64,32 @@ const BANNED = [
     why: "there is no compliance status to claim: a non-qualified issuer gets non-discrimination under art 45b(1) and nothing more",
   },
   { term: "EUDI", why: "idem" },
+  // The four levels are declared/signed/anchored/independent in
+  // glemo-backend rules.schema.ts, computed by assurance/level.ts from the checks the
+  // engine emitted. They measure ONE axis, how little the issuer had to cooperate, and
+  // no published standard grades that axis for a verifier at verification time.
+  //
+  // The ban covers naming a published assurance vocabulary NEXT TO ours, in either
+  // direction: claiming equivalence with NIST or ISO would be false, and so would
+  // implying our four values are an accepted scale. The generic phrase "assurance
+  // level" is in the same pattern because it is the term those standards define, and a
+  // reader who knows them will import their meaning into ours.
+  {
+    term: "NIST SP 800-63",
+    pattern: /\bNIST\b|\bSP ?800-?63\b|\bIAL[123]\b|\bAAL[123]\b|\bISO ?29115\b|assurance level|nivel de garant[ií]a/i,
+    why: "our four levels measure independence from the issuer, an axis no published standard grades for the verifier; naming NIST, SP 800-63 or ISO 29115 beside them claims an equivalence we cannot sustain in either direction",
+  },
+  // UNTP is the near neighbour and the easiest honest mistake, so it gets its own
+  // reason rather than sharing one. Its assessorLevel and AssuranceClass DO order
+  // parties by independence, but institutional accredited independence, written by the
+  // issuer of the attestation and not computed by the verifier. It is already
+  // CONDITIONED below for the self-declaration caveat; this rule is about pinning it to
+  // our scale specifically.
+  {
+    term: "UNTP assurance",
+    pattern: /UNTP[^.]{0,60}(assurance level|assessorLevel|AssuranceClass)|assurance level[^.]{0,60}UNTP/i,
+    why: "UNTP grades accredited institutional independence, declared by the attestation issuer; ours is operational and computed at verification time, so pinning one to the other misdescribes both",
+  },
 ];
 
 /** Terms that are TRUE but incomplete on their own: the capability exists and the
