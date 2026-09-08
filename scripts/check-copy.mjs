@@ -49,6 +49,20 @@ const BANNED = [
       /re-?check\w*[^.]{0,80}(already verified|same billing period)[^.]{0,40}\bfree\b|volver a (?:revisar|verificar)[^.]{0,80}gratis/i,
     why: "metering counts every verification event; there is no per-credential discount and no deduplication",
   },
+  // The billing model is verifier-pays, and it is not a slogan: billing.ts says
+  // "Verifier-pays: issuance is free (there is NOTHING about /issue here)", quotaGuard
+  // is mounted only on the verify routes, and no issuing route touches metering. So a
+  // sentence that prices issuing is not a rounding of the truth, it is the opposite of
+  // it, and the pricing page one screen away says issuance is always free.
+  //
+  // The banned shape is "issuing HAS a price", not the word issuing near the word
+  // price: "issuing is free" must stay sayable, and so must "what does issuing cost".
+  {
+    term: "issuing is priced",
+    pattern:
+      /issuing is priced|issuing[^.]{0,40}\bcosts?\b[^.]{0,20}(per|from|\$)|emitir tiene un precio|emitir[^.]{0,40}cuesta\b/i,
+    why: "verifier-pays: billing.ts states issuance is free and there is NOTHING about /issue in the billing module, quotaGuard is mounted only on the verify routes, and the pricing page says issuing is always free",
+  },
   {
     term: "any credential",
     pattern: /any (?:\w+ ){0,2}credential|cualquier (?:\w+ ){0,2}credencial/i,
@@ -176,14 +190,11 @@ function withoutFullLineComments(src) {
     .join("\n");
 }
 
-const bad = [];
-for (const file of FILES) {
-  let src;
-  try {
-    src = withoutFullLineComments(readFileSync(file, "utf8"));
-  } catch {
-    continue;
-  }
+/** Every finding in ONE source. Split out of the loop so the fixtures below can run
+ *  the real rules against text that is not on disk. */
+function scanSource(file, raw) {
+  const bad = [];
+  const src = withoutFullLineComments(raw);
   // Case sensitive on purpose. "Any credential" at the start of a sentence and "any
   // credential" mid-sentence are both real copy, so each spelling that occurs is
   // listed above rather than matched loosely: a case-insensitive sweep also flags
@@ -228,6 +239,62 @@ for (const file of FILES) {
       from = at + term.length;
     }
   }
+  return bad;
+}
+
+/** The gate's own test, and it runs on every invocation.
+ *
+ *  A rule is only worth what it catches, and the sentences below were PUBLISHED until
+ *  Sprint 29 plan 08 removed them: without this, softening the pattern later would go
+ *  unnoticed because the copy that used to trip it is gone. The negative cases matter
+ *  as much: a rule that also flags "issuing is free" would make the honest sentence
+ *  unsayable, which is how a gate gets deleted instead of fixed. */
+const FIXTURES = [
+  {
+    caught: "issuing is priced",
+    text: "Issuing is priced so any institution can afford it; heavy verification is billed per check.",
+  },
+  {
+    caught: "issuing is priced",
+    text: "Emitir tiene un precio que cualquier institución puede pagar; la verificación intensiva se cobra por chequeo.",
+  },
+  {
+    caught: "re-checking is free",
+    text: "Re-checking a credential you already verified in the same billing period is free.",
+  },
+  { safe: "Issuing credentials is free. Verifiers pay per verification." },
+  { safe: "Emitir credenciales es gratis. Los verificadores pagan por verificación." },
+  { safe: "What does it cost? Every plan publishes its rate." },
+  // The question is not the claim. "How much does issuing cost" must stay askable, and
+  // the honest answer to it is the sentence above.
+  { safe: "¿Cuánto cuesta emitir? Nada: emitir credenciales es gratis." },
+];
+
+const fixtureFailures = [];
+for (const f of FIXTURES) {
+  const found = scanSource("<fixture>", f.text ?? f.safe).map((b) => b.term);
+  if (f.caught && !found.includes(f.caught)) {
+    fixtureFailures.push(`rule "${f.caught}" no longer catches: ${f.text}`);
+  }
+  if (f.safe && found.length > 0) {
+    fixtureFailures.push(`honest copy flagged by ${found.join(", ")}: ${f.safe}`);
+  }
+}
+if (fixtureFailures.length) {
+  console.error("[copy] the GATE ITSELF is broken, before any copy was checked:\n");
+  for (const f of fixtureFailures) console.error(`  ${f}`);
+  process.exit(1);
+}
+
+const bad = [];
+for (const file of FILES) {
+  let src;
+  try {
+    src = readFileSync(file, "utf8");
+  } catch {
+    continue;
+  }
+  bad.push(...scanSource(file, src));
 }
 
 if (bad.length) {
