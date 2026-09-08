@@ -18,6 +18,12 @@ jobs:
       - run: npm run check:receipt      # the receipt snippet needs jose and nothing of ours
       - run: npm run check:quickstart   # doc snippet must use the real SDK surface (live run is local)
       - run: npx tsc --noEmit
+      # The build itself. Eleven checks ran here and none of them was this one, so
+      # "landing: build verde" had never been demonstrated by anything: a broken page,
+      # a bad MDX frontmatter or a missing import reached deploy with CI green. It goes
+      # after tsc because a type error is the cheaper failure and should be reported
+      # first.
+      - run: npm run build
       - run: npm audit --omit=dev --audit-level=high   # SCA: high/critical vulns fail
       # React2Shell-class: patched Next floor. CI breaks if it drops below.
       - run: |

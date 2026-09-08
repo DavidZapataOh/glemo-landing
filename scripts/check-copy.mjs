@@ -63,14 +63,13 @@ const BANNED = [
       /issuing is priced|issuing[^.]{0,40}\bcosts?\b[^.]{0,20}(per|from|\$)|emitir tiene un precio|emitir[^.]{0,40}cuesta\b/i,
     why: "verifier-pays: billing.ts states issuance is free and there is NOTHING about /issue in the billing module, quotaGuard is mounted only on the verify routes, and the pricing page says issuing is always free",
   },
+  // El `[*_]*` no es adorno: MEDIDO en el Sprint 29 plan 09, "any **issuer**" no casaba
+  // porque los asteriscos de la negrita no son `\w`, y una promesa en negrita es la que mas
+  // se lee. La misma tolerancia va en las dos, o la siguiente se escapa por donde se escapo
+  // esta.
   {
     term: "any credential",
-    pattern: /any (?:\w+ ){0,2}credential|cualquier (?:\w+ ){0,2}credencial/i,
-    why: "idem",
-  },
-  {
-    term: "any issuer",
-    pattern: /any (?:\w+ ){0,2}issuer|cualquier (?:\w+ ){0,2}emisor/i,
+    pattern: /\bany[*_]*\s+(?:[*_]*\w+[*_]*\s+){0,2}[*_]*credential|\bcualquier[*_]*\s+(?:[*_]*\w+[*_]*\s+){0,2}[*_]*credencial/i,
     why: "idem",
   },
   {
@@ -111,6 +110,17 @@ const BANNED = [
  *  characters of its qualifier. */
 const WINDOW = 200;
 const CONDITIONED = [
+  // "any issuer" es FALSA en marketing y CIERTA acotada a `byVC`, que resuelve el DID del
+  // emisor y comprueba su firma sin que ese emisor este registrado con nosotros: es la fila
+  // "Cross-issuer" del ledger, en ✅ y con evidencia. Retirarla seria repetir el error del
+  // sprint en la otra direccion, borrando algo que si hacemos. Asi que cuesta una frase: o
+  // se dice `byVC` cerca, o no se dice.
+  {
+    term: "any issuer",
+    pattern: /\bany[*_]*\s+(?:[*_]*\w+[*_]*\s+){0,2}[*_]*issuer|\bcualquier[*_]*\s+(?:[*_]*\w+[*_]*\s+){0,2}[*_]*emisor/i,
+    requires: /byVC|VC-JWT/i,
+    why: "cross-issuer solo existe por byVC, que resuelve el did:web del emisor; sin acotar, promete que cualquier credencial de cualquier sitio se verifica",
+  },
   {
     term: "zkTLS",
     requires: /sandbox/i,
@@ -154,6 +164,11 @@ const FILES = [
   "public/plans.json",
   ...globSync("content/docs/**/*.mdx"),
   ...globSync("app/**/*.tsx"),
+  // Y components/**, que es donde vive la mitad de la copy de este repo. Se barrian
+  // app/**/*.tsx y no esto, asi que treinta y tres ficheros -incluidos dos de mas de
+  // seiscientas lineas- no se miraban nunca. Un gate que cubre el arbol de rutas y no el
+  // de componentes cubre los envoltorios y no las frases.
+  ...globSync("components/**/*.tsx"),
 ];
 
 function escapeRegExp(text) {
@@ -218,7 +233,18 @@ function scanSource(file, raw) {
       from = at + term.length;
     }
   }
-  for (const { term, requires, why } of CONDITIONED) {
+  for (const { term, pattern, requires, why } of CONDITIONED) {
+    // Con patron cuando la frase se escribe de varias formas, igual que en BANNED: sin esto
+    // una condicionada en negrita se escapa por donde se escapo "any **issuer**".
+    if (pattern) {
+      for (const m of src.matchAll(new RegExp(pattern.source, "gi"))) {
+        const around = src.slice(Math.max(0, m.index - WINDOW), m.index + m[0].length + WINDOW);
+        if (!requires.test(around)) {
+          bad.push({ file, line: lineOf(src, m.index), term: `${term} (unqualified)`, why });
+        }
+      }
+      continue;
+    }
     let from = 0;
     for (;;) {
       const at = indexOfTerm(src, term, from);
@@ -264,6 +290,17 @@ const FIXTURES = [
   },
   { safe: "Issuing credentials is free. Verifiers pay per verification." },
   { safe: "Emitir credenciales es gratis. Los verificadores pagan por verificación." },
+  {
+    caught: "any issuer (unqualified)",
+    text: "Verify credentials from any **issuer**, with no integration on their side.",
+  },
+  {
+    safe: "byVC verifies a portable VC-JWT and works for credentials issued by **any** issuer, not just those registered in Glemo.",
+  },
+  {
+    caught: "any credential",
+    text: "Sube *cualquier* credencial y te decimos si es autentica.",
+  },
   { safe: "What does it cost? Every plan publishes its rate." },
   // The question is not the claim. "How much does issuing cost" must stay askable, and
   // the honest answer to it is the sentence above.
