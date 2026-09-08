@@ -360,7 +360,7 @@
     "faqTitle": "Pricing questions",
     "faq": {
       "q1": "What counts as a verification?",
-      "a1": "One check of one credential: by hash, by verifiable credential, or by uploaded certificate image. Issuing credentials never counts, and re-checking a credential you already verified in the same billing period is free.",
+      "a1": "One verification transaction: a call to the API, or one verification session opened against a rule and answered. It counts once whatever the outcome, because verifying and finding a credential revoked is the work you asked for. Issuing credentials never counts. Checking the same credential again is a new transaction and counts again, in the same period or any other.",
       "q2": "What happens when I pass my included verifications?",
       "a2": "On Free, verification is capped: further calls are blocked until the next period, so you are never charged by surprise. On Starter and Scale, extra verifications are billed monthly at the per-verification rate on the plan.",
       "q3": "Is issuing really free?",

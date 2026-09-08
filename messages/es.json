@@ -360,7 +360,7 @@
     "faqTitle": "Preguntas sobre precios",
     "faq": {
       "q1": "¿Qué cuenta como una verificación?",
-      "a1": "Una revisión de una credencial: por hash, por credencial verificable o por imagen de certificado. Emitir credenciales nunca cuenta, y volver a revisar una credencial ya verificada en el mismo periodo de facturación es gratis.",
+      "a1": "Una transacción de verificación: una llamada a la API, o una sesión de verificación abierta contra una regla y contestada. Cuenta una vez sea cual sea el desenlace, porque verificar y descubrir que una credencial está revocada es el trabajo que pediste. Emitir credenciales nunca cuenta. Revisar otra vez la misma credencial es una transacción nueva y vuelve a contar, en el mismo periodo o en cualquier otro.",
       "q2": "¿Qué pasa cuando supero mis verificaciones incluidas?",
       "a2": "En Free la verificación tiene tope: las llamadas adicionales se bloquean hasta el siguiente periodo, así nunca hay cobros sorpresa. En Starter y Scale, las verificaciones extra se facturan mensualmente a la tarifa del plan.",
       "q3": "¿Emitir es gratis de verdad?",

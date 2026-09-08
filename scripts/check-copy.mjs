@@ -40,6 +40,16 @@ const BANNED = [
   // Up to two words in between, so "any credential" and "cualquier enlace de
   // credencial" are one rule instead of a list that grows by one miss at a time.
   {
+    // The billing unit is a verification TRANSACTION, and metering aggregates
+    // count(*) over verification_events with no DISTINCT per credential
+    // (glemo-backend metering.ts:58-64). A second check of the same credential is
+    // charged exactly like the first, in the same period or any other.
+    term: "re-checking is free",
+    pattern:
+      /re-?check\w*[^.]{0,80}(already verified|same billing period)[^.]{0,40}\bfree\b|volver a (?:revisar|verificar)[^.]{0,80}gratis/i,
+    why: "metering counts every verification event; there is no per-credential discount and no deduplication",
+  },
+  {
     term: "any credential",
     pattern: /any (?:\w+ ){0,2}credential|cualquier (?:\w+ ){0,2}credencial/i,
     why: "idem",
