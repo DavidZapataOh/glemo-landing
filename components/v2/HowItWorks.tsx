@@ -171,7 +171,7 @@ function CredentialCard({ withStandards = false }: { withStandards?: boolean }) 
           <p className="mt-2 text-[1.05rem] font-bold text-ink">
             Full-Stack Engineering
           </p>
-          <p className="mt-0.5 text-[0.85rem] text-ink-2">Andes Tech Academy · 2026</p>
+          <p className="mt-0.5 text-[0.85rem] text-ink-2">academy.example · 2026</p>
         </div>
         <svg viewBox="0 0 80 80" className="h-10 w-10 shrink-0" aria-hidden="true">
           <polygon

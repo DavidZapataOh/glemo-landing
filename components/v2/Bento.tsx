@@ -160,7 +160,7 @@ function FlowTile() {
             </span>
             <div>
               <p className="text-[0.98rem] font-black leading-tight">María Torres</p>
-              <p className="text-[0.8rem] text-paper-ink-2">Product Design · Andes Tech</p>
+              <p className="text-[0.8rem] text-paper-ink-2">Product Design · academy.example</p>
             </div>
           </div>
           <span

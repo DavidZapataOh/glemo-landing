@@ -9,13 +9,18 @@ import { cn } from "@/lib/utils";
 
 type Step = { name: string; desc: string };
 
-const SCENE_SECONDS = [5.2, 4.6, 4.8, 4.6, 3.8];
+const SCENE_SECONDS = [4.6, 5.0, 4.8, 4.6, 4.0];
 
 /**
- * "Watch it work": the Certifier lesson executed for Glemo. A simulated
- * cursor builds a credential, issues a cohort, delivers it, verifies it and
- * audits it, while the lifecycle rail auto-advances. Click any step to jump.
- * Reduced motion / mobile: manual tabs with finished states, no cursor.
+ * "Watch it work": the verification layer demonstrating itself. Something the
+ * visitor did not issue arrives, their own rule decides, the verdict keeps its
+ * three states apart, the receipt is signed, and the cost lands per rule. A
+ * simulated cursor drives it while the rail auto-advances; click any step to
+ * jump. Reduced motion / mobile: manual tabs with finished states, no cursor.
+ *
+ * It used to show design, issue, deliver, verify, audit, which was the product
+ * of two sprints ago: three of its five scenes sold issuance on a page whose
+ * hero sells the layer.
  */
 const DESKTOP_QUERY = "(min-width: 1024px)";
 
@@ -29,23 +34,26 @@ export default function GlemoInAction() {
   const t = useTranslations("action");
   const steps = t.raw("steps") as Step[];
   const sc = {
-    toolLogo: t("scene.toolLogo"),
-    toolName: t("scene.toolName"),
-    toolQr: t("scene.toolQr"),
-    certTitle: t("scene.certTitle"),
-    certCourse: t("scene.certCourse"),
-    recipients: t.raw("scene.recipients") as string[],
-    moreRecipients: t("scene.moreRecipients"),
-    issueButton: t("scene.issueButton"),
-    issuedChip: t("scene.issuedChip"),
-    emailSubject: t("scene.emailSubject"),
-    emailFrom: t("scene.emailFrom"),
-    walletShare: t("scene.walletShare"),
-    verifyPlaceholder: t("scene.verifyPlaceholder"),
-    verifyChecks: t.raw("scene.verifyChecks") as string[],
-    verifiedIn: t("scene.verifiedIn"),
-    auditRows: t.raw("scene.auditRows") as string[][],
-    auditExport: t("scene.auditExport"),
+    inbox: t("scene.inbox"),
+    arrivals: t.raw("scene.arrivals") as { label: string; kind: string }[],
+    ruleTitle: t("scene.ruleTitle"),
+    ruleRows: [
+      [t("scene.ruleAccept"), t("scene.ruleAcceptValue")],
+      [t("scene.ruleFrom"), t("scene.ruleFromValue")],
+      [t("scene.ruleFields"), t("scene.ruleFieldsValue")],
+    ] as [string, string][],
+    rulePublish: t("scene.rulePublish"),
+    ruleChip: t("scene.ruleChip"),
+    verdictName: t("scene.verdictName"),
+    verdictCourse: t("scene.verdictCourse"),
+    verdictWord: t("scene.verdictWord"),
+    verdictReqs: t.raw("scene.verdictReqs") as [string, string][],
+    receiptTitle: t("scene.receiptTitle"),
+    receiptLines: t.raw("scene.receiptLines") as string[],
+    receiptNote: t("scene.receiptNote"),
+    usageTitle: t("scene.usageTitle"),
+    usageRows: t.raw("scene.usageRows") as [string, string][],
+    usageTotal: t("scene.usageTotal"),
   };
 
   const reduced = useReducedMotion();
@@ -150,85 +158,70 @@ export default function GlemoInAction() {
         const tl = gsap.timeline();
 
         if (i === 0) {
-          gsap.set(['[data-t="c-logo"]', '[data-t="c-name"]', '[data-t="c-qr"]'], {
-            opacity: 0,
-            scale: 0.7,
+          // Three things land that the verifier did not issue. The cursor picks
+          // the first, because the point is that it does not matter which.
+          gsap.set('[data-t="arr-item"]', { opacity: 0, y: 12 });
+          tl.to('[data-t="arr-item"]', {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            stagger: 0.18,
+            ease: EASE,
           });
-          move(tl, '[data-t="tool-logo"]', 0.7);
+          move(tl, '[data-t="arr-item"]', 0.6);
           click(tl);
-          pop(tl, '[data-t="c-logo"]');
-          move(tl, '[data-t="tool-name"]');
-          click(tl);
-          pop(tl, '[data-t="c-name"]');
-          move(tl, '[data-t="tool-qr"]');
-          click(tl);
-          pop(tl, '[data-t="c-qr"]');
         } else if (i === 1) {
-          gsap.set('[data-t="rec-row"]', { opacity: 0, x: -14 });
-          gsap.set(['[data-t="rec-more"]', '[data-t="issued"]'], { opacity: 0 });
-          gsap.set('[data-t="issue-fill"]', { scaleX: 0 });
-          tl.to('[data-t="rec-row"]', {
+          gsap.set('[data-t="rule-row"]', { opacity: 0, x: -12 });
+          gsap.set('[data-t="rule-chip"]', { opacity: 0, scale: 0.7 });
+          tl.to('[data-t="rule-row"]', {
             opacity: 1,
             x: 0,
             duration: 0.4,
-            stagger: 0.16,
+            stagger: 0.18,
             ease: EASE,
           });
-          tl.to('[data-t="rec-more"]', { opacity: 1, duration: 0.3 });
-          move(tl, '[data-t="issue-btn"]', 0.6);
+          move(tl, '[data-t="rule-publish"]', 0.6);
           click(tl);
-          tl.to('[data-t="issue-fill"]', {
-            scaleX: 1,
-            duration: 1.1,
-            ease: "power1.inOut",
-          });
-          pop(tl, '[data-t="issued"]');
+          pop(tl, '[data-t="rule-chip"]');
         } else if (i === 2) {
-          gsap.set('[data-t="email"]', { opacity: 0, y: 18 });
-          gsap.set('[data-t="phone"]', { opacity: 0, y: 30 });
-          gsap.set('[data-t="linkedin"]', { opacity: 0, scale: 0.7 });
-          tl.to('[data-t="email"]', { opacity: 1, y: 0, duration: 0.55, ease: EASE });
-          tl.to('[data-t="phone"]', { opacity: 1, y: 0, duration: 0.6, ease: EASE }, "+=0.3");
-          move(tl, '[data-t="share-btn"]', 0.6);
-          click(tl);
-          pop(tl, '[data-t="linkedin"]');
-        } else if (i === 3) {
-          const target = $('[data-t="v-text"]');
-          if (target) target.textContent = "";
-          gsap.set('[data-t="v-check"]', { opacity: 0, y: 6 });
+          gsap.set('[data-t="v-req"]', { opacity: 0, y: 6 });
           gsap.set('[data-t="v-badge"]', { opacity: 0, scale: 0.6 });
           gsap.set('[data-t="v-beam"]', { x: 0, opacity: 0 });
-          move(tl, '[data-t="v-input"]', 0.55);
-          click(tl);
-          tl.add(() => {
-            if (target) target.textContent = "glemo.io/c/8f3a…c21";
-          });
-          move(tl, '[data-t="v-btn"]', 0.45);
-          click(tl);
           tl.fromTo(
             '[data-t="v-beam"]',
             { x: 0, opacity: 0 },
             { x: 360, opacity: 1, duration: 0.6, ease: "power2.inOut" }
           ).to('[data-t="v-beam"]', { opacity: 0, duration: 0.12 }, "-=0.1");
-          tl.to('[data-t="v-check"]', {
+          tl.to('[data-t="v-req"]', {
             opacity: 1,
             y: 0,
             duration: 0.3,
-            stagger: 0.14,
+            stagger: 0.16,
             ease: EASE,
           });
           pop(tl, '[data-t="v-badge"]');
+        } else if (i === 3) {
+          gsap.set('[data-t="r-line"]', { opacity: 0, y: 6 });
+          gsap.set('[data-t="r-sig"]', { opacity: 0 });
+          gsap.set('[data-t="r-note"]', { opacity: 0, y: 8 });
+          tl.to('[data-t="r-line"]', {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            stagger: 0.16,
+            ease: EASE,
+          });
+          tl.to('[data-t="r-sig"]', { opacity: 1, duration: 0.45, ease: EASE });
+          tl.to('[data-t="r-note"]', { opacity: 1, y: 0, duration: 0.4, ease: EASE }, "-=0.1");
         } else {
-          gsap.set('[data-t="a-row"]', { opacity: 0, x: -12 });
-          tl.to('[data-t="a-row"]', {
+          gsap.set('[data-t="u-row"]', { opacity: 0, x: -12 });
+          tl.to('[data-t="u-row"]', {
             opacity: 1,
             x: 0,
             duration: 0.4,
             stagger: 0.2,
             ease: EASE,
           });
-          move(tl, '[data-t="a-export"]', 0.6);
-          click(tl);
         }
       });
 
@@ -316,7 +309,7 @@ export default function GlemoInAction() {
           {/* stage */}
           <div
             ref={stageRef}
-            className="relative overflow-hidden rounded-lg border border-line bg-[oklch(0.13_0.011_170)] lg:min-h-[420px]"
+            className="relative overflow-hidden rounded-lg border border-line bg-[oklch(0.13_0.011_170)] lg:h-[460px] lg:self-center"
             style={{
               backgroundImage:
                 "radial-gradient(oklch(1 0 0 / 0.045) 1px, transparent 1px)",
@@ -334,11 +327,11 @@ export default function GlemoInAction() {
             </div>
 
             {/* scenes */}
-            <SceneDesign visible={active === 0} done={!animated} sc={sc} />
-            <SceneIssue visible={active === 1} done={!animated} sc={sc} />
-            <SceneDeliver visible={active === 2} done={!animated} sc={sc} />
-            <SceneVerify visible={active === 3} done={!animated} sc={sc} />
-            <SceneAudit visible={active === 4} done={!animated} sc={sc} />
+            <SceneArrives visible={active === 0} done={!animated} sc={sc} />
+            <SceneRule visible={active === 1} done={!animated} sc={sc} />
+            <SceneVerdict visible={active === 2} done={!animated} sc={sc} />
+            <SceneReceipt visible={active === 3} done={!animated} sc={sc} />
+            <SceneUsage visible={active === 4} done={!animated} sc={sc} />
 
             {/* cursor */}
             {animated && (
@@ -371,10 +364,23 @@ type SceneProps = {
   visible: boolean;
   /** render finished state (no-animation contexts) */
   done: boolean;
-  sc: Record<string, string | string[] | string[][]> & {
-    recipients: string[];
-    verifyChecks: string[];
-    auditRows: string[][];
+  sc: {
+    inbox: string;
+    arrivals: { label: string; kind: string }[];
+    ruleTitle: string;
+    ruleRows: [string, string][];
+    rulePublish: string;
+    ruleChip: string;
+    verdictName: string;
+    verdictCourse: string;
+    verdictWord: string;
+    verdictReqs: [string, string][];
+    receiptTitle: string;
+    receiptLines: string[];
+    receiptNote: string;
+    usageTitle: string;
+    usageRows: [string, string][];
+    usageTotal: string;
   };
 };
 
@@ -396,187 +402,72 @@ function Shell({ visible, children }: { visible: boolean; children: React.ReactN
   );
 }
 
-function SceneDesign({ visible, done, sc }: SceneProps) {
+function SceneArrives({ visible, done, sc }: SceneProps) {
   const hidden = done ? "" : "opacity-0";
   return (
     <Shell visible={visible}>
-      <div className="flex flex-col gap-4 lg:h-full lg:flex-row lg:items-center lg:gap-6" data-s="0">
-        {/* canvas */}
-        <div className="grid flex-1 place-items-center rounded-md border border-line bg-surface py-6 lg:self-stretch lg:py-0">
-          <div className="relative w-[78%] max-w-[330px] rounded-md border border-line bg-[oklch(0.17_0.013_170)] p-6 text-center">
-            <span
-              data-t="c-logo"
-              className={cn("absolute left-4 top-4", hidden)}
-            >
-              <svg viewBox="0 0 80 80" className="h-7 w-7" aria-hidden="true">
-                <polygon points="40,4 72,22 72,58 40,76 8,58 8,22" fill="none" stroke="var(--verify)" strokeWidth="4" />
-                <path d="M28 41 L37 50 L54 30" stroke="var(--verify)" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-            <p className="px-8 font-mono text-[9px] uppercase tracking-[0.18em] text-ink-2/70">
-              {sc.certTitle as string}
-            </p>
-            <p
-              data-t="c-name"
+      <div className="mx-auto flex h-full max-w-[430px] flex-col justify-center" data-s="0">
+        <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-2">{sc.inbox}</p>
+        <ul className="mt-3 flex flex-col gap-2.5">
+          {sc.arrivals.map((a, i) => (
+            <li
+              key={a.label}
+              data-t="arr-item"
               className={cn(
-                "mt-3 rounded-sm border border-dashed border-verify/60 px-2 py-1 font-mono text-[13px] text-verify",
+                "flex items-center justify-between gap-3 rounded-md border bg-surface px-4 py-3",
+                i === 0 ? "border-verify/50" : "border-line",
                 hidden
               )}
             >
-              {"{{recipient_name}}"}
-            </p>
-            <p className="mt-3 text-[11px] text-ink-2">{sc.certCourse as string}</p>
-            <span data-t="c-qr" className={cn("absolute bottom-3 right-3", hidden)}>
-              <svg viewBox="0 0 25 25" className="h-8 w-8 text-ink-2" aria-hidden="true">
-                {[[0,0],[1,2],[2,1],[3,3],[4,0],[0,4],[2,3],[4,4],[1,0],[3,1]].map(([x,y],k)=>(
-                  <rect key={k} x={x*5} y={y*5} width="4" height="4" rx="0.8" fill="currentColor" />
-                ))}
-              </svg>
-            </span>
-          </div>
-        </div>
-        {/* tools */}
-        <div className="flex w-full flex-row flex-wrap justify-center gap-2 lg:w-40 lg:shrink-0 lg:flex-col lg:gap-2.5">
-          {(
-            [
-              ["tool-logo", sc.toolLogo],
-              ["tool-name", sc.toolName],
-              ["tool-qr", sc.toolQr],
-            ] as const
-          ).map(([id, label]) => (
-            <span
-              key={id}
-              data-t={id}
-              className="rounded-md border border-line bg-surface px-4 py-2.5 font-mono text-[12px] text-ink-2"
-            >
-              {label as string}
-            </span>
-          ))}
-        </div>
-      </div>
-    </Shell>
-  );
-}
-
-function SceneIssue({ visible, done, sc }: SceneProps) {
-  const initials = ["MT", "DR", "SL"];
-  return (
-    <Shell visible={visible}>
-      <div className="mx-auto flex h-full max-w-[420px] flex-col justify-center" data-s="1">
-        <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-2/70">
-          recipients.csv
-        </p>
-        <ul className="mt-3 space-y-2">
-          {sc.recipients.map((name, i) => (
-            <li
-              key={name}
-              data-t="rec-row"
-              className={cn(
-                "flex items-center gap-3 rounded-md border border-line bg-surface px-4 py-2.5",
-                done ? "" : "opacity-0"
-              )}
-            >
-              <span className="grid h-7 w-7 place-items-center rounded-full bg-surface-2 text-[10.5px] font-black text-ink-2">
-                {initials[i]}
+              <span className="truncate font-mono text-[12px] text-ink">{a.label}</span>
+              <span className="shrink-0 rounded-full border border-line px-2.5 py-0.5 font-mono text-[10.5px] text-ink-2">
+                {a.kind}
               </span>
-              <span className="text-[0.92rem] font-medium text-ink">{name}</span>
             </li>
           ))}
         </ul>
-        <p
-          data-t="rec-more"
-          className={cn("mt-2 pl-1 font-mono text-[11px] text-ink-2/70", done ? "" : "opacity-0")}
-        >
-          {sc.moreRecipients as string}
-        </p>
-        <div className="mt-5 flex flex-wrap items-center gap-3 sm:gap-4">
-          <span
-            data-t="issue-btn"
-            className="rounded-full bg-verify px-5 py-2.5 text-[0.9rem] font-bold text-[oklch(0.17_0.03_170)]"
-          >
-            {sc.issueButton as string}
-          </span>
-          <span className="h-[5px] flex-1 overflow-hidden rounded-full bg-line">
-            <span
-              data-t="issue-fill"
-              className={cn("block h-full origin-left bg-verify", done ? "" : "scale-x-0")}
-            />
-          </span>
-          <span
-            data-t="issued"
-            className={cn(
-              "rounded-full border border-verify px-3 py-1 font-mono text-[11px] text-verify",
-              done ? "" : "opacity-0"
-            )}
-          >
-            {sc.issuedChip as string}
-          </span>
-        </div>
       </div>
     </Shell>
   );
 }
 
-function SceneDeliver({ visible, done, sc }: SceneProps) {
+function SceneRule({ visible, done, sc }: SceneProps) {
   const hidden = done ? "" : "opacity-0";
   return (
     <Shell visible={visible}>
-      <div
-        className="flex flex-col items-center gap-5 lg:h-full lg:flex-row lg:justify-center lg:gap-6"
-        data-s="2"
-      >
-        <div
-          data-t="email"
-          className={cn(
-            "w-full max-w-[300px] rounded-md border border-line bg-surface p-5",
-            hidden
-          )}
-        >
-          <div className="flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-2 text-sm">✉</span>
-            <div className="min-w-0">
-              <p className="truncate text-[0.95rem] font-bold text-ink">
-                {sc.emailSubject as string}
-              </p>
-              <p className="text-[12px] text-ink-2">{sc.emailFrom as string}</p>
+      <div className="mx-auto flex h-full max-w-[430px] flex-col justify-center" data-s="1">
+        <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-2">
+          {sc.ruleTitle}
+        </p>
+        <div className="mt-3 divide-y divide-line rounded-md border border-line bg-surface">
+          {sc.ruleRows.map(([k, v]) => (
+            <div
+              key={k}
+              data-t="rule-row"
+              className={cn("flex items-baseline justify-between gap-4 px-4 py-3", hidden)}
+            >
+              <span className="shrink-0 font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-2">
+                {k}
+              </span>
+              <span className="text-right text-[0.9rem] leading-[1.4] text-ink">{v}</span>
             </div>
-          </div>
-          <span className="mt-4 inline-block rounded-full border border-line px-4 py-2 text-[12.5px] font-bold text-ink">
-            glemo.io/c/8f3a…c21
-          </span>
+          ))}
         </div>
-        <div
-          data-t="phone"
-          className={cn(
-            "relative w-[170px] rounded-[22px] border border-line bg-[oklch(0.17_0.013_170)] p-3 pb-5",
-            hidden
-          )}
-        >
-          <span className="mx-auto mb-2 block h-1 w-10 rounded-full bg-surface-2" />
-          <div className="rounded-md border border-line bg-surface p-3">
-            <svg viewBox="0 0 80 80" className="h-5 w-5" aria-hidden="true">
-              <polygon points="40,4 72,22 72,58 40,76 8,58 8,22" fill="none" stroke="var(--verify)" strokeWidth="4" />
-              <path d="M28 41 L37 50 L54 30" stroke="var(--verify)" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <p className="mt-2 text-[11.5px] font-bold leading-tight text-ink">
-              María Torres
-            </p>
-            <p className="text-[10px] text-ink-2">{sc.certCourse as string}</p>
-          </div>
+        <div className="mt-4 flex items-center justify-between gap-3">
           <span
-            data-t="share-btn"
-            className="mt-3 block rounded-full bg-verify px-3 py-2 text-center text-[11px] font-bold text-[oklch(0.17_0.03_170)]"
-          >
-            {sc.walletShare as string}
-          </span>
-          <span
-            data-t="linkedin"
+            data-t="rule-chip"
             className={cn(
-              "absolute -right-3 -top-3 grid h-9 w-9 place-items-center rounded-md bg-[#0A66C2] text-[13px] font-black text-white",
+              "rounded-full border border-verify/60 px-3 py-1 font-mono text-[11px] text-verify",
               hidden
             )}
           >
-            in
+            {sc.ruleChip}
+          </span>
+          <span
+            data-t="rule-publish"
+            className="rounded-full bg-verify px-4 py-2 text-[0.85rem] font-bold text-[oklch(0.17_0.03_170)]"
+          >
+            {sc.rulePublish}
           </span>
         </div>
       </div>
@@ -584,59 +475,45 @@ function SceneDeliver({ visible, done, sc }: SceneProps) {
   );
 }
 
-function SceneVerify({ visible, done, sc }: SceneProps) {
+function SceneVerdict({ visible, done, sc }: SceneProps) {
   const hidden = done ? "" : "opacity-0";
   return (
     <Shell visible={visible}>
-      <div className="mx-auto flex h-full max-w-[430px] flex-col justify-center" data-s="3">
-        <div className="flex items-center gap-2.5">
-          <span
-            data-t="v-input"
-            className="flex-1 rounded-full border border-line bg-surface px-4 py-2.5 font-mono text-[12px] text-ink-2"
-          >
-            <span data-t="v-text">{done ? "glemo.io/c/8f3a…c21" : ""}</span>
-            <span className="caret text-verify">▍</span>
-          </span>
-          <span
-            data-t="v-btn"
-            className="rounded-full bg-verify px-4 py-2.5 text-[0.85rem] font-bold text-[oklch(0.17_0.03_170)]"
-          >
-            ✓
-          </span>
-        </div>
-
-        <div className="relative mt-5 overflow-hidden rounded-md border border-line bg-surface p-5">
+      <div className="mx-auto flex h-full max-w-[430px] flex-col justify-center" data-s="2">
+        <div className="relative overflow-hidden rounded-md border border-line bg-surface p-5">
           <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-[1rem] font-bold text-ink">María Torres</p>
-              <p className="text-[12px] text-ink-2">
-                {sc.certCourse as string} · Andes Tech Academy
-              </p>
+            <div className="min-w-0">
+              <p className="truncate text-[1rem] font-bold text-ink">{sc.verdictName}</p>
+              <p className="truncate text-[12px] text-ink-2">{sc.verdictCourse}</p>
             </div>
             <span
               data-t="v-badge"
               className={cn(
-                "rounded-md border-2 border-verify px-2.5 py-1 font-mono text-[11px] font-medium tracking-[0.1em] text-verify",
+                "shrink-0 rounded-md border-2 border-verify px-2.5 py-1 font-mono text-[11px] font-medium tracking-[0.1em] text-verify",
                 hidden
               )}
             >
-              VERIFIED ✓
+              {sc.verdictWord}
             </span>
           </div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {sc.verifyChecks.map((c) => (
-              <span
-                key={c}
-                data-t="v-check"
-                className={cn(
-                  "rounded-full border border-line px-3 py-1 font-mono text-[11px] text-ink-2",
-                  hidden
-                )}
+
+          {/* The three states, kept apart. Collapsing the last one into "not met"
+              would assert something nobody checked. */}
+          <dl className="mt-4 flex flex-col gap-2 border-t border-line pt-4">
+            {sc.verdictReqs.map(([name, state], i) => (
+              <div
+                key={name}
+                data-t="v-req"
+                className={cn("flex items-baseline justify-between gap-4 font-mono text-[12px]", hidden)}
               >
-                {c}
-              </span>
+                <dt className="text-ink-2">{name}</dt>
+                <dd className={i === sc.verdictReqs.length - 1 ? "text-ink-2" : "text-verify"}>
+                  {state}
+                </dd>
+              </div>
             ))}
-          </div>
+          </dl>
+
           <span
             data-t="v-beam"
             className="pointer-events-none absolute inset-y-0 -left-24 w-20 opacity-0"
@@ -647,44 +524,73 @@ function SceneVerify({ visible, done, sc }: SceneProps) {
             }}
           />
         </div>
-        <p className="mt-3 text-right font-mono text-[11px] text-verify">
-          {sc.verifiedIn as string}
+        <p className="mt-3 text-right font-mono text-[11px] text-ink-2">{sc.ruleChip}</p>
+      </div>
+    </Shell>
+  );
+}
+
+function SceneReceipt({ visible, done, sc }: SceneProps) {
+  const hidden = done ? "" : "opacity-0";
+  return (
+    <Shell visible={visible}>
+      <div className="mx-auto flex h-full max-w-[430px] flex-col justify-center" data-s="3">
+        <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-2">
+          {sc.receiptTitle}
+        </p>
+        <div className="mt-3 rounded-md border border-line bg-surface p-4">
+          {sc.receiptLines.map((l, i) => (
+            <p
+              key={l}
+              data-t="r-line"
+              className={cn("font-mono text-[12px] text-ink-2", i > 0 && "mt-1.5", hidden)}
+            >
+              {l}
+            </p>
+          ))}
+          <p
+            data-t="r-sig"
+            className={cn(
+              "mt-3 truncate border-t border-line pt-3 font-mono text-[11px] text-verify",
+              hidden
+            )}
+          >
+            eyJhbGciOiJFUzI1NiIsInR5cCI6InNlY2V2ZW50K2p3dCJ9…
+          </p>
+        </div>
+        <p
+          data-t="r-note"
+          className={cn("mt-3 text-[0.85rem] leading-[1.55] text-ink-2", hidden)}
+        >
+          {sc.receiptNote}
         </p>
       </div>
     </Shell>
   );
 }
 
-function SceneAudit({ visible, done, sc }: SceneProps) {
+function SceneUsage({ visible, done, sc }: SceneProps) {
+  const hidden = done ? "" : "opacity-0";
   return (
     <Shell visible={visible}>
       <div className="mx-auto flex h-full max-w-[430px] flex-col justify-center" data-s="4">
-        <div className="flex items-center justify-between">
-          <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-2/70">
-            verification log
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-2">
+            {sc.usageTitle}
           </p>
-          <span
-            data-t="a-export"
-            className="rounded-full border border-line px-3.5 py-1.5 font-mono text-[11px] text-ink-2"
-          >
-            {sc.auditExport as string} ↓
-          </span>
+          <span className="font-mono text-[11px] text-ink-2">{sc.usageTotal}</span>
         </div>
         <ul className="mt-3 divide-y divide-line rounded-md border border-line bg-surface font-mono text-[12px]">
-          {sc.auditRows.map(([time, who, status]) => (
+          {sc.usageRows.map(([rule, count], i) => (
             <li
-              key={time}
-              data-t="a-row"
-              className={cn(
-                "flex items-center justify-between gap-3 px-4 py-3",
-                done ? "" : "opacity-0"
-              )}
+              key={rule}
+              data-t="u-row"
+              className={cn("flex items-center justify-between gap-3 px-4 py-3", hidden)}
             >
-              <span className="text-ink-2/70">{time}</span>
-              <span className="flex-1 truncate text-ink">{who}</span>
-              <span className={status.includes("revo") ? "text-ink-2" : "text-verify"}>
-                {status}
+              <span className={i === sc.usageRows.length - 1 ? "text-ink-2" : "text-ink"}>
+                {rule}
               </span>
+              <span className="text-ink-2">{count}</span>
             </li>
           ))}
         </ul>

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Glemo · Credenciales que se prueban solas",
-    "description": "Diseña certificados hermosos, envía miles de una vez, y deja que cualquiera compruebe que son reales en segundos. Se acabó perseguir emisores o confiar en lo que diga un PDF."
+    "title": "Glemo · La capa de verificación universal",
+    "description": "Comprueba credenciales que tú no emitiste, contra la regla que tú escribes, y llévate un recibo firmado que cualquiera puede verificar sin nosotros."
   },
   "announcement": {
     "text": "Estamos eligiendo a nuestros primeros design partners",
@@ -18,54 +18,54 @@
     "docs": "Docs"
   },
   "hero": {
-    "titleA": "Credenciales que",
-    "titleB": "se prueban solas.",
-    "sub": "Diseña certificados hermosos, envía miles de una vez, y deja que cualquiera compruebe que son reales en segundos. Se acabó perseguir emisores o confiar en lo que diga un PDF.",
+    "titleA": "La capa de",
+    "titleB": "verificación universal.",
+    "sub": "Comprueba credenciales que tú no emitiste, contra la regla que tú escribes, y llévate un recibo firmado que se verifica sin llamarnos.",
     "ctaPrimary": "Empieza gratis",
     "ctaSecondary": "Agenda una demo",
-    "microTrust": "Estándares abiertos · GDPR-ready · Nada que instalar",
+    "microTrust": "Estándares abiertos · Recibo firmado · Nada que instalar",
     "verifiedChip": "Verificado · 0.04s",
     "cards": {
       "diploma": {
         "kind": "Título universitario",
         "name": "María Torres",
         "title": "Diseño Gráfico",
-        "issuer": "Universidad del Valle",
+        "issuer": "university.example",
         "year": "Promoción 2026"
       },
       "cert": {
         "kind": "Certificado profesional",
         "name": "Daniel Reyes",
-        "title": "Cloud Architecture",
-        "issuer": "Andes Tech Academy",
+        "title": "Arquitectura Cloud",
+        "issuer": "academy.example",
         "year": "2026"
       },
       "event": {
         "kind": "Logro",
         "name": "Sofía Lin",
-        "title": "Ganadora del Hackathon",
-        "issuer": "ETH Bogotá",
+        "title": "Ganadora de hackathon",
+        "issuer": "devcollective.example",
         "year": "2026"
       }
     }
   },
   "usecases": {
-    "label": "Hecho para quienes certifican a las personas",
+    "label": "Para equipos que tienen que confiar en un papel que no emitieron",
     "items": [
-      "Universidades",
-      "Bootcamps",
-      "Academias online",
-      "Equipos de RRHH",
-      "Hackathons y eventos",
-      "Entidades de licencias",
-      "Comunidades",
-      "Plataformas de empleo"
+      "Recursos humanos",
+      "Plataformas de talento",
+      "Marketplaces",
+      "Admisiones",
+      "Entes que licencian",
+      "Compliance",
+      "Verificación de antecedentes",
+      "Y quien emite"
     ]
   },
   "problem": {
     "titleA": "Un PDF no prueba nada.",
-    "titleB": "Y por eso nadie lo comprueba.",
-    "body": "Falsificar un certificado toma diez minutos. Verificarlo toma días de correos y llamadas, así que la mayoría nunca se revisa. Así fue como los diplomas falsos se volvieron un negocio de miles de millones.",
+    "titleB": "Por eso nadie comprueba.",
+    "body": "Falsificar un certificado toma diez minutos. Comprobarlo son correos, llamadas y días de espera, así que la mayoría no se comprueba jamás. Al resto se le hace una captura y se le cree.",
     "chips": [
       "diploma_FINAL_v3.pdf",
       "✎ editado: ayer",
@@ -75,87 +75,194 @@
     ],
     "stats": [
       {
-        "value": "$21B",
-        "label": "mueve al año la economía de credenciales falsas"
+        "value": "días",
+        "label": "comprobar una credencial a mano"
       },
       {
-        "value": "3-5 días",
-        "label": "toma revisar una credencial a mano"
+        "value": "0,04s",
+        "label": "comprobarla por Glemo"
       },
       {
-        "value": "46%",
-        "label": "de las veces las herramientas anti-fraude lo detectan"
+        "value": "0",
+        "label": "llamadas que tienes que hacer"
       }
     ],
-    "statsNote": "Fuentes: Parchment, Velocity Network Foundation, Liminal, 2025."
+    "statsNote": "Los 0,04s son la mediana que mide nuestra propia API. Lo demás es lo que cuesta comprobar a mano."
+  },
+  "arrivals": {
+    "title": "¿Esto te suena?",
+    "sub": "Cuatro formas en que una credencial te llega. Una sola respuesta, haya llegado como haya llegado.",
+    "thesis": "Llegue como llegue, el contrato es el mismo: un veredicto, un recibo y una regla que escribiste tú.",
+    "answerLabel": "La respuesta",
+    "verdict": "Válida",
+    "requirements": [
+      {
+        "name": "firma del emisor",
+        "state": "cumplido"
+      },
+      {
+        "name": "no revocada",
+        "state": "cumplido"
+      },
+      {
+        "name": "evidencia independiente",
+        "state": "no comprobable"
+      }
+    ],
+    "requirementsNote": "Tres estados, nunca dos. Lo que no se pudo comprobar se dice, no se supone.",
+    "ruleLabel": "tu regla",
+    "ruleName": "contratacion-v3",
+    "receipt": "recibo: firmado · verificable sin nosotros",
+    "states": {
+      "met": "cumplido",
+      "unmet": "incumplido",
+      "unknown": "no comprobable"
+    },
+    "items": [
+      {
+        "id": "image",
+        "quote": "Te mandan un PDF y pudo haberlo hecho una IA.",
+        "arrival": "Un fichero del certificado",
+        "arrivalNote": "PDF o imagen, directo del candidato",
+        "answer": "Leemos la credencial sellada dentro del fichero, o el código que apunta a ella. Si no lleva nada firmado, lo decimos en vez de adivinar.",
+        "checks": [
+          "credencial dentro del fichero",
+          "firma del emisor",
+          "lista de revocación",
+          "vigencia"
+        ]
+      },
+      {
+        "id": "file",
+        "quote": "El emisor no contesta al teléfono.",
+        "arrival": "Una credencial portable",
+        "arrivalNote": "emitida en otro sitio, te la entregan",
+        "answer": "Resolvemos la identidad del propio emisor y comprobamos su firma contra ella. Nadie tiene que descolgar.",
+        "checks": [
+          "identidad del emisor resuelta",
+          "firma del emisor",
+          "lista de revocación",
+          "vigencia"
+        ]
+      },
+      {
+        "id": "wallet",
+        "quote": "Vive en el móvil del candidato.",
+        "arrival": "Una presentación desde su wallet",
+        "arrivalNote": "el titular elige qué enseña",
+        "answer": "La presenta, elige qué campos revela, y tú recibes el mismo veredicto que por cualquier otra vía.",
+        "checks": [
+          "presentada por el titular",
+          "firma del emisor",
+          "lista de revocación",
+          "campos que pediste"
+        ]
+      },
+      {
+        "id": "portal",
+        "quote": "Solo existe dentro de un portal que tú no controlas.",
+        "arrival": "El portal mismo",
+        "arrivalNote": "sin integración del lado del emisor",
+        "answer": "Lo leemos donde vive y lo convertimos en la misma evidencia firmada, sin pedirle nada al emisor.",
+        "checks": [
+          "leído en el origen",
+          "prueba de procedencia",
+          "capturado en un instante",
+          "campos que pediste"
+        ]
+      }
+    ]
   },
   "action": {
     "title": "Míralo funcionar.",
-    "sub": "De una página en blanco a una credencial en la que cualquiera puede confiar, este es el viaje completo.",
+    "sub": "Llega algo que tú no emitiste. Esto es todo lo que pasa entre ese momento y una decisión que puedes defender.",
     "steps": [
       {
-        "name": "Diseña",
-        "desc": "Parte de una plantilla o de un lienzo en blanco, ponle tu logo y tus colores, y tenlo listo en minutos."
+        "name": "Llega",
+        "desc": "Un fichero, un enlace o una presentación de wallet. Tú no emitiste nada."
       },
       {
-        "name": "Emite",
-        "desc": "Una persona o toda una cohorte. Sube una hoja de cálculo, dale al botón, listo."
+        "name": "Tu regla",
+        "desc": "Qué aceptas, de quién y qué campos. Se escribe una vez y se aplica igual."
       },
       {
-        "name": "Entrega",
-        "desc": "Cada quien recibe la suya por email, con una página para compartir donde sea, LinkedIn incluido."
+        "name": "El veredicto",
+        "desc": "Cumplido, incumplido y no comprobable, separados. Nunca supuesto."
       },
       {
-        "name": "Verifica",
-        "desc": "Empleadores y plataformas comprueban una credencial de Glemo en menos de un segundo, sin crear cuentas y sin llamar a nadie."
+        "name": "El recibo",
+        "desc": "Un registro firmado que nombra la regla, verificable con cualquier librería JWT."
       },
       {
-        "name": "Audita",
-        "desc": "Cada verificación deja rastro. Puedes revocar, expirar o exportar cuando quieras."
+        "name": "El coste",
+        "desc": "Desglosado por regla, para que veas cuál se gana su sitio."
       }
     ],
     "scene": {
-      "toolLogo": "Logo",
-      "toolName": "Nombre",
-      "toolQr": "Código QR",
-      "certTitle": "Certificado de Finalización",
-      "certCourse": "Diseño de Producto · 2026",
-      "recipients": [
-        "María Torres",
-        "Daniel Reyes",
-        "Sofía Lin"
+      "inbox": "lo que llegó",
+      "arrivals": [
+        {
+          "label": "titulo.pdf",
+          "kind": "fichero"
+        },
+        {
+          "label": "glemo.io/c/8f3a…c21",
+          "kind": "enlace"
+        },
+        {
+          "label": "presentación",
+          "kind": "wallet"
+        }
       ],
-      "moreRecipients": "+1,844 más",
-      "issueButton": "Emitir todo",
-      "issuedChip": "1,847 emitidas",
-      "emailSubject": "Tu credencial está aquí 🎓",
-      "emailFrom": "Andes Tech Academy",
-      "walletShare": "Compartir en LinkedIn",
-      "verifyPlaceholder": "Pega un enlace de credencial…",
-      "verifyChecks": [
-        "Emisor ✓",
-        "Titular ✓",
-        "No revocada ✓"
-      ],
-      "verifiedIn": "verificada en 0.04s",
-      "auditRows": [
+      "ruleTitle": "nueva regla",
+      "ruleAccept": "aceptas",
+      "ruleAcceptValue": "títulos, certificados profesionales",
+      "ruleFrom": "de",
+      "ruleFromValue": "emisores en los que confías",
+      "ruleFields": "tiene que traer",
+      "ruleFieldsValue": "nombre · emisor · fecha",
+      "rulePublish": "Publicar",
+      "ruleChip": "contratacion-v3",
+      "verdictName": "María Torres",
+      "verdictCourse": "Diseño Gráfico · university.example",
+      "verdictWord": "VÁLIDA",
+      "verdictReqs": [
         [
-          "14:02",
-          "hr-platform.co",
-          "verificada ✓"
+          "firma del emisor",
+          "cumplido"
         ],
         [
-          "13:47",
-          "portal de empleo",
-          "verificada ✓"
+          "no revocada",
+          "cumplido"
         ],
         [
-          "11:20",
-          "credencial #291",
-          "revocada por el emisor"
+          "evidencia independiente",
+          "no comprobable"
         ]
       ],
-      "auditExport": "Exportar CSV"
+      "receiptTitle": "recibo firmado",
+      "receiptLines": [
+        "alg: ES256 · typ: secevent+jwt",
+        "regla: contratacion-v3 · versión: 1",
+        "comprobado: 2026-09-26T14:02Z"
+      ],
+      "receiptNote": "Verifícalo con cualquier librería JWT, contra nuestras claves públicas, sin llamarnos.",
+      "usageTitle": "este mes, por regla",
+      "usageRows": [
+        [
+          "contratacion-v3",
+          "1.204"
+        ],
+        [
+          "contratistas-v2",
+          "318"
+        ],
+        [
+          "sin regla",
+          "96"
+        ]
+      ],
+      "usageTotal": "1.618 verificaciones"
     }
   },
   "bento": {
@@ -164,9 +271,9 @@
       "label": "La vida de una credencial",
       "steps": [
         "Emitida",
-        "Enviada",
+        "Entregada",
         "Verificada ×12",
-        "En LinkedIn"
+        "Recibo archivado"
       ]
     },
     "whitelabel": {
@@ -182,9 +289,9 @@
       "label": "tiempo medio de verificación",
       "note": "más rápido que una duda",
       "feed": [
-        "hr-platform.co · verificada · 0.04s",
-        "talent-app.io · verificada · 0.05s",
-        "edu-portal.mx · verificada · 0.03s"
+        "hr.example · verificada · 0,04s",
+        "talent.example · verificada · 0,05s",
+        "portal.example · verificada · 0,03s"
       ]
     },
     "nolockin": {
@@ -213,9 +320,9 @@
       "rawTitle": "lo que llega",
       "rawLines": [
         "credential_id: 8f3a…c21",
-        "emisor: andes-tech.edu ✓",
+        "emisor: academy.example ✓",
         "firma: válida ✓",
-        "revocada: false"
+        "regla contratacion-v3: cumplida ✓"
       ],
       "resultTitle": "lo que ve tu equipo",
       "counter": "verificada ×12 esta semana"
@@ -225,43 +332,43 @@
     "title": "¿Para quién es Glemo?",
     "tabs": [
       {
-        "id": "issuers",
-        "label": "Quienes certifican",
-        "headline": "Universidades, bootcamps, academias, eventos.",
+        "id": "verifiers",
+        "label": "Equipos que necesitan confiar",
+        "headline": "RR. HH., plataformas, marketplaces, admisiones.",
         "points": [
-          "Certificados que se ven como tú, no como una plantilla",
-          "Envía uno o miles, el mismo esfuerzo",
-          "Tus estudiantes los comparten con un clic",
-          "Revoca o expira una credencial que emitiste, cuando sea"
+          "Escribe la regla una vez: qué aceptas, de quién y qué campos exiges",
+          "Un veredicto en menos de un segundo, con qué faltó y qué no se pudo comprobar",
+          "Un recibo firmado por cada comprobación, verificable sin nosotros",
+          "Comprueba credenciales que tú no emitiste"
         ]
       },
       {
-        "id": "verifiers",
-        "label": "Quienes necesitan confiar",
-        "headline": "Equipos de RRHH, plataformas, marketplaces.",
+        "id": "issuers",
+        "label": "Quien certifica",
+        "headline": "Universidades, bootcamps, academias, eventos.",
         "points": [
-          "Comprueba una credencial en menos de un segundo",
-          "Un widget que insertas en tu producto",
-          "Funciona con credenciales de los emisores de nuestro registro",
-          "Se acabó llamar a universidades"
+          "Certificados con tu cara, no con una plantilla",
+          "Envía uno o miles, el mismo esfuerzo",
+          "Emitir es gratis, y seguirá siéndolo",
+          "Revoca o caduca una credencial tuya cuando quieras"
         ]
       },
       {
         "id": "developers",
-        "label": "Builders",
-        "headline": "Una API limpia para ambos lados.",
+        "label": "Quien construye",
+        "headline": "Una sola API para los dos lados.",
         "points": [
           "REST + webhooks que se comportan como esperas",
-          "Llaves sandbox, primera verificación en minutos",
-          "Estándares abiertos por debajo, sin lock-in",
-          "Docs escritas por gente que lee docs"
+          "Claves de sandbox y tu primera verificación en minutos",
+          "Un SDK publicado y un contrato OpenAPI generado desde la API",
+          "Estándares abiertos debajo, sin lock-in"
         ]
       }
     ]
   },
   "dev": {
-    "title": "Para developers, es una llamada",
-    "body": "Una API REST que se porta bien. Verifica credenciales que no emitiste, de los portales de nuestro registro, y recibe una respuesta con la que puedes actuar.",
+    "title": "Para desarrolladores es una sola llamada",
+    "body": "Una API REST que se comporta. Verifica una credencial que tú no emitiste, obtén un veredicto accionable y quédate con el recibo firmado que prueba qué comprobaste.",
     "docs": "Lee la documentación",
     "tabs": {
       "curl": "cURL",
@@ -275,8 +382,9 @@
     "items": [
       "W3C Verifiable Credentials",
       "Open Badges 3.0",
-      "Decentralized Identifiers",
-      "GDPR-ready",
+      "Identificadores descentralizados",
+      "Recibos firmados (RFC 8417)",
+      "Listo para GDPR",
       "REST + Webhooks"
     ]
   },
@@ -284,20 +392,24 @@
     "title": "Preguntas justas",
     "items": [
       {
-        "q": "¿Necesito saber algo de blockchain?",
-        "a": "No. Nadie necesita, ni tú, ni tus estudiantes, ni quien comprueba. Verás email, enlaces y un dashboard. La criptografía pesada se queda donde debe estar: fuera de la vista."
+        "q": "¿Qué puede comprobar Glemo de verdad?",
+        "a": "Credenciales emitidas por Glemo, y credenciales emitidas en otro sitio que llegan como fichero portable: resolvemos el DID del propio emisor y comprobamos su firma, su esquema y su lista de estado. También imágenes de certificados, cuando el fichero lleva dentro una credencial firmada o un QR que apunta a ella."
       },
       {
-        "q": "¿Qué pasa si Glemo desaparece?",
-        "a": "Tus credenciales siguen funcionando. Están construidas sobre estándares abiertos, así que se pueden exportar y verificar sin nosotros. Creemos que es la única forma honesta de construir esto."
+        "q": "¿Tengo que fiarme de vuestros criterios?",
+        "a": "No, y ese es justo el punto. La regla la escribes tú: qué tipos de credencial aceptas, de qué emisores y qué campos tienen que estar. Dos empresas pueden llegar a conclusiones opuestas sobre la misma credencial y tener razón las dos."
       },
       {
-        "q": "¿Mis destinatarios pueden dañar algo?",
-        "a": "No hay nada que dañar. Reciben un email con un enlace. Esa es toda la experiencia, sin wallet, sin contraseña, sin apps que instalar."
+        "q": "¿Con qué me quedo yo?",
+        "a": "Con un recibo firmado por cada comprobación, salga como salga. Es un Security Event Token, así que cualquier librería JWT lo verifica contra nuestras claves públicas sin llamarnos. Nosotros no guardamos copia: si lo vas a necesitar, guárdalo."
       },
       {
-        "q": "¿Dónde viven los datos personales?",
-        "a": "En almacenamiento normal y compatible con GDPR, que se puede editar o borrar, nunca en algo público o permanente. Públicamente solo se anclan huellas infalsificables."
+        "q": "¿Y si Glemo desaparece?",
+        "a": "Tus credenciales siguen funcionando y tus recibos siguen verificándose. Todo se apoya en estándares abiertos y se puede exportar. Nos parece la única forma honesta de construir esto."
+      },
+      {
+        "q": "¿Los destinatarios necesitan wallet o cuenta?",
+        "a": "No. Una credencial es un enlace. Lo abren, lo comparten y ahí se acaba la experiencia: sin wallet, sin contraseña, sin app que instalar."
       },
       {
         "q": "¿Cuánto cuesta?",
@@ -306,13 +418,13 @@
     ]
   },
   "cta": {
-    "title": "Dale a tus credenciales un checkmark",
-    "body": "Estamos eligiendo un grupo pequeño de design partners. Construye con la API, o trae Glemo a tu institución.",
+    "title": "Deja de creerle a los documentos",
+    "body": "Estamos eligiendo un grupo pequeño de design partners. Construye con la API, o trae Glemo a tu equipo.",
     "primary": "Empieza gratis",
     "secondary": "Ver precios"
   },
   "footer": {
-    "tagline": "Credenciales en las que la gente puede confiar, desde donde sea, para siempre.",
+    "tagline": "La capa de verificación universal. Comprueba lo que tú no emitiste.",
     "product": "Producto",
     "productLinks": {
       "how": "Míralo funcionar",
@@ -366,7 +478,7 @@
       "q3": "¿Emitir es gratis de verdad?",
       "a3": "Sí. Cualquiera puede emitir credenciales, diseñar plantillas y compartir la página pública sin costo. Solo paga el lado verificador, las relying parties que consumen la API.",
       "q4": "¿Mis destinatarios necesitan wallet o cuenta?",
-      "a4": "No. Una credencial es un enlace. Los destinatarios lo abren, lo comparten y lo agregan a LinkedIn sin instalar nada, y los verificadores lo confirman con una llamada a la API.",
+      "a4": "No. Una credencial es un enlace. Los destinatarios lo abren y lo comparten sin instalar nada, y los verificadores lo confirman con una llamada a la API.",
       "q5": "¿Puedo cambiar de plan después?",
       "a5": "Cuando quieras, desde tu workspace. Las mejoras aplican de inmediato; la cuota incluida y la tarifa por verificación cambian con el plan."
     }

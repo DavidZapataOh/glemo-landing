@@ -209,3 +209,9 @@ p {
     transform: none;
   }
 }
+
+/* The nav is fixed, so an in-page anchor would land the heading underneath it.
+   Reserve the nav's height plus a breath on every section that can be linked. */
+section[id] {
+  scroll-margin-top: 7rem;
+}

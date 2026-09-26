@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Glemo · Credentials that prove themselves",
-    "description": "Design beautiful certificates, send thousands in one go, and let anyone check they're real in seconds. No more chasing issuers or trusting whatever a PDF says."
+    "title": "Glemo · The universal verification layer",
+    "description": "Check credentials you did not issue, against the rule you write, and get a signed receipt anyone can verify without us."
   },
   "announcement": {
     "text": "We're choosing our first design partners",
@@ -18,54 +18,54 @@
     "docs": "Docs"
   },
   "hero": {
-    "titleA": "Credentials that",
-    "titleB": "prove themselves.",
-    "sub": "Design beautiful certificates, send thousands in one go, and let anyone check they're real in seconds. No more chasing issuers or trusting whatever a PDF says.",
+    "titleA": "The universal",
+    "titleB": "verification layer.",
+    "sub": "Check credentials you did not issue, against the rule you write, and walk away with a signed receipt anyone can verify without calling us.",
     "ctaPrimary": "Start free",
     "ctaSecondary": "Book a demo",
-    "microTrust": "Open standards · GDPR-ready · Nothing to install",
+    "microTrust": "Open standards · Signed receipts · Nothing to install",
     "verifiedChip": "Verified · 0.04s",
     "cards": {
       "diploma": {
         "kind": "University degree",
         "name": "María Torres",
         "title": "B.A. Graphic Design",
-        "issuer": "Universidad del Valle",
+        "issuer": "university.example",
         "year": "Class of 2026"
       },
       "cert": {
         "kind": "Professional certificate",
         "name": "Daniel Reyes",
         "title": "Cloud Architecture",
-        "issuer": "Andes Tech Academy",
+        "issuer": "academy.example",
         "year": "2026"
       },
       "event": {
         "kind": "Achievement",
         "name": "Sofía Lin",
         "title": "Hackathon Winner",
-        "issuer": "ETH Bogotá",
+        "issuer": "devcollective.example",
         "year": "2026"
       }
     }
   },
   "usecases": {
-    "label": "Made for the people who certify people",
+    "label": "For teams that have to trust a document they did not issue",
     "items": [
-      "Universities",
-      "Bootcamps",
-      "Online academies",
-      "HR teams",
-      "Hackathons & events",
+      "HR and recruiting",
+      "Talent platforms",
+      "Marketplaces",
+      "Admissions",
       "Licensing bodies",
-      "Communities",
-      "Job platforms"
+      "Compliance",
+      "Background checks",
+      "And whoever issues"
     ]
   },
   "problem": {
     "titleA": "A PDF proves nothing.",
     "titleB": "So nobody checks.",
-    "body": "Faking a certificate takes ten minutes. Verifying one takes days of emails and calls, so most are never checked at all. That's how fake diplomas became a billion-dollar business.",
+    "body": "Faking a certificate takes ten minutes. Checking one means emails, phone calls and days of waiting, so most are never checked at all. The rest get a screenshot and a shrug.",
     "chips": [
       "diploma_FINAL_v3.pdf",
       "✎ edited: yesterday",
@@ -75,87 +75,194 @@
     ],
     "stats": [
       {
-        "value": "$21B",
-        "label": "the yearly fake-credential economy"
-      },
-      {
-        "value": "3-5 days",
+        "value": "days",
         "label": "to check one credential by hand"
       },
       {
-        "value": "46%",
-        "label": "how often fraud tools actually catch it"
+        "value": "0.04s",
+        "label": "to check one through Glemo"
+      },
+      {
+        "value": "0",
+        "label": "calls you have to make"
       }
     ],
-    "statsNote": "Sources: Parchment, Velocity Network Foundation, Liminal, 2025."
+    "statsNote": "The 0.04s is the median our own API measures. The rest is what checking by hand looks like."
+  },
+  "arrivals": {
+    "title": "Sound familiar?",
+    "sub": "Four ways a credential reaches you. One answer, whichever it was.",
+    "thesis": "However it arrives, the contract is the same: one verdict, one receipt, one rule you wrote.",
+    "answerLabel": "The answer",
+    "verdict": "Valid",
+    "requirements": [
+      {
+        "name": "issuer signature",
+        "state": "met"
+      },
+      {
+        "name": "not revoked",
+        "state": "met"
+      },
+      {
+        "name": "independent evidence",
+        "state": "not checkable"
+      }
+    ],
+    "requirementsNote": "Three states, never two. What could not be checked is said, not assumed.",
+    "ruleLabel": "your rule",
+    "ruleName": "hiring-v3",
+    "receipt": "receipt: signed · verifiable without us",
+    "states": {
+      "met": "met",
+      "unmet": "not met",
+      "unknown": "not checkable"
+    },
+    "items": [
+      {
+        "id": "image",
+        "quote": "They send you a PDF and an AI could have made it.",
+        "arrival": "A certificate file",
+        "arrivalNote": "PDF or image, straight from the candidate",
+        "answer": "We read the credential sealed inside the file, or the code that points at it. If it carries nothing signed, we say so instead of guessing.",
+        "checks": [
+          "credential inside the file",
+          "issuer signature",
+          "revocation list",
+          "validity window"
+        ]
+      },
+      {
+        "id": "file",
+        "quote": "The issuer never answers the phone.",
+        "arrival": "A portable credential",
+        "arrivalNote": "issued somewhere else, handed to you",
+        "answer": "We resolve the issuer's own identity and check their signature against it. Nobody has to pick up.",
+        "checks": [
+          "issuer identity resolved",
+          "issuer signature",
+          "revocation list",
+          "validity window"
+        ]
+      },
+      {
+        "id": "wallet",
+        "quote": "It lives on the candidate's phone.",
+        "arrival": "A presentation from their wallet",
+        "arrivalNote": "the holder chooses what to show",
+        "answer": "They present it, they choose which fields to reveal, and you get the same verdict as every other way in.",
+        "checks": [
+          "holder presented it",
+          "issuer signature",
+          "revocation list",
+          "fields you asked for"
+        ]
+      },
+      {
+        "id": "portal",
+        "quote": "It only exists inside a portal you do not control.",
+        "arrival": "The portal itself",
+        "arrivalNote": "no integration on the issuer's side",
+        "answer": "We read it where it lives and turn it into the same signed evidence, without asking the issuer for anything.",
+        "checks": [
+          "read at the source",
+          "proof of origin",
+          "captured at a point in time",
+          "fields you asked for"
+        ]
+      }
+    ]
   },
   "action": {
     "title": "Watch it work.",
-    "sub": "This is the whole journey, from a blank page to a credential anyone can trust.",
+    "sub": "Something arrives that you did not issue. This is everything that happens between that and a decision you can defend.",
     "steps": [
       {
-        "name": "Design",
-        "desc": "Start from a template or a blank canvas, add your logo and your colors, and have it ready in minutes."
+        "name": "It arrives",
+        "desc": "A file, a link or a wallet presentation. You issued none of it."
       },
       {
-        "name": "Issue",
-        "desc": "One person or a whole cohort. Upload a spreadsheet, press go, done."
+        "name": "Your rule",
+        "desc": "What you accept, from whom, which fields. Written once, applied the same way."
       },
       {
-        "name": "Deliver",
-        "desc": "Everyone gets theirs by email, with a page they can share anywhere, LinkedIn included."
+        "name": "The verdict",
+        "desc": "Met, not met and not checkable kept apart. Never assumed."
       },
       {
-        "name": "Verify",
-        "desc": "Employers and platforms check a Glemo credential in under a second, without an account and without calling anyone."
+        "name": "The receipt",
+        "desc": "A signed record naming the rule, verifiable with any JWT library."
       },
       {
-        "name": "Audit",
-        "desc": "Every check leaves a trace. You can revoke, expire or export whenever you want."
+        "name": "The cost",
+        "desc": "Broken down by rule, so you see which one earns its place."
       }
     ],
     "scene": {
-      "toolLogo": "Logo",
-      "toolName": "Recipient name",
-      "toolQr": "QR code",
-      "certTitle": "Certificate of Completion",
-      "certCourse": "Product Design · 2026",
-      "recipients": [
-        "María Torres",
-        "Daniel Reyes",
-        "Sofía Lin"
+      "inbox": "what arrived",
+      "arrivals": [
+        {
+          "label": "degree.pdf",
+          "kind": "file"
+        },
+        {
+          "label": "glemo.io/c/8f3a…c21",
+          "kind": "link"
+        },
+        {
+          "label": "presentation",
+          "kind": "wallet"
+        }
       ],
-      "moreRecipients": "+1,844 more",
-      "issueButton": "Issue all",
-      "issuedChip": "1,847 issued",
-      "emailSubject": "Your credential is here 🎓",
-      "emailFrom": "Andes Tech Academy",
-      "walletShare": "Share to LinkedIn",
-      "verifyPlaceholder": "Paste a credential link…",
-      "verifyChecks": [
-        "Issuer ✓",
-        "Holder ✓",
-        "Not revoked ✓"
-      ],
-      "verifiedIn": "verified in 0.04s",
-      "auditRows": [
+      "ruleTitle": "new rule",
+      "ruleAccept": "you accept",
+      "ruleAcceptValue": "degrees, professional certificates",
+      "ruleFrom": "from",
+      "ruleFromValue": "issuers you trust",
+      "ruleFields": "must include",
+      "ruleFieldsValue": "name · issuer · date",
+      "rulePublish": "Publish",
+      "ruleChip": "hiring-v3",
+      "verdictName": "María Torres",
+      "verdictCourse": "B.A. Graphic Design · university.example",
+      "verdictWord": "VALID",
+      "verdictReqs": [
         [
-          "14:02",
-          "hr-platform.co",
-          "verified ✓"
+          "issuer signature",
+          "met"
         ],
         [
-          "13:47",
-          "employer portal",
-          "verified ✓"
+          "not revoked",
+          "met"
         ],
         [
-          "11:20",
-          "credential #291",
-          "revoked by issuer"
+          "independent evidence",
+          "not checkable"
         ]
       ],
-      "auditExport": "Export CSV"
+      "receiptTitle": "signed receipt",
+      "receiptLines": [
+        "alg: ES256 · typ: secevent+jwt",
+        "rule: hiring-v3 · version: 1",
+        "checked: 2026-09-26T14:02Z"
+      ],
+      "receiptNote": "Verify it with any JWT library, against our public keys, without calling us.",
+      "usageTitle": "this month, by rule",
+      "usageRows": [
+        [
+          "hiring-v3",
+          "1,204"
+        ],
+        [
+          "contractors-v2",
+          "318"
+        ],
+        [
+          "no rule",
+          "96"
+        ]
+      ],
+      "usageTotal": "1,618 verifications"
     }
   },
   "bento": {
@@ -164,9 +271,9 @@
       "label": "One credential's life",
       "steps": [
         "Issued",
-        "Emailed",
+        "Delivered",
         "Verified ×12",
-        "On LinkedIn"
+        "Receipt filed"
       ]
     },
     "whitelabel": {
@@ -182,9 +289,9 @@
       "label": "median time to verify",
       "note": "faster than a doubt",
       "feed": [
-        "hr-platform.co · verified · 0.04s",
-        "talent-app.io · verified · 0.05s",
-        "edu-portal.mx · verified · 0.03s"
+        "hr.example · verified · 0.04s",
+        "talent.example · verified · 0.05s",
+        "portal.example · verified · 0.03s"
       ]
     },
     "nolockin": {
@@ -213,9 +320,9 @@
       "rawTitle": "what arrives",
       "rawLines": [
         "credential_id: 8f3a…c21",
-        "issuer: andes-tech.edu ✓",
+        "issuer: academy.example ✓",
         "signature: valid ✓",
-        "revoked: false"
+        "rule hiring-v3: satisfied ✓"
       ],
       "resultTitle": "what your team sees",
       "counter": "checked ×12 this week"
@@ -225,25 +332,25 @@
     "title": "Who is Glemo for?",
     "tabs": [
       {
+        "id": "verifiers",
+        "label": "Teams who need to trust",
+        "headline": "HR, platforms, marketplaces, admissions.",
+        "points": [
+          "Write the rule once: what you accept, from whom, which fields",
+          "A verdict in under a second, with what failed and what could not be checked",
+          "A signed receipt for every check, verifiable without us",
+          "Check credentials you did not issue"
+        ]
+      },
+      {
         "id": "issuers",
         "label": "People who certify",
         "headline": "Universities, bootcamps, academies, events.",
         "points": [
           "Certificates that look like you, not like a template",
           "Send one or thousands, same effort",
-          "Your students share them with one click",
+          "Issuing is free, and it stays free",
           "Revoke or expire a credential you issued, anytime"
-        ]
-      },
-      {
-        "id": "verifiers",
-        "label": "Teams who need to trust",
-        "headline": "HR teams, platforms, marketplaces.",
-        "points": [
-          "Check a credential in under a second",
-          "A widget you can drop into your product",
-          "Works for credentials from the issuers in our registry",
-          "No more calling universities"
         ]
       },
       {
@@ -251,17 +358,17 @@
         "label": "Builders",
         "headline": "One clean API for both sides.",
         "points": [
-          "REST + webhooks that behave like you'd expect",
+          "REST + webhooks that behave like you would expect",
           "Sandbox keys, first verification in minutes",
-          "Open standards underneath, no lock-in",
-          "Docs written by people who read docs"
+          "A published SDK and an OpenAPI contract generated from the API",
+          "Open standards underneath, no lock-in"
         ]
       }
     ]
   },
   "dev": {
-    "title": "For developers, it's one call",
-    "body": "A REST API that behaves. Verify credentials you did not issue, from the portals in our registry, and get an answer you can act on.",
+    "title": "For developers, it is one call",
+    "body": "A REST API that behaves. Verify a credential you did not issue, get a verdict you can act on, and keep the signed receipt that proves what you checked.",
     "docs": "Read the docs",
     "tabs": {
       "curl": "cURL",
@@ -276,6 +383,7 @@
       "W3C Verifiable Credentials",
       "Open Badges 3.0",
       "Decentralized Identifiers",
+      "Signed receipts (RFC 8417)",
       "GDPR-ready",
       "REST + Webhooks"
     ]
@@ -284,20 +392,24 @@
     "title": "Fair questions",
     "items": [
       {
-        "q": "Do I need to know anything about blockchain?",
-        "a": "No. Nobody does, not you, not your students, not the person checking. You'll see email, links and a dashboard. The heavy cryptography stays where it belongs: out of sight."
+        "q": "What can Glemo actually check?",
+        "a": "Credentials issued through Glemo, and credentials issued elsewhere that arrive as a portable file: we resolve the issuer's own DID and check their signature, their schema and their status list. Certificate images too, when the file carries a signed credential inside or a QR that points at one."
+      },
+      {
+        "q": "Do I have to trust your criteria?",
+        "a": "No, and that is the whole point. You write the rule: which credential types you accept, from which issuers, which fields have to be there. Two companies can reach opposite conclusions about the same credential and both be right."
+      },
+      {
+        "q": "What do I get to keep?",
+        "a": "A signed receipt for every check, whatever the outcome. It is a Security Event Token, so any JWT library verifies it against our public keys without calling us. We keep no copy, so if you need it later, save it."
       },
       {
         "q": "What happens if Glemo disappears?",
-        "a": "Your credentials keep working. They're built on open standards, so they can be exported and verified without us. We think that's the only honest way to build this."
+        "a": "Your credentials keep working and your receipts keep verifying. Everything sits on open standards and can be exported. We think that is the only honest way to build this."
       },
       {
-        "q": "Can my recipients mess it up?",
-        "a": "There's nothing to mess up. They get an email with a link. That's the whole experience, no wallet, no password, no app to install."
-      },
-      {
-        "q": "Where does personal data live?",
-        "a": "In normal, GDPR-compliant storage that can be edited or deleted, never on anything public or permanent. Only tamper-proof fingerprints are anchored publicly."
+        "q": "Do recipients need a wallet or an account?",
+        "a": "No. A credential is a link. They open it, share it and that is the whole experience: no wallet, no password, no app to install."
       },
       {
         "q": "What does it cost?",
@@ -306,13 +418,13 @@
     ]
   },
   "cta": {
-    "title": "Give your credentials a checkmark",
-    "body": "We're picking a small group of design partners. Build with the API, or bring Glemo to your institution.",
+    "title": "Stop taking documents on faith",
+    "body": "We are picking a small group of design partners. Build with the API, or bring Glemo to your team.",
     "primary": "Start free",
     "secondary": "See pricing"
   },
   "footer": {
-    "tagline": "Credentials people can trust, from anywhere, forever.",
+    "tagline": "The universal verification layer. Check what you did not issue.",
     "product": "Product",
     "productLinks": {
       "how": "Watch it work",
@@ -366,7 +478,7 @@
       "q3": "Is issuing really free?",
       "a3": "Yes. Anyone can issue credentials, design templates and share the public credential page at no cost. Only the verifier side, the relying parties consuming the API, pays.",
       "q4": "Do my recipients need a wallet or an account?",
-      "a4": "No. A credential is a link. Recipients open it, share it and add it to LinkedIn without installing anything, and verifiers confirm it with one API call.",
+      "a4": "No. A credential is a link. Recipients open it and share it without installing anything, and verifiers confirm it with one API call.",
       "q5": "Can I change plans later?",
       "a5": "Any time, from your workspace. Upgrades apply immediately; the included quota and the per-verification rate change with the plan."
     }

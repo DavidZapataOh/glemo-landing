@@ -2,6 +2,7 @@ import SmoothScroll from "@/components/v2/SmoothScroll";
 import Nav from "@/components/v2/Nav";
 import Hero from "@/components/v2/Hero";
 import UseCaseStrip from "@/components/v2/UseCaseStrip";
+import Arrivals from "@/components/v2/Arrivals";
 import Problem from "@/components/v2/Problem";
 import GlemoInAction from "@/components/v2/GlemoInAction";
 import Bento from "@/components/v2/Bento";
@@ -20,6 +21,7 @@ export default function Home() {
         <Hero />
         <UseCaseStrip />
         <Problem />
+        <Arrivals />
         <GlemoInAction />
         <Bento />
         <Audiences />
