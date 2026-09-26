@@ -1,7 +1,6 @@
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import Link from "next/link";
-import { appUrl } from "@/lib/app-url";
 import { source } from "@/lib/source";
 import "./docs.css";
 
@@ -17,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         // Always offer the way back to the site and into the app.
         links={[
           { text: "Site", url: "/" },
-          { text: "Open app", url: appUrl("/") },
+          { text: "Join the waitlist", url: "/waitlist" },
         ]}
         nav={{
           title: (

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { PricingFaq } from "@/components/v2/PricingFaq";
-import { appUrl } from "@/lib/app-url";
 import plansData from "@/public/plans.json";
 
 export const metadata: Metadata = {
@@ -78,7 +77,7 @@ export default async function PricingPage() {
                 </ul>
 
                 <Link
-                  href={appUrl(`/signup?plan=${plan.id}`)}
+                  href={`/waitlist?plan=${plan.id}`}
                   className="mt-7 rounded-lg px-4 py-2.5 text-center font-medium transition-colors"
                   style={
                     featured

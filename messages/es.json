@@ -12,8 +12,7 @@
     "developers": "Developers",
     "institutions": "Para quién",
     "faq": "FAQ",
-    "cta": "Empieza gratis",
-    "signIn": "Iniciar sesión",
+    "cta": "Únete a la lista",
     "pricing": "Precios",
     "docs": "Docs"
   },
@@ -21,8 +20,8 @@
     "titleA": "La capa de",
     "titleB": "verificación universal.",
     "sub": "Comprueba credenciales que tú no emitiste, contra la regla que tú escribes, y llévate un recibo firmado que se verifica sin llamarnos.",
-    "ctaPrimary": "Empieza gratis",
-    "ctaSecondary": "Agenda una demo",
+    "ctaPrimary": "Únete a la lista",
+    "ctaSecondary": "Mira cómo funciona",
     "microTrust": "Estándares abiertos · Recibo firmado · Nada que instalar",
     "verifiedChip": "Verificado · 0.04s",
     "cards": {
@@ -420,7 +419,7 @@
   "cta": {
     "title": "Deja de creerle a los documentos",
     "body": "Estamos eligiendo un grupo pequeño de design partners. Construye con la API, o trae Glemo a tu equipo.",
-    "primary": "Empieza gratis",
+    "primary": "Únete a la lista",
     "secondary": "Ver precios"
   },
   "footer": {
@@ -467,7 +466,7 @@
     "featureCore": "Verificación por ID, enlace o archivo de credencial",
     "featureZkTls": "Verifica credenciales de un portal soportado (zkTLS) — Sandbox",
     "featureImage": "Verifica imágenes de certificados",
-    "cta": "Empieza gratis",
+    "cta": "Únete a la lista",
     "footnote": "Todos los planes incluyen la marca de confianza independiente, la página pública de verificación y la API completa. El excedente en planes pagos se factura mensualmente a la tarifa por verificación indicada.",
     "faqTitle": "Preguntas sobre precios",
     "faq": {
@@ -482,6 +481,22 @@
       "q5": "¿Puedo cambiar de plan después?",
       "a5": "Cuando quieras, desde tu workspace. Las mejoras aplican de inmediato; la cuota incluida y la tarifa por verificación cambian con el plan."
     }
+  },
+  "waitlist": {
+    "metaTitle": "Únete a la lista · Glemo",
+    "metaDescription": "Estamos abriendo Glemo primero a un grupo pequeño de design partners. Cuéntanos quién eres y volvemos con acceso.",
+    "title": "Únete a la lista",
+    "lead": "Estamos abriendo Glemo primero a un grupo pequeño de design partners: equipos que tienen que fiarse de credenciales que no emitieron, y las instituciones que las emiten.",
+    "stepsTitle": "Qué pasa cuando lo envías",
+    "steps": [
+      "Lo leemos todo. Una persona, no un filtro.",
+      "Si encaja con lo que estamos construyendo ahora, te damos acceso y una llamada con nosotros.",
+      "Si todavía no encaja, te lo decimos y te contamos qué lo cambiaría."
+    ],
+    "formTitle": "Formulario de la lista",
+    "fallbackLead": "El formulario se abre en una pestaña nueva.",
+    "fallbackCta": "Abrir el formulario",
+    "back": "Volver al sitio"
   },
   "accessibility": {
     "noticeLead": "Medido, no afirmado.",

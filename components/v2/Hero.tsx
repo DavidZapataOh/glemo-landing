@@ -71,7 +71,7 @@ export default function Hero() {
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3.5 lg:justify-start">
             <span className="hero-cta-primary inline-flex">
-              <Button href="#cta" size="lg">
+              <Button href="/waitlist" size="lg">
                 {t("ctaPrimary")}
               </Button>
             </span>

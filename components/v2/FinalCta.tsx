@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { appUrl } from "@/lib/app-url";
 import Button from "./ui/Button";
 import VerifyStroke from "./ui/VerifyStroke";
 import Reveal from "./ui/Reveal";
@@ -48,7 +47,7 @@ export default function FinalCta() {
             </p>
 
             <div className="relative mt-9 flex flex-wrap items-center justify-center gap-3.5">
-              <Button href={appUrl("/signup")} size="lg">
+              <Button href="/waitlist" size="lg">
                 {t("primary")}
               </Button>
               <Button href="/pricing" size="lg" variant="ghost">

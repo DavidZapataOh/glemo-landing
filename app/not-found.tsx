@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { appUrl } from "@/lib/app-url";
 
 export default function NotFound() {
   return (
@@ -24,12 +23,12 @@ export default function NotFound() {
         >
           Read the docs
         </Link>
-        <a
-          href={appUrl("/")}
+        <Link
+          href="/waitlist"
           className="rounded-full border border-line px-5 py-2.5 font-medium text-ink transition-colors hover:bg-surface"
         >
-          Open the app
-        </a>
+          Join the waitlist
+        </Link>
       </div>
     </main>
   );

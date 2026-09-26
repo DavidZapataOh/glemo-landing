@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { appUrl } from "@/lib/app-url";
 import { getLenis } from "@/lib/motion";
 import LocaleSwitcher from "./LocaleSwitcher";
 
@@ -56,8 +55,7 @@ export default function Nav() {
           <p className="text-[13px] font-medium text-ink-2">
             {ta("text")}{" "}
             <a
-              href="#cta"
-              onClick={onLink("#cta")}
+              href="/waitlist"
               className="font-bold text-ink underline decoration-verify decoration-2 underline-offset-4 hover:text-verify"
             >
               {ta("cta")} →
@@ -120,14 +118,11 @@ export default function Nav() {
             <span className="hidden sm:inline-flex">
               <LocaleSwitcher />
             </span>
+            {/* No "Sign in" while the product is gated. A control that says sign in
+                and lands on a form is a bait, and the people who already have
+                access reach the app directly. It comes back when signup opens. */}
             <a
-              href={appUrl("/login")}
-              className="rounded-full px-3.5 py-2.5 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 hover:text-ink"
-            >
-              {t("signIn")}
-            </a>
-            <a
-              href={appUrl("/signup")}
+              href="/waitlist"
               className="rounded-full bg-verify px-5 py-2.5 text-[0.9rem] font-bold text-[oklch(0.17_0.03_170)] transition-colors duration-200 hover:bg-verify-strong"
             >
               {t("cta")}

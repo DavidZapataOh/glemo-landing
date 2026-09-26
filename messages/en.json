@@ -12,8 +12,7 @@
     "developers": "Developers",
     "institutions": "Who it's for",
     "faq": "FAQ",
-    "cta": "Start free",
-    "signIn": "Sign in",
+    "cta": "Join the waitlist",
     "pricing": "Pricing",
     "docs": "Docs"
   },
@@ -21,8 +20,8 @@
     "titleA": "The universal",
     "titleB": "verification layer.",
     "sub": "Check credentials you did not issue, against the rule you write, and walk away with a signed receipt anyone can verify without calling us.",
-    "ctaPrimary": "Start free",
-    "ctaSecondary": "Book a demo",
+    "ctaPrimary": "Join the waitlist",
+    "ctaSecondary": "See how it works",
     "microTrust": "Open standards · Signed receipts · Nothing to install",
     "verifiedChip": "Verified · 0.04s",
     "cards": {
@@ -420,7 +419,7 @@
   "cta": {
     "title": "Stop taking documents on faith",
     "body": "We are picking a small group of design partners. Build with the API, or bring Glemo to your team.",
-    "primary": "Start free",
+    "primary": "Join the waitlist",
     "secondary": "See pricing"
   },
   "footer": {
@@ -467,7 +466,7 @@
     "featureCore": "Verification by ID, link or credential file",
     "featureZkTls": "Verify credentials from a supported portal (zkTLS) — Sandbox",
     "featureImage": "Verify certificate images",
-    "cta": "Start free",
+    "cta": "Join the waitlist",
     "footnote": "Every plan includes the independent trust mark, the public verification page and the full API. Overage on paid plans is billed monthly at the per-verification rate above.",
     "faqTitle": "Pricing questions",
     "faq": {
@@ -482,6 +481,22 @@
       "q5": "Can I change plans later?",
       "a5": "Any time, from your workspace. Upgrades apply immediately; the included quota and the per-verification rate change with the plan."
     }
+  },
+  "waitlist": {
+    "metaTitle": "Join the waitlist · Glemo",
+    "metaDescription": "We are opening Glemo to a small group of design partners first. Tell us who you are and we will come back with access.",
+    "title": "Join the waitlist",
+    "lead": "We are opening Glemo to a small group of design partners first: teams that have to trust credentials they did not issue, and the institutions that issue them.",
+    "stepsTitle": "What happens after you send it",
+    "steps": [
+      "We read every one. A person, not a filter.",
+      "If it fits what we are building right now, you get access and a call with us.",
+      "If it does not fit yet, we say so and tell you what would change that."
+    ],
+    "formTitle": "Waitlist form",
+    "fallbackLead": "The form opens in a new tab.",
+    "fallbackCta": "Open the form",
+    "back": "Back to the site"
   },
   "accessibility": {
     "noticeLead": "Measured, not asserted.",
